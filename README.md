@@ -1,4 +1,4 @@
-=== Prayer ===
+=== Prayer
 Contributors: kalebheitzman
 Tags: prayer, api
 Requires at least: 4.0.0
