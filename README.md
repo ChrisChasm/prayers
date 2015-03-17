@@ -1,4 +1,4 @@
-=== Prayer
+# Up Wordpress Plugin
 Contributors: kalebheitzman
 Tags: prayer, api
 Requires at least: 4.0.0
@@ -8,27 +8,27 @@ License URI: http://opensource.org/licenses/MIT
 
 Let's an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume.
 
-== Description ==
+## Description
 Let's an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume.
 
 You can create, categories, tag, and filter prayer requests using this plugin.
 
-== Installation ==
+## Installation
 Download wp-prayer-api into your /wp-content/plugins directory.
 
-== Frequently Asked Questions ==
+## Frequently Asked Questions
 Q: How do I create a request?
 A: Click on Prayers in the sidebar menu and then new prayer.
 
 Q: Are there shortcodes available?
 A: Yes please see http://...
 
-== Screenshots ==
+## Screenshots
 1. Create a new request
 2. Shortcodes
 3. JSON Api
 
-== Changelog ==
+## Changelog
 v.0.1.0 Initial Release
 
 == Upgrade Notice ==
