@@ -6,7 +6,7 @@ Tested up to: 4.0.0
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Let's an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume.
+Lets an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume.
 
 ## Description
 Let's an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume.
