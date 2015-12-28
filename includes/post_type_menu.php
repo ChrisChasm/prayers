@@ -13,6 +13,23 @@ function prayer_settings_cb() {
    	<div class="wrap">
     	<h2>Prayer Settings</h2>
    	</div>
+
+   	<div id="col-container">
+
+   		<div id="col-right">
+    		<div class="col-wrap">
+    			<p>Column Right</p>
+    		</div>
+    	</div>
+
+    	<div id="col-left">
+    		<div class="col-wrap">
+    		<p>Column Left</p>
+    		</div>
+    	</div>
+
+   	</div>
+
   	<?php
 }
 
