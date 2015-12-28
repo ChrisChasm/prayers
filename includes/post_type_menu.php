@@ -31,8 +31,8 @@ function prayer_feeds_cb() {
 	    			<table>
 		    			<thead>
 			    			<tr>
-			    				<td>Type</td>
-			    				<td>Feed</td>
+			    				<td><strong>Type</strong></td>
+			    				<td><strong>Feed</strong></td>
 			    			</tr>
 		    			</thead>
 		    			<tbody>
@@ -60,8 +60,8 @@ function prayer_feeds_cb() {
 	    			<table>
 	    				<thead>
 		    				<tr>
-		    					<td>Type</td>
-		    					<td>Feed</td>
+		    					<td><strong>Type</strong></td>
+		    					<td><strong>Feed</strong></td>
 		    				</tr>
 	    				</thead>
 	    				<tbody>
@@ -86,7 +86,7 @@ function prayer_feeds_cb() {
     		<div id="col-left">
 	    		<div class="col-wrap">
 
-	    			<p>Up provides both RSS and JSON feeds for your prayer requests. This gives you the ability to allow subscribers to subsribe to RSS or integrate the prayers on your website into other third-party services.</p>
+	    			<p>Echo provides both RSS and JSON feeds for your prayer requests. This gives you the ability to allow subscribers to subsribe to RSS or integrate the prayers on your website into other third-party services.</p>
 
 	    			<p>These feeds only display published prayers.</p>
 
