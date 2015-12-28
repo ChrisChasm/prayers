@@ -3,7 +3,7 @@
 /**
 * Plugin Name: Echo
 * Plugin URI: http://github.com/kalebheitzman/echo
-* Description: Let's an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume.
+* Description: Lets an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume.
 * Version: 1.0
 * Author: Kaleb Heitzman
 * Author URI: http://github.com/kalebheitzman/echo
