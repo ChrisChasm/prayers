@@ -39,7 +39,7 @@ function prayer_post_type() {
 		'menu_position'       => 24,
 		'menu_icon'           => 'dashicons-heart',
 		'can_export'          => true,
-		'has_archive'         => true,
+		'has_archive'         => false,
 		'exclude_from_search' => false,
 		'publicly_queryable'  => true,
 		'rewrite'             => $rewrite,
