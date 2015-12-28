@@ -28,6 +28,11 @@ function prayers_shortcode( $atts ) {
 	// The Query
 	$query = new WP_Query( $args );
 
+	// start a buffer to capture output
+	ob_start();
+
+	get_template_part('prayers');
+	
 	// The Loop
 	if ( $query->have_posts() ) {
 		echo '<ul>';
@@ -36,9 +41,10 @@ function prayers_shortcode( $atts ) {
 
 			// Get custom metadata
 
-			echo '<li>'
-			 	. get_the_title() 
-				. get_the_content() . '</li>';
+			echo '<li>';
+			echo '<h3 class="prayer-title">' . get_the_title() . '</h3>';
+			echo '<div class="prayer-content">' . get_the_content() . '</div>';
+			echo '</li>';
 		}
 		echo '</ul>';
 	} else {
@@ -47,6 +53,10 @@ function prayers_shortcode( $atts ) {
 	/* Restore original Post Data */
 	wp_reset_postdata();
 
+	// capture the output and return it to the hook
+	$output = ob_get_contents(); // end output buffering
+    ob_end_clean(); // grab the buffer contents and empty the buffer
+    return $output;
 }
 
 add_shortcode( 'prayers', 'prayers_shortcode' );
@@ -71,6 +81,9 @@ function prayers_form( $atts ) {
 	<style type="text/css">
 		.prayer-form label.hide { display: none; }
 	</style>
+	
+	<h3 id="prayer-form-title">Send a prayer</h3>
+	
 	<form method="post" class="prayer-form" action="">
 		<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>
 

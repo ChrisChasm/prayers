@@ -15,6 +15,9 @@ if ( ! defined( 'WPINC' ) ) {
     die;
 }
 
+// load template loader
+require plugin_dir_path( __FILE__ ) . 'includes/template-loader.php';
+
 // load prayer post type
 require plugin_dir_path( __FILE__ ) . 'includes/post_type_prayer.php';
 // Hook into the 'init' action
@@ -43,8 +46,7 @@ add_shortcode( 'prayers', 'prayers_shortcode' );
 
 require plugin_dir_path( __FILE__ ) . 'includes/post_type_meta.php';
 
-
-
+// prayer form submission
 function prayer_submission() {
 
 	if ( isset( $_POST['prayer-submission']) && '1' == $_POST['prayer-submission']) {
