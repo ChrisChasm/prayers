@@ -15,23 +15,26 @@ if ( ! defined( 'WPINC' ) ) {
     die;
 }
 
+define( 'ECHO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+
 // load template loader
-require plugin_dir_path( __FILE__ ) . 'includes/template-loader.php';
+require ECHO_PLUGIN_DIR . 'includes/class-gamajo-template-loader.php';
+require ECHO_PLUGIN_DIR . 'includes/class-echo-template-loader.php';
 
 // load prayer post type
-require plugin_dir_path( __FILE__ ) . 'includes/post_type_prayer.php';
+require ECHO_PLUGIN_DIR . 'includes/post_type_prayer.php';
 // Hook into the 'init' action
 add_action( 'init', 'prayer_post_type', 0 );
 
 // add post type menu
-require plugin_dir_path( __FILE__ ) . 'includes/post_type_menu.php';
+require ECHO_PLUGIN_DIR . 'includes/post_type_menu.php';
 add_action('admin_menu' , 'prayer_feeds_menu', 0 );
 add_action('admin_menu' , 'prayer_settings_menu', 0 );
 
 // load prayer taxonomies
-require plugin_dir_path( __FILE__ ) . 'includes/taxonomy_prayer_category.php';
-require plugin_dir_path( __FILE__ ) . 'includes/taxonomy_prayer_location.php';
-require plugin_dir_path( __FILE__ ) . 'includes/taxonomy_prayer_post_tag.php';
+require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_category.php';
+require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_location.php';
+require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_post_tag.php';
 // Hook into the 'init' action
 add_action( 'init', 'prayer_category_taxonomy', 1 );
 // Hook into the 'init' action
@@ -40,11 +43,11 @@ add_action( 'init', 'prayer_location_taxonomy', 2 );
 add_action( 'init', 'prayer_post_tag_taxonomy', 3 );
 
 // load shortcodes
-require plugin_dir_path( __FILE__ ) . 'includes/shortcodes.php';
+require ECHO_PLUGIN_DIR . 'includes/shortcodes.php';
 // register the shortcodes
 add_shortcode( 'prayers', 'prayers_shortcode' );
 
-require plugin_dir_path( __FILE__ ) . 'includes/post_type_meta.php';
+require ECHO_PLUGIN_DIR . 'includes/post_type_meta.php';
 
 // prayer form submission
 function prayer_submission() {
