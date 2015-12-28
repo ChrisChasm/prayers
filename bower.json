@@ -1,17 +1,17 @@
 {
-  "name": "up",
+  "name": "echo",
   "version": "1.0.0",
   "authors": [
-    "Kaleb Heitzman <kaleblex@gmail.com>"
+    "Kaleb Heitzman <kalebheitzman@gmail.com>"
   ],
-  "description": "Up Wordpress Plugin",
+  "description": "Echo Wordpress Plugin",
   "main": "plugin.php",
   "keywords": [
     "wordpress",
     "plugin"
   ],
   "license": "MIT",
-  "homepage": "http://github.org/kalebheitzman/up",
+  "homepage": "http://github.org/kalebheitzman/echo",
   "private": true,
   "ignore": [
     "**/.*",
