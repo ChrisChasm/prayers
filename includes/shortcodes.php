@@ -11,6 +11,42 @@ function prayers_shortcode( $atts ) {
 			'end_date' => 'today',
 		), $atts )
 	);
+
+	// WP_Query arguments
+	$args = array (
+		'post_type'              => array( 'prayer' ),
+		'post_status'            => array( 'publish' ),
+		'meta_query' => array(
+			array(
+				'key' => 'meta-prayer-anonymous',
+				'value' => true,
+				'compare' => 'NOT LIKE',
+			),
+		),
+	);
+
+	// The Query
+	$query = new WP_Query( $args );
+
+	// The Loop
+	if ( $query->have_posts() ) {
+		echo '<ul>';
+		while ( $query->have_posts() ) {
+			$query->the_post();
+
+			// Get custom metadata
+
+			echo '<li>'
+			 	. get_the_title() 
+				. get_the_content() . '</li>';
+		}
+		echo '</ul>';
+	} else {
+		// no posts found
+	}
+	/* Restore original Post Data */
+	wp_reset_postdata();
+
 }
 
 add_shortcode( 'prayers', 'prayers_shortcode' );
@@ -22,6 +58,9 @@ function prayers_form( $atts ) {
 			'anonymous' => true
 		), $atts )
 	);
+
+	// start a buffer to capture output
+	ob_start();
 
 	if (count($_POST) > 0): ?>
 
@@ -110,13 +149,20 @@ function prayers_form( $atts ) {
 		</p>
 
 		<p>
-			<input type="submit" value="Submit Prayer Request" />
+			<input type="submit" value="Send Prayer" />
 			<input type="hidden" name="prayer-submission" value="1" />
 		</p>
 
 	</form>
+	
 	<?php
+
 	endif;
+	
+	// capture the output and return it to the hook
+	$output = ob_get_contents(); // end output buffering
+    ob_end_clean(); // grab the buffer contents and empty the buffer
+    return $output;
 }
 
-add_shortcode( 'prayer_form', 'prayers_form' );
+add_shortcode( 'prayers_form', 'prayers_form' );
