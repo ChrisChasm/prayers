@@ -80,3 +80,11 @@ span.echo-box {
 	border-radius: 4px;
 	border: 1px solid #efefef;
 }
+
+li.prayer-avatar-small img {
+	width: 24px;
+	height: 24px;
+	background: #efefef;
+	border-radius: 4px;
+	margin-top: -2px;
+}
