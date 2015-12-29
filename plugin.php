@@ -1,9 +1,9 @@
 <?php
 
 /**
-* Plugin Name: Echo
+* Plugin Name: Echo Prayer App
 * Plugin URI: http://github.com/kalebheitzman/echo
-* Description: Lets an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume.
+* Description: Lets an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume and requires the <a href="https://wordpress.org/plugins/rest-api/">WP REST API</a> be installed and activated first.
 * Version: 1.0
 * Author: Kaleb Heitzman
 * Author URI: http://github.com/kalebheitzman/echo
@@ -14,6 +14,17 @@
 if ( ! defined( 'WPINC' ) ) {
     die;
 }
+
+// requir the REST API plugin
+function echo_plugin_activate(){
+
+    // Require parent plugin
+    if ( ! is_plugin_active( 'rest-api/plugin.php' ) and current_user_can( 'activate_plugins' ) ) {
+        // Stop activation redirect and show error
+        wp_die('Sorry, but this plugin requires the <a href="https://wordpress.org/plugins/rest-api/">WP REST API (Version 2)</a> to be installed and active. <br><a href="' . admin_url( 'plugins.php' ) . '">&laquo; Return to Plugins</a>');
+    }
+}
+register_activation_hook( __FILE__, 'echo_plugin_activate' );
 
 define( 'ECHO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 

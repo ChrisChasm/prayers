@@ -6,7 +6,7 @@ Tested up to: 4.0.0
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Lets an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume.
+Lets an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume and requires the [WP REST API](https://wordpress.org/plugins/rest-api/) be installed and activated first.
 
 ## Description
 Let's an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume.
