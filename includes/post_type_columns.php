@@ -1,12 +1,25 @@
 <?php
 
 
-function echo_prayers_columns_head( $defaults ) {
-	$defaults['prayer_count'] = __( 'Prayed', 'echo' );
-	$defaults['prayer_location'] = __( 'Location', 'echo' );
-	$defaults['prayer_coordinates'] = __( 'Coordinates', 'echo' );
-	$defaults['prayer_submitter'] = __( 'Submitter', 'echo' );
-	return $defaults;
+function echo_prayers_columns_head( $columns ) {
+
+	unset($columns['author']);
+
+	$date = $columns['date'];
+	unset($columns['date']);
+
+	$category = $columns['taxonomy-prayer_category'];
+	unset($columns['taxonomy-prayer_category']);
+
+	$columns['prayer_submitter'] = __( 'Submitter', 'echo' );
+	$columns['prayer_location'] = __( 'Location', 'echo' );
+	$columns['prayer_coordinates'] = __( 'Coordinates', 'echo' );
+	$columns['prayer_count'] = __( 'Prayed', 'echo' );
+
+	$columns['taxonomy-prayer_category'] = $category;
+	$columns['date'] = $date;
+
+	return $columns;
 }
 function echo_prayers_columns( $column_name, $post_ID ) {
 	if ($column_name == 'prayer_count' ) {
@@ -42,8 +55,8 @@ function echo_prayers_columns( $column_name, $post_ID ) {
 			echo '<a href="http://maps.google.com/?ie=UTF8&hq=&ll=' . $lat . ',' . $long . '&z=13" target="_blank">Map</a>';
 			echo '</div>';			
 		}
-		
+
 	}
 }
-add_filter( 'manage_posts_columns', 'echo_prayers_columns_head' );
-add_action( 'manage_posts_custom_column', 'echo_prayers_columns', 10, 2 );
+add_filter( 'manage_prayer_posts_columns', 'echo_prayers_columns_head' );
+add_action( 'manage_prayer_posts_custom_column', 'echo_prayers_columns', 10, 2 );

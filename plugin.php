@@ -32,6 +32,9 @@ define( 'ECHO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 require ECHO_PLUGIN_DIR . 'includes/class-gamajo-template-loader.php';
 require ECHO_PLUGIN_DIR . 'includes/class-echo-template-loader.php';
 
+// load plugin helpers
+require ECHO_PLUGIN_DIR . 'includes/plugin-helpers.php';
+
 // load template helpers
 require ECHO_PLUGIN_DIR . 'includes/template-helpers.php';
 
@@ -111,22 +114,13 @@ function echo_prayer_form_submission() {
 		add_post_meta( $prayer_id, 'meta-prayer-location', $post['prayer_location'] );
 
 		// calculate coordinates
+		$location = echo_parse_location($post['prayer_location']);
 
-		$prepAddr = str_replace(' ', '+', $post['prayer_location']);
-		$geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
-        $output= json_decode($geocode);
-
-        $formatted_address = $output->results[0]->formatted_address; // Lexington, KY, USA
-        $lat = $output->results[0]->geometry->location->lat;
-        $long = $output->results[0]->geometry->location->lng;
-        $country_long = $output->results[0]->address_components[3]->long_name;
-        $country_short = $output->results[0]->address_components[3]->short_name;
-
-		add_post_meta( $prayer_id, 'meta-prayer-location-latitude', $lat );
-		add_post_meta( $prayer_id, 'meta-prayer-location-longitude', $long );
-		add_post_meta( $prayer_id, 'meta-prayer-location-formatted-address', $formatted_address );
-		add_post_meta( $prayer_id, 'meta-prayer-location-country-long', $country_long );
-		add_post_meta( $prayer_id, 'meta-prayer-location-country-short', $country_short );
+		add_post_meta( $prayer_id, 'meta-prayer-location-latitude', $location['lat'] );
+		add_post_meta( $prayer_id, 'meta-prayer-location-longitude', $location['long'] );
+		add_post_meta( $prayer_id, 'meta-prayer-location-formatted-address', $location['formatted_address'] );
+		add_post_meta( $prayer_id, 'meta-prayer-location-country-long', $location['country_long'] );
+		add_post_meta( $prayer_id, 'meta-prayer-location-country-short', $location['country_short'] );
 
 	}
 
