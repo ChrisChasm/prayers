@@ -44,7 +44,10 @@ function prayer_post_type() {
 		'publicly_queryable'  => true,
 		'rewrite'             => $rewrite,
 		'capability_type'     => 'post',
-		'register_meta_box_cb' => 'add_prayer_metaboxes'
+		'register_meta_box_cb' => 'add_prayer_metaboxes',
+		'show_in_rest'       => true,
+		'rest_base'          => 'prayers',
+        'rest_controller_class' => 'WP_REST_Posts_Controller',
 	);
 	register_post_type( 'prayer', $args );
 

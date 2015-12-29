@@ -83,7 +83,7 @@ function prayer_feeds_cb() {
 	    				</thead>
 	    				<tbody>
 			    			<tr>
-						    	<td>By Most Recent </td><td><a target="_blank" href="<?php echo get_site_url(); ?>/prayers/json"><?php echo get_site_url(); ?>/prayers/json?count=10</a></td>
+						    	<td>By Most Recent </td><td><a target="_blank" href="<?php echo get_site_url(); ?>/wp-json/wp/v2/prayers"><?php echo get_site_url(); ?>/wp-json/wp/v2/prayers</a></td>
 							</tr>
 							<tr>
 						    	<td>By Locations </td><td><a target="_blank" href="#"><?php echo get_site_url(); ?>/prayers/json?location=north_america</a></td>
