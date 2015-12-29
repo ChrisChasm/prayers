@@ -2,7 +2,7 @@
 
 function add_prayer_metaboxes() {
 	add_meta_box('prayer_answered', 
-		__('Prayer Information', 'prayer'), 'prayer_answered_cb', 'prayer', 'side', 'high');
+		__('Prayer Meta', 'prayer'), 'prayer_answered_cb', 'prayer', 'side', 'high');
 }
 
 add_action( 'add_meta_boxes', 'add_prayer_metaboxes', 0 );
@@ -11,22 +11,6 @@ function prayer_answered_cb( $post ) {
     // Noncename needed to verify where the data originated
 	wp_nonce_field( basename(__FILE__), 'prayer_nonce' );
 	$prayer_stored_meta = get_post_meta( $post->ID );
-
-	// answered value
-	$answered = $prayer_stored_meta['meta-prayer-answered'][0];
-
-	if (empty($answered)) {
-		$answered = false;
-	}
-	$answeredTrue = $answered == true ? 'checked' : '';
-	$answeredFalse = $answered == false ? 'checked' : '';
-
-	?>
-	<p>
-		<label for="meta-prayer-answered"><?php echo __('Answered?', 'prayer') ?> </label>
-		<label><input type="radio" name="meta-prayer-answered" value="0" <?php echo $answeredFalse; ?> /><span>No </span></label>
-		<label><input type="radio" name="meta-prayer-answered" value="1" <?php echo $answeredTrue; ?> /><span>Yes </span></label>
-	</p><?php
 
 	// answered value
 	$anonymous = $prayer_stored_meta['meta-prayer-anonymous'][0];
@@ -43,9 +27,37 @@ function prayer_answered_cb( $post ) {
 		<label><input type="radio" name="meta-prayer-anonymous" value="1" <?php echo $anonymousTrue; ?> /><span>Yes </span></label>
 	</p>
 
+	<?php 
+	// answered value
+	$answered = $prayer_stored_meta['meta-prayer-answered'][0];
+
+	if (empty($answered)) {
+		$answered = false;
+	}
+	$answeredTrue = $answered == true ? 'checked' : '';
+	$answeredFalse = $answered == false ? 'checked' : '';
+
+	?>
+	<p>
+		<label for="meta-prayer-answered"><?php echo __('Answered?', 'prayer') ?> </label>
+		<label><input type="radio" name="meta-prayer-answered" value="0" <?php echo $answeredFalse; ?> /><span>No </span></label>
+		<label><input type="radio" name="meta-prayer-answered" value="1" <?php echo $answeredTrue; ?> /><span>Yes </span></label>
+	</p>
+
+	<?php
+	$count = $prayer_stored_meta['meta-prayer-count'][0];
+	?>
+
+	<p>
+		<label for="meta-prayer-count"><?php echo __('Prayed Count', 'prayer') ?></label>
+		<input type="text" name="meta-prayer-count" value="<?php echo $count; ?>" />
+	</p>
+
 	<?php
 	$name = $prayer_stored_meta['meta-prayer-name'][0];
 	?>
+
+	<p><strong>Contact Info</strong></p>
 
 	<p>
 		<label for="meta-prayer-name"><?php echo __('Name', 'prayer') ?></label>
@@ -61,6 +73,8 @@ function prayer_answered_cb( $post ) {
 		<input type="text" name="meta-prayer-email" value="<?php echo $email; ?>" />
 	</p>
 
+	<p><strong>Location Info</strong></p>
+
 	<?php
 	$location = $prayer_stored_meta['meta-prayer-location'][0];
 	?>
@@ -71,13 +85,23 @@ function prayer_answered_cb( $post ) {
 	</p>
 
 	<?php
-	$count = $prayer_stored_meta['meta-prayer-count'][0];
+	$latitude = $prayer_stored_meta['meta-prayer-location-latitude'][0];
+	$longitude = $prayer_stored_meta['meta-prayer-location-longitude'][0];
+	$formatted = $prayer_stored_meta['meta-prayer-location-formatted-address'][0];
+	$long = $prayer_stored_meta['meta-prayer-location-country-long'][0];
+	$short = $prayer_stored_meta['meta-prayer-location-country-short'][0];	
+
 	?>
 
-	<p>
-		<label for="meta-prayer-count"><?php echo __('Prayer count', 'prayer') ?></label>
-		<input type="text" name="meta-prayer-count" value="<?php echo $count; ?>" />
-	</p>
+	<div>
+		<ul>
+			<li>Latitude: <?php echo $latitude; ?></li>
+			<li>Longitude: <?php echo $longitude; ?></li>
+			<li>Address: <?php echo $formatted; ?></li>
+			<li>Country: <?php echo $long; ?> (<?php echo $short ?>)</li>
+		</ul>
+	</div>
+
 
 	<?php
     
@@ -126,5 +150,14 @@ function prayer_meta_save( $post_id ) {
     	update_post_meta( $post_id, 'meta-prayer-count', sanitize_text_field( $_POST[ 'meta-prayer-count' ] ) );
     }
 
+     // Checks for input and sanitizes/saves if needed
+    if( isset( $_POST[ 'meta-prayer-location-latitude' ] ) ) {
+    	update_post_meta( $post_id, 'meta-prayer-location-latitude', sanitize_text_field( $_POST[ 'meta-prayer-location-latitude' ] ) );
+    }
+
+     // Checks for input and sanitizes/saves if needed
+    if( isset( $_POST[ 'meta-prayer-location-longitude' ] ) ) {
+    	update_post_meta( $post_id, 'meta-prayer-location-longitude', sanitize_text_field( $_POST[ 'meta-prayer-location-longitude' ] ) );
+    }
 }
 add_action( 'save_post', 'prayer_meta_save' );

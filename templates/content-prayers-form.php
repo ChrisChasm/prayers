@@ -38,8 +38,8 @@ if (count($_POST) > 0): ?>
 		<p>Place your request on the map? City and state is fine, we don't need a full address.</p>
 
 		<p class="prayer-address">
-			<label for="prayer_address" class="hide"><?php echo __('Your city, state, province, country', 'prayer') ?></label>
-			<input type="text" name="prayer_address" placeholder="Your city, state, province, country, etc (not required)" />
+			<label for="prayer_location" class="hide"><?php echo __('Your city, state, province, country', 'prayer') ?></label>
+			<input type="text" name="prayer_location" placeholder="Your city, state, province, country, etc (not required)" />
 		</p>
 
 		<?php

@@ -81,15 +81,15 @@ function echo_prayer_form_submission() {
 		$post = $_POST;
 
 		$prayer_category = term_exists( $post['prayer_category'], 'prayer_category', 0 );
-		$prayer_location = term_exists( $post['prayer_location'], 'prayer_location', 0 );
+		// $prayer_location = term_exists( $post['prayer_location'], 'prayer_location', 0 );
 
 		if ( ! $prayer_category ) {
 			$prayer_category = wp_insert_term( $prayer_category, 'prayer_category', array( 'parent' => 0 ) );
 		}
 
-		if ( ! $prayer_location ) {
+		/*if ( ! $prayer_location ) {
 			$prayer_location = wp_insert_term( $prayer_location, 'prayer_location', array( 'parent' => 0 ) );
-		}
+		}*/
 
 		$prayer = array(
 			'comment_status' => 'closed',
@@ -107,8 +107,29 @@ function echo_prayer_form_submission() {
 
 		add_post_meta( $prayer_id, 'meta-prayer-anonymous', $post['prayer_anonymous'] );
 		add_post_meta( $prayer_id, 'meta-prayer-answered', 0);
+		add_post_meta( $prayer_id, 'meta-prayer-count', 0);
 		add_post_meta( $prayer_id, 'meta-prayer-name', $post['prayer_name'] );
 		add_post_meta( $prayer_id, 'meta-prayer-email', $post['prayer_email'] );
+		add_post_meta( $prayer_id, 'meta-prayer-location', $post['prayer_location'] );
+
+		// calculate coordinates
+
+		$prepAddr = str_replace(' ', '+', $post['prayer_location']);
+		$geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
+        $output= json_decode($geocode);
+
+        $formatted_address = $output->results[0]->formatted_address; // Lexington, KY, USA
+        $lat = $output->results[0]->geometry->location->lat;
+        $long = $output->results[0]->geometry->location->lng;
+        $country_long = $output->results[0]->address_components[3]->long_name;
+        $country_short = $output->results[0]->address_components[3]->short_name;
+
+		add_post_meta( $prayer_id, 'meta-prayer-location-latitude', $lat );
+		add_post_meta( $prayer_id, 'meta-prayer-location-longitude', $long );
+		add_post_meta( $prayer_id, 'meta-prayer-location-formatted-address', $formatted_address );
+		add_post_meta( $prayer_id, 'meta-prayer-location-country-long', $country_long );
+		add_post_meta( $prayer_id, 'meta-prayer-location-country-short', $country_short );
+
 	}
 
 }
