@@ -24,32 +24,32 @@
 
 			$id = get_the_ID();
 
-			// Custom Post Values
-			$prayer_submitter_name = get_post_custom_values( 'echo_prayer_request_name', $id );
-
 			?>
 	
 			<li>
 				<h3 class="prayer-title"><?php the_title() ?></h3>
-				<div class="prayer-content">
-					<span class="echo prayer-submitter-name"><?php echo $prayer_submitter_name; ?></span>
-					<?php the_content() ?>
-				</div>
-				<div class="meta">
+
+				<div class="echo prayer-meta">
 					<ul>
-					
+
+						<li><?php echo get_echo_prayed_button() ?></li>
 						<?php if ( $prayer_answered ): ?>
 							<li class="echo prayer-answered"><span class="echo prayer-answered">Answered</span></li>
 						<?php endif; ?>
-						<?php if ( ! empty( $prayer_location ) ): ?>
-							<li class="echo prayer-location"><?php echo $prayer_location; ?></li>
+						<?php if ( ! empty( get_echo_prayer_location($id) ) ): ?>
+							<li><?php echo get_echo_prayer_location($id); ?></li>
 						<?php endif; ?>
 						<li><?php echo get_echo_terms_list($id, 'prayer_category'); ?></li>
 						<li><?php echo get_echo_terms_list($id, 'prayer_location'); ?></li>
-						<li><?php echo get_echo_prayed_button() ?></li>
 
 					</ul>
 				</div>
+
+				<div class="prayer-content">
+					<span class="echo prayer-name"><?php echo get_echo_prayer_name($id); ?></span>
+					<?php the_content() ?>
+				</div>
+				
 			</li>
 	
 		<?php endwhile; ?>

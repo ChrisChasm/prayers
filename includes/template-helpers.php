@@ -14,7 +14,7 @@ function get_echo_terms_list( $id = 0, $taxonomy = null ) {
 	// return a wrapped list
 	if ( $categories && ! is_wp_error( $categories ) ) {
 
-		$output = '<span class="echo category taxonomy-' . $taxonomy . '">';
+		$output = '<span class="echo echo-box category taxonomy-' . $taxonomy . '">';
 
 		$categories_list = array();
 		foreach ( $categories as $term ) {
@@ -35,8 +35,26 @@ function get_echo_terms_list( $id = 0, $taxonomy = null ) {
  */
 function get_echo_prayed_button() {
 	?>
-		<li class="echo prayer-click" data-prayer-click="<?php the_ID(); ?>">
-			<span><a href="#">I Prayed</a></span>
-		</li>
+		<span class="echo-pray-button" data-prayer-click="<?php the_ID(); ?>"><a href="#">I Prayed</a></span>
 	<?php
+}
+
+// Get prayer location
+function get_echo_prayer_location( $id = 0 ) {
+	if ( $id == 0) { return; }
+
+	$prayer_location = get_post_meta( $id, 'meta-prayer-location', 1);
+	if ( empty($prayer_location) ) { return; }
+
+	?><span class="echo-box"><?php echo $prayer_location; ?></span><?
+}
+
+// Get prayer name
+function get_echo_prayer_name( $id = 0 ) {
+	if ( $id == 0) { return; }
+
+	$prayer_name = get_post_meta( $id, 'meta-prayer-name', 1);
+	if ( empty($prayer_name) ) { return; }
+
+	?><span class="echo-prayer-name"><?php echo $prayer_name; ?></span><?
 }
