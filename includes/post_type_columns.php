@@ -24,6 +24,10 @@ function echo_prayers_columns_head( $columns ) {
 function echo_prayers_columns( $column_name, $post_ID ) {
 	$post_meta = get_post_meta( $post_ID );
 
+	// geocoded info
+	$lat = $post_meta['meta-prayer-location-latitude'][0];
+	$long = $post_meta['meta-prayer-location-longitude'][0];
+
 	if ($column_name == 'prayer_count' ) {
 		$prayer_count = $post_meta['meta-prayer-count'][0];
 		echo $prayer_count;
@@ -32,6 +36,12 @@ function echo_prayers_columns( $column_name, $post_ID ) {
 		$prayer_location = $post_meta['meta-prayer-location'][0];
 		$prayer_country = $post_meta['meta-prayer-location-country-long'][0];
 		echo $prayer_location . "<br />" . $prayer_country;
+
+		if ( ! empty($lat) && ! empty($long) ) {
+			echo '<div class="row-actions">';
+			echo '<a href="http://maps.google.com/?ie=UTF8&hq=&ll=' . $lat . ',' . $long . '&z=13" target="_blank">Map</a>';
+			echo '</div>';			
+		}
 	}
 	if ($column_name == 'prayer_submitter' ) {
 		$prayer_name = $post_meta['meta-prayer-name'][0];
@@ -48,14 +58,9 @@ function echo_prayers_columns( $column_name, $post_ID ) {
 		<?php
 	}
 	if ($column_name == 'prayer_coordinates') {
-		$lat = $post_meta['meta-prayer-location-latitude'][0];
-		$long = $post_meta['meta-prayer-location-longitude'][0];
 
 		if ( ! empty($lat) && ! empty($long) ) {
 			echo $lat . "<br />" . $long . "<br />";
-			echo '<div class="row-actions">';
-			echo '<a href="http://maps.google.com/?ie=UTF8&hq=&ll=' . $lat . ',' . $long . '&z=13" target="_blank">Map</a>';
-			echo '</div>';			
 		}
 
 	}

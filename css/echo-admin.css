@@ -1,0 +1,13 @@
+
+.echo-admin {}
+.echo-submitter {}
+.echo-submitter .avatar {
+	float: left;
+	margin-right: 0.25em;
+}
+.echo-submitter .avatar img {
+
+}
+.echo-submitter .details {
+
+}

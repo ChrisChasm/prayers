@@ -38,9 +38,13 @@ require ECHO_PLUGIN_DIR . 'includes/plugin-helpers.php';
 // load template helpers
 require ECHO_PLUGIN_DIR . 'includes/template-helpers.php';
 
-// load styles
+// load front styles
 require ECHO_PLUGIN_DIR . 'includes/scripts.php';
 add_action( 'wp_enqueue_scripts', 'echo_register_styles' );
+
+// load admin styles
+require ECHO_PLUGIN_DIR . 'includes/scripts-admin.php';
+add_action( 'admin_enqueue_scripts', 'echo_register_admin_styles' );
 
 // load prayer post type
 require ECHO_PLUGIN_DIR . 'includes/post_type_prayer.php';
