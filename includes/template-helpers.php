@@ -44,9 +44,9 @@ function get_echo_prayed_button( $id = 0 ) {
 	?>
 		<div class="echo-prayer-button" data-prayer-id="<?php the_ID(); ?>">
 			<span class="echo-prayer-count"><?php echo $prayer_count; ?></span>
-			<span class="echo-pray-button" data-prayer-click="<?php the_ID(); ?>"><a href="#">Pray</a></span>
+			<span class="echo-pray-button" data-prayer-click="<?php the_ID(); ?>"><a href="/">Pray</a></span>
 		</div>
-		
+
 	<?php
 }
 

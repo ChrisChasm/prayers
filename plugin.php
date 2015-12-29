@@ -24,21 +24,12 @@ require ECHO_PLUGIN_DIR . 'includes/class-echo-template-loader.php';
 // load template helpers
 require ECHO_PLUGIN_DIR . 'includes/template-helpers.php';
 
-// enqueue styles and scripts
-function echo_register_styles() {
-	
-	wp_register_style( 'echo-css', plugins_url( '/css/echo.css', __FILE__ ), array(), '20151228', 'all' );
-	wp_enqueue_style( 'echo-css');
-
-	wp_register_script( 'echo-js', plugins_url( '/js/echo.js', __FILE__ ), array(), '20151228', 'all' );
-	wp_enqueue_script( 'echo-js');	
-}
+// load styles
+require ECHO_PLUGIN_DIR . 'includes/scripts.php';
 add_action( 'wp_enqueue_scripts', 'echo_register_styles' );
-
 
 // load prayer post type
 require ECHO_PLUGIN_DIR . 'includes/post_type_prayer.php';
-// Hook into the 'init' action
 add_action( 'init', 'prayer_post_type', 0 );
 
 // add post type menu
@@ -50,18 +41,15 @@ add_action('admin_menu' , 'prayer_settings_menu', 0 );
 require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_category.php';
 require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_location.php';
 require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_post_tag.php';
-// Hook into the 'init' action
 add_action( 'init', 'prayer_category_taxonomy', 1 );
-// Hook into the 'init' action
 add_action( 'init', 'prayer_location_taxonomy', 2 );
-// Hook into the 'init' action
 add_action( 'init', 'prayer_post_tag_taxonomy', 3 );
 
 // load shortcodes
 require ECHO_PLUGIN_DIR . 'includes/shortcodes.php';
-// register the shortcodes
 add_shortcode( 'prayers', 'prayers_shortcode' );
 
+// load post meta
 require ECHO_PLUGIN_DIR . 'includes/post_type_meta.php';
 
 // prayer form submission

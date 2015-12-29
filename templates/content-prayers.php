@@ -1,16 +1,24 @@
 <?php
 
+	// paged
+	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
+	// Attributes
+	extract( $shortcode_atts );
+
 	// WP_Query arguments
 	$args = array (
-		'post_type'              => array( 'prayer' ),
-		'post_status'            => array( 'publish' ),
-		'meta_query' => array(
+		'post_type' => array( 'prayer' ),
+		'post_status' => array( 'publish' ),
+		'paged' => $paged,
+		'posts_per_page' => $limit,
+		/*'meta_query' => array(
 			array(
 				'key' => 'meta-prayer-anonymous', // filters out anonymous prayers
 				'value' => 0,
 				'compare' => 'LIKE',
 			),
-		),
+		),*/
 	);
 
 	// The Query
@@ -27,7 +35,9 @@
 			?>
 	
 			<li>
-				<h3 class="prayer-title"><?php the_title() ?></h3>
+				<h3 class="prayer-title">
+					<a href="<?php the_permalink(); ?>"><?php the_title() ?></a>
+				</h3>
 
 				<div class="echo prayer-meta">
 					<ul>
@@ -41,7 +51,6 @@
 						<?php endif; ?>
 						<li><?php echo get_echo_terms_list($id, 'prayer_category'); ?></li>
 						<li><?php echo get_echo_terms_list($id, 'prayer_location'); ?></li>
-						<li><?php echo get_echo_prayer_count($id); ?></li>
 
 					</ul>
 				</div>
@@ -54,7 +63,10 @@
 			</li>
 	
 		<?php endwhile; ?>
-	
+		
+		<div class="nav-previous alignleft"><?php next_posts_link( 'Older posts' ); ?></div>
+		<div class="nav-next alignright"><?php previous_posts_link( 'Newer posts' ); ?></div>
+
 	</ul>
 
 	<?php else: ?>
@@ -64,4 +76,4 @@
 	<?php endif;
 
 	/* Restore original Post Data */
-	wp_reset_postdata(); ?>
+	// wp_reset_postdata(); ?>

@@ -3,14 +3,15 @@
 // Add Shortcode
 function prayers_shortcode( $atts ) {
 
-	// Attributes
-	extract( shortcode_atts(
+	// set shortcode atts to pass to the template
+	$shortcode_atts = shortcode_atts(
 		array(
-			'count' => '10',
+			'limit' => '10',
 			'start_date' => 'last month',
 			'end_date' => 'today',
-		), $atts )
-	);
+		), $atts );
+
+	set_query_var( 'shortcode_atts', $shortcode_atts );
 
 	// load templates
 	$templates = new Echo_Template_Loader;
