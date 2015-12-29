@@ -1,5 +1,16 @@
 <?php
 
+function prayer_pending_menu() {
+	add_submenu_page(
+        'edit.php?post_type=prayer',
+        '',
+        'Pending',
+        'edit_posts',
+        'edit.php?post_type=prayer&post_status=pending',
+        ''
+    );
+}
+
 function prayer_settings_menu() {
 	add_submenu_page('edit.php?post_type=prayer', 'Settings', 'Settings', 'edit_posts', 'prayer_settings', 'prayer_settings_cb');
 }
@@ -116,5 +127,6 @@ function prayer_feeds_cb() {
   	<?php
 }
 
-add_action('admin_menu' , 'prayer_feeds_menu', 0 );
-add_action('admin_menu' , 'prayer_settings_menu', 0 );
+add_action( 'admin_menu', 'prayer_pending_menu', 0 );
+add_action( 'admin_menu' , 'prayer_feeds_menu', 0 );
+add_action( 'admin_menu' , 'prayer_settings_menu', 0 );
