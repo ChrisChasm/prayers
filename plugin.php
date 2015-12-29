@@ -115,13 +115,7 @@ function echo_prayer_form_submission() {
 
 		// calculate coordinates
 		$location = echo_parse_location($post['prayer_location']);
-
-		add_post_meta( $prayer_id, 'meta-prayer-location-latitude', $location['lat'] );
-		add_post_meta( $prayer_id, 'meta-prayer-location-longitude', $location['long'] );
-		add_post_meta( $prayer_id, 'meta-prayer-location-formatted-address', $location['formatted_address'] );
-		add_post_meta( $prayer_id, 'meta-prayer-location-country-long', $location['country_long'] );
-		add_post_meta( $prayer_id, 'meta-prayer-location-country-short', $location['country_short'] );
-
+		echo_save_location_meta( $prayer_id, $location );
 	}
 
 }

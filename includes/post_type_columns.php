@@ -22,18 +22,20 @@ function echo_prayers_columns_head( $columns ) {
 	return $columns;
 }
 function echo_prayers_columns( $column_name, $post_ID ) {
+	$post_meta = get_post_meta( $post_ID );
+
 	if ($column_name == 'prayer_count' ) {
-		$prayer_count = get_post_meta( $post_ID, 'meta-prayer-count',  1 );
+		$prayer_count = $post_meta['meta-prayer-count'][0];
 		echo $prayer_count;
 	}
 	if ($column_name == 'prayer_location' ) {
-		$prayer_location = get_post_meta( $post_ID, 'meta-prayer-location',  1 );
-		$prayer_country = get_post_meta( $post_ID, 'meta-prayer-location-country-long', 1);
+		$prayer_location = $post_meta['meta-prayer-location'][0];
+		$prayer_country = $post_meta['meta-prayer-location-country-long'][0];
 		echo $prayer_location . "<br />" . $prayer_country;
 	}
 	if ($column_name == 'prayer_submitter' ) {
-		$prayer_name = get_post_meta( $post_ID, 'meta-prayer-name',  1 );
-		$prayer_email = get_post_meta( $post_ID, 'meta-prayer-email',  1 );
+		$prayer_name = $post_meta['meta-prayer-name'][0];
+		$prayer_email = $post_meta['meta-prayer-email'][0];
 		?>
 			<div class="echo-admin echo-submitter">
 				<div class="avatar">
@@ -46,8 +48,8 @@ function echo_prayers_columns( $column_name, $post_ID ) {
 		<?php
 	}
 	if ($column_name == 'prayer_coordinates') {
-		$lat = get_post_meta( $post_ID, 'meta-prayer-location-latitude', 1);
-		$long = get_post_meta( $post_ID, 'meta-prayer-location-longitude', 1);
+		$lat = $post_meta['meta-prayer-location-latitude'][0];
+		$long = $post_meta['meta-prayer-location-longitude'][0];
 
 		if ( ! empty($lat) && ! empty($long) ) {
 			echo $lat . "<br />" . $long . "<br />";

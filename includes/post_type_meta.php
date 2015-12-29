@@ -85,16 +85,19 @@ function prayer_answered_cb( $post ) {
 	</p>
 
 	<?php
-	$latitude = $prayer_stored_meta['meta-prayer-location-latitude'][0];
-	$longitude = $prayer_stored_meta['meta-prayer-location-longitude'][0];
-	$formatted = $prayer_stored_meta['meta-prayer-location-formatted-address'][0];
-	$long = $prayer_stored_meta['meta-prayer-location-country-long'][0];
-	$short = $prayer_stored_meta['meta-prayer-location-country-short'][0];	
+
+	if ( ! empty($location) ):
+
+		$latitude = $prayer_stored_meta['meta-prayer-location-latitude'][0];
+		$longitude = $prayer_stored_meta['meta-prayer-location-longitude'][0];
+		$formatted = $prayer_stored_meta['meta-prayer-location-formatted-address'][0];
+		$long = $prayer_stored_meta['meta-prayer-location-country-long'][0];
+		$short = $prayer_stored_meta['meta-prayer-location-country-short'][0];	
 
 	?>
 
 	<div>
-		<ul>
+		<ul class="echo-geocode">
 			<li>Latitude: <?php echo $latitude; ?></li>
 			<li>Longitude: <?php echo $longitude; ?></li>
 			<li>Address: <?php echo $formatted; ?></li>
@@ -104,6 +107,7 @@ function prayer_answered_cb( $post ) {
 
 
 	<?php
+	endif;
     
 }
 
@@ -143,6 +147,10 @@ function prayer_meta_save( $post_id ) {
     // Checks for input and sanitizes/saves if needed
     if( isset( $_POST[ 'meta-prayer-location' ] ) ) {
     	update_post_meta( $post_id, 'meta-prayer-location', sanitize_text_field( $_POST[ 'meta-prayer-location' ] ) );
+
+    	// get geocoded data from location
+    	$location = echo_parse_location( sanitize_text_field( $_POST[ 'meta-prayer-location' ] ) );
+    	echo_save_location_meta( $post_id, $location );
     }
 
     // Checks for input and sanitizes/saves if needed
@@ -150,14 +158,5 @@ function prayer_meta_save( $post_id ) {
     	update_post_meta( $post_id, 'meta-prayer-count', sanitize_text_field( $_POST[ 'meta-prayer-count' ] ) );
     }
 
-     // Checks for input and sanitizes/saves if needed
-    if( isset( $_POST[ 'meta-prayer-location-latitude' ] ) ) {
-    	update_post_meta( $post_id, 'meta-prayer-location-latitude', sanitize_text_field( $_POST[ 'meta-prayer-location-latitude' ] ) );
-    }
-
-     // Checks for input and sanitizes/saves if needed
-    if( isset( $_POST[ 'meta-prayer-location-longitude' ] ) ) {
-    	update_post_meta( $post_id, 'meta-prayer-location-longitude', sanitize_text_field( $_POST[ 'meta-prayer-location-longitude' ] ) );
-    }
 }
 add_action( 'save_post', 'prayer_meta_save' );
