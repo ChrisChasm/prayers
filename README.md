@@ -1,6 +1,6 @@
 # Echo Prayer Wordpress Plugin
 
-```Contributors: kalebheitzman<br />
+```Contributors: kalebheitzman \r\n
 Tags: prayer, api
 Requires at least: 4.0.0
 Tested up to: 4.0.0
