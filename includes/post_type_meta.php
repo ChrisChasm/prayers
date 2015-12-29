@@ -2,7 +2,7 @@
 
 function add_prayer_metaboxes() {
 	add_meta_box('prayer_answered', 
-		__('Prayer Meta', 'prayer'), 'prayer_answered_cb', 'prayer', 'side', 'high');
+		__('Prayer Information', 'prayer'), 'prayer_answered_cb', 'prayer', 'side', 'high');
 }
 
 add_action( 'add_meta_boxes', 'add_prayer_metaboxes', 0 );
@@ -14,32 +14,51 @@ function prayer_answered_cb( $post ) {
 
 	// answered value
 	$answered = $prayer_stored_meta['meta-prayer-answered'][0];
+
 	if (empty($answered)) {
-		$answered = 'no';
+		$answered = false;
 	}
-	$answeredTrue = $answered == 'yes' ? 'checked' : '';
-	$answeredFalse = $answered == 'no' ? 'checked' : '';
+	$answeredTrue = $answered == true ? 'checked' : '';
+	$answeredFalse = $answered == false ? 'checked' : '';
 
 	?>
 	<p>
 		<label for="meta-prayer-answered"><?php echo __('Answered?', 'prayer') ?> </label>
-		<label><input type="radio" name="meta-prayer-answered" value="no" <?php echo $answeredFalse; ?> /><span>No </span></label>
-		<label><input type="radio" name="meta-prayer-answered" value="yes" <?php echo $answeredTrue; ?> /><span>Yes </span></label>
+		<label><input type="radio" name="meta-prayer-answered" value="0" <?php echo $answeredFalse; ?> /><span>No </span></label>
+		<label><input type="radio" name="meta-prayer-answered" value="1" <?php echo $answeredTrue; ?> /><span>Yes </span></label>
 	</p><?php
 
 	// answered value
 	$anonymous = $prayer_stored_meta['meta-prayer-anonymous'][0];
 	if (empty($anonymous)) {
-		$anonymous = 'no';
+		$anonymous = false;
 	}
-	$anonymousTrue = $anonymous == 'yes' ? 'checked' : '';
-	$anonymousFalse = $anonymous == 'no' ? 'checked' : '';
+	$anonymousTrue = $anonymous == true ? 'checked' : '';
+	$anonymousFalse = $anonymous == false ? 'checked' : '';
 
 	?>
 	<p>
 		<label for="meta-prayer-anonymous"><?php echo __('Anonymous?', 'prayer') ?></label>
-		<label><input type="radio" name="meta-prayer-anonymous" value="no" <?php echo $anonymousFalse; ?> /><span>No </span></label>
-		<label><input type="radio" name="meta-prayer-anonymous" value="yes" <?php echo $anonymousTrue; ?> /><span>Yes </span></label>
+		<label><input type="radio" name="meta-prayer-anonymous" value="0" <?php echo $anonymousFalse; ?> /><span>No </span></label>
+		<label><input type="radio" name="meta-prayer-anonymous" value="1" <?php echo $anonymousTrue; ?> /><span>Yes </span></label>
+	</p>
+
+	<?php
+	$name = $prayer_stored_meta['meta-prayer-name'][0];
+	?>
+
+	<p>
+		<label for="meta-prayer-name"><?php echo __('Name', 'prayer') ?></label>
+		<input type="text" name="meta-prayer-name" value="<?php echo $name; ?>" />
+	</p>
+
+	<?php
+	$email = $prayer_stored_meta['meta-prayer-email'][0];
+	?>
+
+	<p>
+		<label for="meta-prayer-email"><?php echo __('Email', 'prayer') ?></label>
+		<input type="text" name="meta-prayer-email" value="<?php echo $email; ?>" />
 	</p>
 
 	<?php
@@ -50,6 +69,7 @@ function prayer_answered_cb( $post ) {
 		<label for="meta-prayer-location"><?php echo __('Location', 'prayer') ?></label>
 		<input type="text" name="meta-prayer-location" value="<?php echo $location; ?>" />
 	</p>
+
 	<?php
     
 }
@@ -75,6 +95,16 @@ function prayer_meta_save( $post_id ) {
     // Checks for input and sanitizes/saves if needed
     if( isset( $_POST[ 'meta-prayer-anonymous' ] ) ) {
         update_post_meta( $post_id, 'meta-prayer-anonymous', sanitize_text_field( $_POST[ 'meta-prayer-anonymous' ] ) );
+    }
+
+    // Checks for input and sanitizes/saves if needed
+    if( isset( $_POST[ 'meta-prayer-name' ] ) ) {
+    	update_post_meta( $post_id, 'meta-prayer-name', sanitize_text_field( $_POST[ 'meta-prayer-name' ] ) );
+    }
+
+    // Checks for input and sanitizes/saves if needed
+    if( isset( $_POST[ 'meta-prayer-email' ] ) ) {
+    	update_post_meta( $post_id, 'meta-prayer-email', sanitize_text_field( $_POST[ 'meta-prayer-email' ] ) );
     }
 
     // Checks for input and sanitizes/saves if needed

@@ -21,6 +21,9 @@ define( 'ECHO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 require ECHO_PLUGIN_DIR . 'includes/class-gamajo-template-loader.php';
 require ECHO_PLUGIN_DIR . 'includes/class-echo-template-loader.php';
 
+// load template helpers
+require ECHO_PLUGIN_DIR . 'includes/template-helpers.php';
+
 // load prayer post type
 require ECHO_PLUGIN_DIR . 'includes/post_type_prayer.php';
 // Hook into the 'init' action
@@ -62,6 +65,23 @@ function prayer_submission() {
 
 		$post = $_POST;
 
+		$prayer_category = term_exists( $post['prayer_category'], 'prayer_category', 0 );
+		$prayer_location = term_exists( $post['prayer_location'], 'prayer_location', 0 );
+
+		if ( ! $prayer_category ) {
+			$prayer_category = wp_insert_term( $prayer_category, 'prayer_category', array( 'parent' => 0 ) );
+		}
+
+		if ( ! $prayer_location ) {
+			$prayer_location = wp_insert_term( $prayer_location, 'prayer_location', array( 'parent' => 0 ) );
+		}
+
+		echo "<pre>";
+		var_dump($post);
+		var_dump($prayer_category);
+		var_dump($prayer_location);
+		echo "</pre>";
+
 		$prayer = array(
 			'comment_status' => 'closed',
 			'ping_status' => 'closed',
@@ -70,12 +90,16 @@ function prayer_submission() {
 			'post_content' => $post['prayer_content'],
 			'post_status' => 'pending',
 			'post_type' => 'prayer',
-			'tax_input' => [ 'prayer_category' => implode(',', $post['prayer_category']), 'prayer_location' => implode(',', $post['prayer_location']) ]
+			'tax_input' => [ 'prayer_category' => $prayer_category['term_taxonomy_id'], 'prayer_location' => $prayer_location['term_taxonomy_id'] ],
 		);
-
 
 		// create the pending prayer request
 		$prayer_id = wp_insert_post($prayer);
+
+		add_post_meta( $prayer_id, 'meta-prayer-anonymous', $post['prayer_anonymous'] );
+		add_post_meta( $prayer_id, 'meta-prayer-answered', 0);
+		add_post_meta( $prayer_id, 'meta-prayer-name', $post['prayer_name'] );
+		add_post_meta( $prayer_id, 'meta-prayer-email', $post['prayer_email'] );
 	}
 
 }
