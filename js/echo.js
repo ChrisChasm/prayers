@@ -1,6 +1,22 @@
 (function($) {
 	$(document).ready(function() {
 
+		var db = localStorage.getItem('echo');
+		var items = JSON.parse(db);
+
+		// disable prayer button for prayers already clicked
+		$('form.echo-prayed').each(function( index, value ) {
+			// get items from the database 
+			var prayer_id = $(this).attr('data-prayer-id');
+			
+			// request has already been prayed for
+			if (items.prayers.indexOf(prayer_id) > -1) {						
+				$(this).addClass('prayed-for');
+				$('input[type="submit"]', this).prop('disabled', true);
+				$('input[type="submit"]', this).prop('value', 'Prayed');
+			}
+		});
+
 		// record prayed for request
 		$('form.echo-prayed').submit( function( event ) {
 
@@ -8,13 +24,18 @@
 			var formData = $form.serialize();
 			var prayer_id = $form.attr('data-prayer-id');
 
+			// update the prayer count
+			var count = parseInt( $('span.echo-prayer-count.prayer-' + prayer_id).text(), 10 );				
+
+			// update visual display
+			$('span.echo-prayer-count.prayer-' + prayer_id).text(count+1);
+			$form.addClass('prayed-for');
+			$('input[type="submit"]', $form).prop('disabled', true);
+			$('input[type="submit"]', $form).prop('value', 'Prayed');
+
 			// post the form
 			$.post('#', formData, function(data) {
-				// update the prayer count
-				var count = parseInt( $('span.echo-prayer-count.prayer-' + prayer_id).text(), 10 );				
-				// update visual display
-				$('span.echo-prayer-count.prayer-' + prayer_id).text(count+1);
-				
+							
 				// store this click in local storage to prevent abuse
 				var items = localStorage.getItem('echo');
 

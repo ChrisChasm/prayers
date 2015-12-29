@@ -47,6 +47,15 @@ span.echo-pray-button:hover input[type="submit"] {
 	border-right: 1px solid #36DA99;
 
 }
+span.echo-pray-button form.prayed-for input[type="submit"] {
+	background: #36DA99;
+	color: #fff;
+	border-top: 1px solid #36DA99;
+	border-bottom: 1px solid #36DA99;
+	border-right: 1px solid #36DA99;
+	cursor: default;
+}
+
 span.echo-prayer-count {
 	background: #efefef;
 	padding: 0 0.5em;
