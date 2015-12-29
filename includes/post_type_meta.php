@@ -71,6 +71,15 @@ function prayer_answered_cb( $post ) {
 	</p>
 
 	<?php
+	$count = $prayer_stored_meta['meta-prayer-count'][0];
+	?>
+
+	<p>
+		<label for="meta-prayer-count"><?php echo __('Prayer count', 'prayer') ?></label>
+		<input type="text" name="meta-prayer-count" value="<?php echo $count; ?>" />
+	</p>
+
+	<?php
     
 }
 
@@ -110,6 +119,11 @@ function prayer_meta_save( $post_id ) {
     // Checks for input and sanitizes/saves if needed
     if( isset( $_POST[ 'meta-prayer-location' ] ) ) {
     	update_post_meta( $post_id, 'meta-prayer-location', sanitize_text_field( $_POST[ 'meta-prayer-location' ] ) );
+    }
+
+    // Checks for input and sanitizes/saves if needed
+    if( isset( $_POST[ 'meta-prayer-count' ] ) ) {
+    	update_post_meta( $post_id, 'meta-prayer-count', sanitize_text_field( $_POST[ 'meta-prayer-count' ] ) );
     }
 
 }

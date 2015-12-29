@@ -32,7 +32,7 @@
 				<div class="echo prayer-meta">
 					<ul>
 
-						<li><?php echo get_echo_prayed_button() ?></li>
+						<li><?php echo get_echo_prayed_button( $id ); ?></li>
 						<?php if ( $prayer_answered ): ?>
 							<li class="echo prayer-answered"><span class="echo prayer-answered">Answered</span></li>
 						<?php endif; ?>
@@ -41,6 +41,7 @@
 						<?php endif; ?>
 						<li><?php echo get_echo_terms_list($id, 'prayer_category'); ?></li>
 						<li><?php echo get_echo_terms_list($id, 'prayer_location'); ?></li>
+						<li><?php echo get_echo_prayer_count($id); ?></li>
 
 					</ul>
 				</div>

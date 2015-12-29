@@ -33,9 +33,20 @@ function get_echo_terms_list( $id = 0, $taxonomy = null ) {
  *
  * Lets anonymous users record that they've prayed for this request
  */
-function get_echo_prayed_button() {
+function get_echo_prayed_button( $id = 0 ) {
+
+	$prayer_count = get_post_meta( $id, 'meta-prayer-count', 1);
+
+	if ( empty($prayer_count) ) {
+		$prayer_count = 0;
+	}
+
 	?>
-		<span class="echo-pray-button" data-prayer-click="<?php the_ID(); ?>"><a href="#">I Prayed</a></span>
+		<div class="echo-prayer-button" data-prayer-id="<?php the_ID(); ?>">
+			<span class="echo-prayer-count"><?php echo $prayer_count; ?></span>
+			<span class="echo-pray-button" data-prayer-click="<?php the_ID(); ?>"><a href="#">Pray</a></span>
+		</div>
+		
 	<?php
 }
 
@@ -57,4 +68,24 @@ function get_echo_prayer_name( $id = 0 ) {
 	if ( empty($prayer_name) ) { return; }
 
 	?><span class="echo-prayer-name"><?php echo $prayer_name; ?></span><?
+}
+
+// Get Prayer Count
+function get_echo_prayer_count( $id = 0 ) {
+	if ($id == 0) return 0;
+
+	$prayer_count = get_post_meta( $id, 'meta-prayer-count', 1);
+
+	if ( empty($prayer_count) ) {
+		$prayer_count = 0;
+	}
+
+	if ($prayer_count == 1) {
+		$output = __("Prayed once", "echo");
+	}
+	else {
+		$output = __("Prayed", "echo") . " " . $prayer_count . " " . __("times", "echo");		
+	}
+
+	return $output;
 }
