@@ -50,11 +50,9 @@ add_action('admin_menu' , 'prayer_settings_menu', 0 );
 
 // load prayer taxonomies
 require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_category.php';
-require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_location.php';
 require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_post_tag.php';
 add_action( 'init', 'prayer_category_taxonomy', 1 );
-add_action( 'init', 'prayer_location_taxonomy', 2 );
-add_action( 'init', 'prayer_post_tag_taxonomy', 3 );
+add_action( 'init', 'prayer_post_tag_taxonomy', 2 );
 
 // load shortcodes
 require ECHO_PLUGIN_DIR . 'includes/shortcodes.php';
