@@ -4,6 +4,7 @@
 function echo_prayers_columns_head( $defaults ) {
 	$defaults['prayer_count'] = __( 'Prayed', 'echo' );
 	$defaults['prayer_location'] = __( 'Location', 'echo' );
+	$defaults['prayer_coordinates'] = __( 'Coordinates', 'echo' );
 	$defaults['prayer_submitter'] = __( 'Submitter', 'echo' );
 	return $defaults;
 }
