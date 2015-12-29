@@ -82,6 +82,9 @@ span.echo-prayer-count {
 	display: inline-block;
 	margin-right: 0.25em;
 }
+.prayer-meta ul li.echo-taxonomy span {
+
+}
 span.echo-box {
 	background: #efefef;
 	color: #333;

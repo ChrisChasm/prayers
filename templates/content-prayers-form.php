@@ -75,6 +75,8 @@ if (count($_POST) > 0): ?>
 		$prayer_locations = get_terms($prayer_location, $args);
 		?>
 
+<?php /* Geographic Location
+
 		<p class="prayer-location inline-form-elements">
 			<label for="prayer_location">
 				<strong><?php echo __('Locations'); ?></strong>
@@ -85,7 +87,7 @@ if (count($_POST) > 0): ?>
 				</label>
 			<?php endforeach; ?>
 		</p>
-
+*/ ?>
 		<p class="prayer-anonymous inline-form-elements">
 			<label>
 				<strong><?php echo __('Would you like this prayer request to be anonymous?', 'prayer' ); ?></strong>

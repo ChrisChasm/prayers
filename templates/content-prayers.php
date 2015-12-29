@@ -50,8 +50,8 @@
 						<?php if ( ! empty( get_echo_prayer_location($id) ) ): ?>
 							<li><?php echo get_echo_prayer_location($id); ?></li>
 						<?php endif; ?>
-						<li><?php echo get_echo_terms_list($id, 'prayer_category'); ?></li>
-						<li><?php echo get_echo_terms_list($id, 'prayer_location'); ?></li>
+						<li class="echo-taxonomy"><?php echo get_echo_terms_list($id, 'prayer_category'); ?></li>
+						<li class="echo-taxonomy"><?php echo get_echo_terms_list($id, 'prayer_location'); ?></li>
 
 					</ul>
 				</div>

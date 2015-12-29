@@ -27,7 +27,7 @@ function get_echo_terms_list( $id = 0, $taxonomy = null ) {
 			$output .= '</span>';
 		}
 	}
-
+	
 	return $output;
 }
 
