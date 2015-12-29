@@ -1,13 +1,34 @@
 
 .echo-admin {}
-.echo-submitter {}
-.echo-submitter .avatar {
+.echo-location {}
+.echo-location .avatar {
 	float: left;
 	margin-right: 0.25em;
+	display: inline-block;
 }
-.echo-submitter .avatar img {
+.echo-location .avatar img {
 
 }
-.echo-submitter .details {
+.echo-location .details {
+	position: absolute;
+	margin-left: 35px;
+}
 
+th#title {
+	width: 200px;
+}
+th#prayer_location {
+  width: 320px;
+}
+th#taxonomy-prayer_category {
+	width: 100px;
+}
+th#prayer_count {
+	width: 50px;
+}
+th#prayer_answered {
+	width: 80px;
+}
+th#prayer_anonymous {
+	width: 90px;
 }
