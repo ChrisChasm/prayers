@@ -1,10 +1,20 @@
 <?php
 
 function prayer_pending_menu() {
+
+	global $wpdb;
+	$query = "SELECT COUNT(*) FROM wp_posts WHERE post_status = 'pending' AND post_type = 'prayer'";
+	$post_count = $wpdb->get_var($query);
+	$post_count_string = ' <span class="echo-update-count">' . $post_count . '</span>';
+
+	if ($post_count == 0) {
+		$post_count_string = "";
+	}
+
 	add_submenu_page(
         'edit.php?post_type=prayer',
         '',
-        'Pending',
+        'Pending' . $post_count_string,
         'edit_posts',
         'edit.php?post_type=prayer&post_status=pending',
         ''
@@ -130,3 +140,25 @@ function prayer_feeds_cb() {
 add_action( 'admin_menu', 'prayer_pending_menu', 0 );
 add_action( 'admin_menu' , 'prayer_feeds_menu', 0 );
 add_action( 'admin_menu' , 'prayer_settings_menu', 0 );
+
+/*Change menu-order*/
+
+function echo_prayer_submenu_order( $menu_ord ) {
+    global $submenu;
+
+    // Enable the next line to see all menu orders
+    // echo '<pre>'.print_r($submenu['edit.php?post_type=prayer'],true).'</pre>';
+
+    $arr = array();
+    $arr[] = $submenu['edit.php?post_type=prayer'][5]; // all prayers
+    $arr[] = $submenu['edit.php?post_type=prayer'][17]; // pending
+    $arr[] = $submenu['edit.php?post_type=prayer'][10]; // add new
+    $arr[] = $submenu['edit.php?post_type=prayer'][15]; // categoris
+    $arr[] = $submenu['edit.php?post_type=prayer'][16]; // tags
+    $arr[] = $submenu['edit.php?post_type=prayer'][18]; // feeds
+    $arr[] = $submenu['edit.php?post_type=prayer'][19]; // settings
+    $submenu['edit.php?post_type=prayer'] = $arr;
+
+    return $menu_ord;
+}
+add_filter( 'custom_menu_order', 'echo_prayer_submenu_order' );
