@@ -14,15 +14,18 @@ function get_echo_terms_list( $id = 0, $taxonomy = null ) {
 	// return a wrapped list
 	if ( $categories && ! is_wp_error( $categories ) ) {
 
-		$output = '<span class="echo echo-box category taxonomy-' . $taxonomy . '">';
+		$output = "";
 
 		$categories_list = array();
 		foreach ( $categories as $term ) {
 			$categories_list[] = $term->name;
 		} 
-		$categories_output_list = join( ", ", $categories_list);
-		$output .= $categories_output_list;
-		$output .= '</span>';
+
+		foreach ($categories_list as $category) {
+			$output .= '<span class="echo echo-box category taxonomy-' . $taxonomy . '">';
+			$output .= $category;
+			$output .= '</span>';
+		}
 	}
 
 	return $output;
