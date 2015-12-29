@@ -25,7 +25,7 @@ function prayer_post_tag_taxonomy() {
 		'hierarchical'               => false,
 		'public'                     => true,
 		'show_ui'                    => true,
-		'show_admin_column'          => true,
+		'show_admin_column'          => false,
 		'show_in_nav_menus'          => false,
 		'show_tagcloud'              => true,
 		'update_count_callback'      => 'prayer_post_tag_cb',	);

@@ -63,6 +63,10 @@ add_shortcode( 'prayers', 'prayers_shortcode' );
 // load post meta
 require ECHO_PLUGIN_DIR . 'includes/post_type_meta.php';
 
+// load custom prayer post columns
+require ECHO_PLUGIN_DIR . 'includes/post_type_columns.php';
+
+
 // prayer form submission
 function echo_prayer_form_submission() {
 
