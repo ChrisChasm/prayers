@@ -43,8 +43,15 @@ function get_echo_prayed_button( $id = 0 ) {
 
 	?>
 		<div class="echo-prayer-button" data-prayer-id="<?php the_ID(); ?>">
-			<span class="echo-prayer-count"><?php echo $prayer_count; ?></span>
-			<span class="echo-pray-button" data-prayer-click="<?php the_ID(); ?>"><a href="/">Pray</a></span>
+			<span class="echo-prayer-count prayer-<?php the_ID(); ?>"><?php echo $prayer_count; ?></span>
+			<span class="echo-pray-button">
+				<form class="echo-prayed" action="" method="post" data-prayer-id="<?php the_ID(); ?>">
+					<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>	
+					<input type="hidden" name="prayer_id" value="<?php the_ID(); ?>" />
+					<input type="submit" value="Pray" />
+					<input type="hidden" name="prayer-click" value="1" />
+				</form>
+			</span>
 		</div>
 
 	<?php
@@ -88,4 +95,12 @@ function get_echo_prayer_count( $id = 0 ) {
 	}
 
 	return $output;
+}
+
+// Get Avatar
+function get_echo_avatar( $id = 0, $size = 26 ) {
+	if ($id == 0) return;
+
+	$email = get_post_meta( $id, 'meta-prayer-email', 1);
+	return get_avatar( $email, $size );
 }

@@ -64,7 +64,7 @@ add_shortcode( 'prayers', 'prayers_shortcode' );
 require ECHO_PLUGIN_DIR . 'includes/post_type_meta.php';
 
 // prayer form submission
-function prayer_submission() {
+function echo_prayer_form_submission() {
 
 	if ( isset( $_POST['prayer-submission']) && '1' == $_POST['prayer-submission']) {
 		// check for a valid nonce
@@ -87,12 +87,6 @@ function prayer_submission() {
 			$prayer_location = wp_insert_term( $prayer_location, 'prayer_location', array( 'parent' => 0 ) );
 		}
 
-		echo "<pre>";
-		var_dump($post);
-		var_dump($prayer_category);
-		var_dump($prayer_location);
-		echo "</pre>";
-
 		$prayer = array(
 			'comment_status' => 'closed',
 			'ping_status' => 'closed',
@@ -114,5 +108,30 @@ function prayer_submission() {
 	}
 
 }
+add_action( 'init', 'echo_prayer_form_submission' );
 
-add_action( 'init', 'prayer_submission' );
+// update prayer count
+function echo_prayed_click_submit() {
+
+	if ( isset( $_POST['prayer-click']) && '1' == $_POST['prayer-click']) {
+		// check for a valid nonce
+		$is_valid_nonce = ( isset( $_POST[ 'prayer_nonce' ] ) && wp_verify_nonce( $_POST[ 'prayer_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false'; 
+	    // Exits script depending on save status
+	    if ( !$is_valid_nonce ) {
+	        return;
+	    }
+
+		$post = $_POST;
+
+		$count = get_post_meta( $post['prayer_id'], 'meta-prayer-count', 1 );
+		if ( empty($count) ) {
+			$count = 0;
+		}
+
+		$count++;
+
+		update_post_meta( $post['prayer_id'], 'meta-prayer-count', $count );
+
+	}
+}
+add_action( 'init', 'echo_prayed_click_submit');

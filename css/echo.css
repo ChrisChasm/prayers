@@ -22,26 +22,30 @@ div.echo-prayer-button {
 	display: inline-block;
 }
 div.echo-prayer-button span,
-div.echo-prayer-button a {
+div.echo-prayer-button input[type="submit"] {
 	line-height: 1.65em;
 	display: inline-block;
 }
-span.echo-pray-button a {
-	border-top: 1px solid #efefef;
-	border-bottom: 1px solid #efefef;
-	border-right: 1px solid #efefef;
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 4px;
-	padding: 0 0.65em;
-	color: #333;
-	margin-left: -5px;
-}
-span.echo-pray-button:hover a {
-	background: #2582EA;
-	color: #fff;
+span.echo-pray-button input[type="submit"] {
 	border-top: 1px solid #2582EA;
 	border-bottom: 1px solid #2582EA;
 	border-right: 1px solid #2582EA;
+	border-left: 0;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	padding: 0 0.65em;
+	color: #fff;
+	background: #2582EA;
+	margin-left: -5px;
+	outline: none;
+}
+span.echo-pray-button:hover input[type="submit"] {
+	background: #36DA99;
+	color: #fff;
+	border-top: 1px solid #36DA99;
+	border-bottom: 1px solid #36DA99;
+	border-right: 1px solid #36DA99;
+
 }
 span.echo-prayer-count {
 	background: #efefef;
