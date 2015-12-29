@@ -37,13 +37,13 @@
 				</div>
 				<div class="meta">
 					<ul>
+					
 						<?php if ( $prayer_answered ): ?>
 							<li class="echo prayer-answered"><span class="echo prayer-answered">Answered</span></li>
 						<?php endif; ?>
 						<?php if ( ! empty( $prayer_location ) ): ?>
 							<li class="echo prayer-location"><?php echo $prayer_location; ?></li>
 						<?php endif; ?>
-						
 						<li><?php echo get_echo_terms_list($id, 'prayer_category'); ?></li>
 						<li><?php echo get_echo_terms_list($id, 'prayer_location'); ?></li>
 						<li><?php echo get_echo_prayed_button() ?></li>

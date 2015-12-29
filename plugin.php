@@ -24,6 +24,18 @@ require ECHO_PLUGIN_DIR . 'includes/class-echo-template-loader.php';
 // load template helpers
 require ECHO_PLUGIN_DIR . 'includes/template-helpers.php';
 
+// enqueue styles and scripts
+function echo_register_styles() {
+	
+	wp_register_style( 'echo-css', plugins_url( '/css/echo.css', __FILE__ ), array(), '20151228', 'all' );
+	wp_enqueue_style( 'echo-css');
+
+	wp_register_script( 'echo-js', plugins_url( '/js/echo.js', __FILE__ ), array(), '20151228', 'all' );
+	wp_enqueue_script( 'echo-js');	
+}
+add_action( 'wp_enqueue_scripts', 'echo_register_styles' );
+
+
 // load prayer post type
 require ECHO_PLUGIN_DIR . 'includes/post_type_prayer.php';
 // Hook into the 'init' action
