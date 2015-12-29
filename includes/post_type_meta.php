@@ -10,10 +10,10 @@ add_action( 'add_meta_boxes', 'add_prayer_metaboxes', 0 );
 function prayer_answered_cb( $post ) {
     // Noncename needed to verify where the data originated
 	wp_nonce_field( basename(__FILE__), 'prayer_nonce' );
-	$prayer_stored_meta = get_post_meta( $post->ID );
+	$post_meta = get_post_meta( $post->ID );
 
 	// answered value
-	$anonymous = $prayer_stored_meta['meta-prayer-anonymous'][0];
+	$anonymous = $post_meta['meta-prayer-anonymous'][0];
 	if (empty($anonymous)) {
 		$anonymous = false;
 	}
@@ -29,7 +29,7 @@ function prayer_answered_cb( $post ) {
 
 	<?php 
 	// answered value
-	$answered = $prayer_stored_meta['meta-prayer-answered'][0];
+	$answered = $post_meta['meta-prayer-answered'][0];
 
 	if (empty($answered)) {
 		$answered = false;
@@ -45,7 +45,7 @@ function prayer_answered_cb( $post ) {
 	</p>
 
 	<?php
-	$count = $prayer_stored_meta['meta-prayer-count'][0];
+	$count = $post_meta['meta-prayer-count'][0];
 	?>
 
 	<p>
@@ -54,7 +54,7 @@ function prayer_answered_cb( $post ) {
 	</p>
 
 	<?php
-	$name = $prayer_stored_meta['meta-prayer-name'][0];
+	$name = $post_meta['meta-prayer-name'][0];
 	?>
 
 	<p><strong>Contact Info</strong></p>
@@ -65,7 +65,7 @@ function prayer_answered_cb( $post ) {
 	</p>
 
 	<?php
-	$email = $prayer_stored_meta['meta-prayer-email'][0];
+	$email = $post_meta['meta-prayer-email'][0];
 	?>
 
 	<p>
@@ -76,7 +76,7 @@ function prayer_answered_cb( $post ) {
 	<p><strong>Location Info</strong></p>
 
 	<?php
-	$location = $prayer_stored_meta['meta-prayer-location'][0];
+	$location = $post_meta['meta-prayer-location'][0];
 	?>
 
 	<p>
@@ -88,11 +88,11 @@ function prayer_answered_cb( $post ) {
 
 	if ( ! empty($location) ):
 
-		$latitude = $prayer_stored_meta['meta-prayer-location-latitude'][0];
-		$longitude = $prayer_stored_meta['meta-prayer-location-longitude'][0];
-		$formatted = $prayer_stored_meta['meta-prayer-location-formatted-address'][0];
-		$long = $prayer_stored_meta['meta-prayer-location-country-long'][0];
-		$short = $prayer_stored_meta['meta-prayer-location-country-short'][0];	
+		$latitude = $post_meta['meta-prayer-location-latitude'][0];
+		$longitude = $post_meta['meta-prayer-location-longitude'][0];
+		$formatted = $post_meta['meta-prayer-location-formatted-address'][0];
+		$long = $post_meta['meta-prayer-location-country-long'][0];
+		$short = $post_meta['meta-prayer-location-country-short'][0];	
 
 	?>
 
