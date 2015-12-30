@@ -164,8 +164,9 @@ add_filter( 'custom_menu_order', 'echo_prayer_submenu_order' );
  * @since 0.1.0
  */
 require ECHO_PLUGIN_DIR . 'includes/shortcodes.php';
-add_shortcode( 'prayers', 'prayers_shortcode' );
-add_shortcode( 'prayers_form', 'prayers_form_shortcode' );
+add_shortcode( 'echo_prayers', 'echo_prayers_shortcode' );
+add_shortcode( 'echo_prayers_form', 'echo_prayers_form_shortcode' );
+add_shortcode( 'echo_prayers_map', 'echo_prayers_map_shortcode' );
 
 /**
  * Admin Prayer Listing Page Columns

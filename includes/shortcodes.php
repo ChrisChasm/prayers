@@ -30,7 +30,7 @@
  * @return html
  * @since  0.1.0 
  */
-function prayers_shortcode( $atts ) {
+function echo_prayers_shortcode( $atts ) {
 	// set shortcode atts to pass to the template
 	$shortcode_atts = shortcode_atts(
 		array(
@@ -44,7 +44,7 @@ function prayers_shortcode( $atts ) {
 	$templates = new Echo_Template_Loader;
 	// start a buffer to capture output
 	ob_start();
-	$templates->get_template_part( 'content', 'prayers' );
+	$templates->get_template_part( 'content', 'prayers-listing' );
 	return ob_get_clean();
 }
 
@@ -61,7 +61,7 @@ function prayers_shortcode( $atts ) {
  * @return html
  * @since  0.1.0 
  */
-function prayers_form_shortcode( $atts ) {
+function echo_prayers_form_shortcode( $atts ) {
 	// Attributes
 	extract( shortcode_atts(
 		array(
@@ -73,5 +73,32 @@ function prayers_form_shortcode( $atts ) {
 	// start a buffer to capture output
 	ob_start();
 	$templates->get_template_part( 'content', 'prayers-form' );
+	return ob_get_clean();
+}
+
+/**
+ * Prayer Form Shortcode
+ *
+ * Provides a frontend prayer map that displays where prayer requests are
+ * coming from. It currently accepts the following custom attributes:
+ *
+ * - None at this time
+ * 
+ * @param  array Custom Atafsdftributes
+ * @return html
+ * @since  0.1.0 
+ */
+function echo_prayers_map_shortcode( $atts ) {
+	// Attributes
+	extract( shortcode_atts(
+		array(
+
+		), $atts)
+	);
+	// load templates
+	$templates = new Echo_Template_Loader;
+	// start a buffer to capture output
+	ob_start();
+	$templates->get_template_part( 'content', 'prayers-map' );
 	return ob_get_clean();
 }
