@@ -1,6 +1,21 @@
 <?php
+/**
+ * Prayer Categories
+ *
+ * Generated with generatewp.com
+ * 
+ * @package   Echo
+ * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
+ * @link      https://github.com/kalebheitzman/echo
+ * @copyright 2015 Kaleb Heitzman
+ * @license   GPL-2.0+
+ * @version   0.1.0
+ */
 
-// Register Custom Taxonomy
+/**
+ * Registers Prayer Category
+ * @return hook
+ */
 function prayer_category_taxonomy() {
 
 	$labels = array(

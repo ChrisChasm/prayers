@@ -1,25 +1,53 @@
 <?php
+/**
+ * Build Meta Boxes
+ *
+ * Build the metabox used for the Prayer edit page. This adds options for 
+ * storing name, email, and location, as well as other metadata. This is also 
+ * where the meta save process is found. It's straightforward other than a
+ * call to process location data using the echo_save_meta_location plugin 
+ * helper.
+ * 
+ * @package   Echo
+ * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
+ * @link      https://github.com/kalebheitzman/echo
+ * @copyright 2015 Kaleb Heitzman
+ * @license   GPL-2.0+
+ * @version   0.1.0
+ */
 
+/**
+ * Build Prayer Meta Box
+ * @since  0.1.0
+ */
 function add_prayer_metaboxes() {
-	add_meta_box('prayer_answered', 
-		__('Prayer Meta', 'prayer'), 'prayer_answered_cb', 'prayer', 'side', 'high');
+	add_meta_box(
+		'prayer_answered', 
+		__('Prayer Meta', 'prayer'), 
+		'prayer_answered_cb', 
+		'prayer', 
+		'side', 
+		'high');
 }
 
-add_action( 'add_meta_boxes', 'add_prayer_metaboxes', 0 );
-
+/**
+ * HTML Output Callback
+ * @param  object Post object
+ * @return html
+ * @since 0.1.0
+ */
 function prayer_answered_cb( $post ) {
     // Noncename needed to verify where the data originated
 	wp_nonce_field( basename(__FILE__), 'prayer_nonce' );
 	$post_meta = get_post_meta( $post->ID );
-
 	// answered value
 	$anonymous = $post_meta['meta-prayer-anonymous'][0];
 	if (empty($anonymous)) {
 		$anonymous = false;
 	}
+	// build the anonymouse radio buttons
 	$anonymousTrue = $anonymous == true ? 'checked' : '';
 	$anonymousFalse = $anonymous == false ? 'checked' : '';
-
 	?>
 	<p>
 		<label for="meta-prayer-anonymous"><?php echo __('Anonymous?', 'prayer') ?></label>
@@ -27,8 +55,7 @@ function prayer_answered_cb( $post ) {
 		<label><input type="radio" name="meta-prayer-anonymous" value="1" <?php echo $anonymousTrue; ?> /><span>Yes </span></label>
 	</p>
 
-	<?php 
-	// answered value
+	<?php // build the answered radio buttons
 	$answered = $post_meta['meta-prayer-answered'][0];
 
 	if (empty($answered)) {
@@ -44,7 +71,7 @@ function prayer_answered_cb( $post ) {
 		<label><input type="radio" name="meta-prayer-answered" value="1" <?php echo $answeredTrue; ?> /><span>Yes </span></label>
 	</p>
 
-	<?php
+	<?php // build the prayer count input
 	$count = $post_meta['meta-prayer-count'][0];
 	?>
 
@@ -53,7 +80,7 @@ function prayer_answered_cb( $post ) {
 		<input type="text" name="meta-prayer-count" value="<?php echo $count; ?>" />
 	</p>
 
-	<?php
+	<?php // build the submitter name input
 	$name = $post_meta['meta-prayer-name'][0];
 	?>
 
@@ -64,7 +91,7 @@ function prayer_answered_cb( $post ) {
 		<input type="text" name="meta-prayer-name" value="<?php echo $name; ?>" />
 	</p>
 
-	<?php
+	<?php // build the email input
 	$email = $post_meta['meta-prayer-email'][0];
 	?>
 
@@ -75,7 +102,7 @@ function prayer_answered_cb( $post ) {
 
 	<p><strong>Location Info</strong></p>
 
-	<?php
+	<?php // build the location output
 	$location = $post_meta['meta-prayer-location'][0];
 	?>
 
@@ -84,8 +111,7 @@ function prayer_answered_cb( $post ) {
 		<input type="text" name="meta-prayer-location" value="<?php echo $location; ?>" />
 	</p>
 
-	<?php
-
+	<?php // if location is set, build the geocoded data and display it
 	if ( ! empty($location) ):
 
 		$latitude = $post_meta['meta-prayer-location-latitude'][0];
@@ -111,8 +137,13 @@ function prayer_answered_cb( $post ) {
     
 }
 
-// save the custom meta input
-function prayer_meta_save( $post_id ) {
+/**
+ * Save the meta information
+ * @param  integer Post ID
+ * @since  0.1.0
+ */
+function prayer_meta_save( $post_id = 0 ) {
+	if ( $post_id == 0 ) return;
 
 	// Checks save status
     $is_autosave = wp_is_post_autosave( $post_id );
@@ -159,4 +190,3 @@ function prayer_meta_save( $post_id ) {
     }
 
 }
-add_action( 'save_post', 'prayer_meta_save' );

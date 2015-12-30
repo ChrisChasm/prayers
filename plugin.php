@@ -1,21 +1,40 @@
 <?php
-
 /**
-* Plugin Name: Echo Prayer App
-* Plugin URI: http://github.com/kalebheitzman/echo
-* Description: Lets an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume and requires the <a href="https://wordpress.org/plugins/rest-api/">WP REST API</a> be installed and activated first.
-* Version: 1.0
-* Author: Kaleb Heitzman
-* Author URI: http://github.com/kalebheitzman/echo
-* License: MIT
-*/
+ * Plugin Name: Echo Prayer App
+ * Plugin URI: http://github.com/kalebheitzman/echo
+ * Description: Lets an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume and requires the <a href="https://wordpress.org/plugins/rest-api/">WP REST API</a> be installed and activated first.
+ * Version: 1.0
+ * Author: Kaleb Heitzman
+ * Author URI: http://github.com/kalebheitzman/echo
+ *
+ * @package   Echo
+ * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
+ * @link      https://github.com/kalebheitzman/echo
+ * @copyright 2015 Kaleb Heitzman
+ * @license   GPL-2.0+
+ * @version   0.1.0
+ */
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
     die;
 }
 
-// requir the REST API plugin
+// Define plugin directory constant
+define( 'ECHO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+
+/**
+ * Activate Plugin
+ *
+ * Requires WP REST API plugin for JSON feeds
+ * Installs a user to associate front end prayer submissions to. If there is a
+ * cleaner way than using wp_die to require dependencies for plugins then I'll
+ * add it in.
+ *
+ * Future: find a better way to require dependencies other than wp_die.
+ *
+ * @since 0.1.0 
+ */
 function echo_plugin_activate(){
 
     // Require parent plugin
@@ -26,127 +45,153 @@ function echo_plugin_activate(){
 }
 register_activation_hook( __FILE__, 'echo_plugin_activate' );
 
-define( 'ECHO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-
-// load template loader
+/**
+ * Template Loader
+ *
+ * Allows template loading from plugin with echo_get_template_part(). This
+ * will load templates from your themes/your_theme/templates directory first 
+ * and then search for templates in plugins/echo/templates
+ *
+ * @since  0.1.0
+ */
 require ECHO_PLUGIN_DIR . 'includes/class-gamajo-template-loader.php';
 require ECHO_PLUGIN_DIR . 'includes/class-echo-template-loader.php';
 
-// load plugin helpers
-require ECHO_PLUGIN_DIR . 'includes/plugin-helpers.php';
+/**
+ * Template Helpers
+ *
+ * Provideds helpers to be used inside of template files for things like
+ * buttons, lists, etc.
+ *
+ * @since 0.1.0
+ */
+require ECHO_PLUGIN_DIR . 'includes/helpers-template.php';
 
-// load template helpers
-require ECHO_PLUGIN_DIR . 'includes/template-helpers.php';
+/**
+ * Plugin Helpers
+ *
+ * Plugin helpers that provide various helpers and functions that don't fit
+ * anywhere else in the plugin. This is where repeatable function calls
+ * (outside of shortcodes) will be stored.
+ *
+ * @since 0.1.0
+ */
+require ECHO_PLUGIN_DIR . 'includes/helpers-plugin.php';
 
-// load front styles
-require ECHO_PLUGIN_DIR . 'includes/scripts.php';
+/**
+ * Front and Admin Styles
+ *
+ * Loads frontend and admin backend styles and scripts. These are vanilla css
+ * and js files. In the future I may provide less/sass and coffeescript files
+ * as well for advanced functionality. 
+ *
+ * @since 0.1.0
+ */
+
+// load frontend styles
+require ECHO_PLUGIN_DIR . 'includes/scripts-frontend.php';
 add_action( 'wp_enqueue_scripts', 'echo_register_styles' );
 
-// load admin styles
+// load admin backend styles
 require ECHO_PLUGIN_DIR . 'includes/scripts-admin.php';
 add_action( 'admin_enqueue_scripts', 'echo_register_admin_styles' );
 
-// load prayer post type
+/**
+ * Prayer Post Type
+ *
+ * This defines the Prayer custom post type. A majority of the prayer app data
+ * will be stored under this custom post type. Taxonomy and heavy use of meta
+ * are used as well to construct the different data functionalities that this
+ * plugin provides.
+ *
+ * @since 0.1.0
+ */
 require ECHO_PLUGIN_DIR . 'includes/post_type_prayer.php';
 add_action( 'init', 'prayer_post_type', 0 );
 
-// add post type menu
-require ECHO_PLUGIN_DIR . 'includes/post_type_menu.php';
-add_action('admin_menu' , 'prayer_feeds_menu', 0 );
-add_action('admin_menu' , 'prayer_settings_menu', 0 );
+/**
+ * Prayer Post Meta
+ *
+ * Meta is heavily used (instead of custom post fields) to save various data
+ * that helps to define the context of the prayer request like subitter,
+ * location, etc. You can find the Prayer Meta Box in the editing sidebar
+ * area.
+ *
+ * @since 0.1.0
+ */
+require ECHO_PLUGIN_DIR . 'includes/post_type_meta.php';
+add_action( 'add_meta_boxes', 'add_prayer_metaboxes', 0 );
+add_action( 'save_post', 'prayer_meta_save' );
 
-// load prayer taxonomies
+/**
+ * Prayer Taxonomies
+ *
+ * Currently, a custom prayer category and tags taxonomy are associated with
+ * the prayer post type to keep other taxonomies in your WP system clean. The
+ * slugs used are prayer_category and prayer_tag. You can query off of these
+ * slugs for any custom queries that you create. 
+ *
+ * @since 0.1.0
+ */
 require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_category.php';
 require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_post_tag.php';
 add_action( 'init', 'prayer_category_taxonomy', 1 );
 add_action( 'init', 'prayer_post_tag_taxonomy', 2 );
 
-// load shortcodes
+/**
+ * Prayer Post Type Menu
+ *
+ * Creates a prayer menu to be used in the main editing sidebar menu of your 
+ * WP Install. Provides pages like settings, feeds, pending prayers, etc.
+ *
+ * Future ideas: MailChimp integration page
+ *
+ * @since  0.1.0
+ */
+require ECHO_PLUGIN_DIR . 'includes/post_type_menu.php';
+add_action( 'admin_menu', 'prayer_pending_menu', 0 );
+add_action( 'admin_menu' , 'prayer_feeds_menu', 0 );
+add_action( 'admin_menu' , 'prayer_settings_menu', 0 );
+add_filter( 'custom_menu_order', 'echo_prayer_submenu_order' );
+
+/**
+ * Shortcodes
+ *
+ * Provides various prayer related shortcodes to use in the WYSIWYG editor
+ * of wordpress. This includes shortcodes for prayer listings, a front-end
+ * submission form, and prayer locations-based map.
+ *
+ * @since 0.1.0
+ */
 require ECHO_PLUGIN_DIR . 'includes/shortcodes.php';
 add_shortcode( 'prayers', 'prayers_shortcode' );
+add_shortcode( 'prayers_form', 'prayers_form_shortcode' );
 
-// load post meta
-require ECHO_PLUGIN_DIR . 'includes/post_type_meta.php';
-
-// load custom prayer post columns
+/**
+ * Admin Prayer Listing Page Columns
+ *
+ * Manipulates the prayer listing edit page to add columns to the listing
+ * table with relevant data to the request like location, whether the prayer
+ * has been answered, etc.
+ *
+ * @since 0.1.0
+ */
 require ECHO_PLUGIN_DIR . 'includes/post_type_columns.php';
+add_filter( 'manage_prayer_posts_columns', 'echo_prayers_columns_head' );
+add_action( 'manage_prayer_posts_custom_column', 'echo_prayers_columns', 10, 2 );
 
-
-// prayer form submission
-function echo_prayer_form_submission() {
-
-	if ( isset( $_POST['prayer-submission']) && '1' == $_POST['prayer-submission']) {
-		// check for a valid nonce
-		$is_valid_nonce = ( isset( $_POST[ 'prayer_nonce' ] ) && wp_verify_nonce( $_POST[ 'prayer_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false'; 
-	    // Exits script depending on save status
-	    if ( !$is_valid_nonce ) {
-	        return;
-	    }
-
-		$post = $_POST;
-
-		$prayer_category = term_exists( $post['prayer_category'], 'prayer_category', 0 );
-		// $prayer_location = term_exists( $post['prayer_location'], 'prayer_location', 0 );
-
-		if ( ! $prayer_category ) {
-			$prayer_category = wp_insert_term( $prayer_category, 'prayer_category', array( 'parent' => 0 ) );
-		}
-
-		/*if ( ! $prayer_location ) {
-			$prayer_location = wp_insert_term( $prayer_location, 'prayer_location', array( 'parent' => 0 ) );
-		}*/
-
-		$prayer = array(
-			'comment_status' => 'closed',
-			'ping_status' => 'closed',
-			'post_author' => 0,
-			'post_title' => $post['prayer_title'],
-			'post_content' => $post['prayer_content'],
-			'post_status' => 'pending',
-			'post_type' => 'prayer',
-			'tax_input' => [ 'prayer_category' => $prayer_category['term_taxonomy_id'], 'prayer_location' => $prayer_location['term_taxonomy_id'] ],
-		);
-
-		// create the pending prayer request
-		$prayer_id = wp_insert_post($prayer);
-
-		add_post_meta( $prayer_id, 'meta-prayer-anonymous', $post['prayer_anonymous'] );
-		add_post_meta( $prayer_id, 'meta-prayer-answered', 0);
-		add_post_meta( $prayer_id, 'meta-prayer-count', 0);
-		add_post_meta( $prayer_id, 'meta-prayer-name', $post['prayer_name'] );
-		add_post_meta( $prayer_id, 'meta-prayer-email', $post['prayer_email'] );
-		add_post_meta( $prayer_id, 'meta-prayer-location', $post['prayer_location'] );
-
-		// calculate coordinates
-		$location = echo_parse_location($post['prayer_location']);
-		echo_save_location_meta( $prayer_id, $location );
-	}
-
-}
+/**
+ * Data Saving
+ *
+ * Echo lets anonymous users submit prayers from the front end. These
+ * submissions are saved to the Prayer custom post type and marked as pending
+ * review. They are also associated with an Echo user/author to help sort out
+ * frontend submissions from submissions your authorized wordpress users can
+ * make on the backend. Currently this includes a function to process frontend
+ * form submissions and saving metadata on the backend.
+ *
+ * @since 0.1.0
+ */
+require ECHO_PLUGIN_DIR . 'includes/form-processing.php';
 add_action( 'init', 'echo_prayer_form_submission' );
-
-// update prayer count
-function echo_prayed_click_submit() {
-
-	if ( isset( $_POST['prayer-click']) && '1' == $_POST['prayer-click']) {
-		// check for a valid nonce
-		$is_valid_nonce = ( isset( $_POST[ 'prayer_nonce' ] ) && wp_verify_nonce( $_POST[ 'prayer_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false'; 
-	    // Exits script depending on save status
-	    if ( !$is_valid_nonce ) {
-	        return;
-	    }
-
-		$post = $_POST;
-
-		$count = get_post_meta( $post['prayer_id'], 'meta-prayer-count', 1 );
-		if ( empty($count) ) {
-			$count = 0;
-		}
-
-		$count++;
-
-		update_post_meta( $post['prayer_id'], 'meta-prayer-count', $count );
-
-	}
-}
 add_action( 'init', 'echo_prayed_click_submit');

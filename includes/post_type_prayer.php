@@ -1,6 +1,28 @@
 <?php
+/**
+ * Prayer Post Type
+ *
+ * Build the prayer post type.
+ * This was generated from generatewp.com using the Custom Post Generator.
+ * 
+ * @package   Echo
+ * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
+ * @link      https://github.com/kalebheitzman/echo
+ * @copyright 2015 Kaleb Heitzman
+ * @license   GPL-2.0+
+ * @version   0.1.0
+ */
 
-// Register Custom Post Type
+/**
+ * Build the Prayer Post Type
+ *
+ * WP REST API functionality has been added to the post type to allow JSON
+ * feeds of prayers. This allows you easily feed your data to other 3rd party
+ * apps that use JSON for processing data.
+ * 
+ * @return hook
+ * @since  0.1.0
+ */
 function prayer_post_type() {
 
 	$labels = array(

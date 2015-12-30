@@ -1,34 +1,75 @@
 <?php
+/**
+ * Build Submenu Pages
+ *
+ * Builds submenu pages for things like settings, feed documentation, etc. 
+ * These pages will be listed under the Prayers admin links section in the 
+ * sidebar.
+ * 
+ * @package   Echo
+ * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
+ * @link      https://github.com/kalebheitzman/echo
+ * @copyright 2015 Kaleb Heitzman
+ * @license   GPL-2.0+
+ * @version   0.1.0
+ */
 
+/**
+ * Build Settings Menu
+ * @return hook
+ * @since 0.1.0 
+ */
+function prayer_settings_menu() {
+	add_submenu_page('edit.php?post_type=prayer', 'Settings', 'Settings', 'edit_posts', 'prayer_settings', 'prayer_settings_cb');
+}
+
+/**
+ * Build Feeds Menu
+ * @return hook
+ * @since  0.1.0
+ */
+function prayer_feeds_menu() {
+	add_submenu_page('edit.php?post_type=prayer', 'Feeds', 'Feeds', 'edit_posts', 'prayer_feeds', 'prayer_feeds_cb');
+}
+
+/**
+ * Add Pending Menu
+ *
+ * Builds the pending menu along with a post pending count for display in the 
+ * admin links section of the sidebar.
+ * 
+ * @return html
+ * @since  0.1.0
+ */
 function prayer_pending_menu() {
 
 	global $wpdb;
 	$query = "SELECT COUNT(*) FROM wp_posts WHERE post_status = 'pending' AND post_type = 'prayer'";
 	$post_count = $wpdb->get_var($query);
-	$post_count_string = ' <span class="echo-update-count">' . $post_count . '</span>';
 
-	if ($post_count == 0) {
-		$post_count_string = "";
+	if ($post_count != 0) {
+
+		$post_count_string = ' <span class="echo-update-count">' . $post_count . '</span>';		
+		add_submenu_page(
+	        'edit.php?post_type=prayer',
+	        '',
+	        'Pending' . $post_count_string,
+	        'edit_posts',
+	        'edit.php?post_type=prayer&post_status=pending',
+	        ''
+	    );
 	}
-
-	add_submenu_page(
-        'edit.php?post_type=prayer',
-        '',
-        'Pending' . $post_count_string,
-        'edit_posts',
-        'edit.php?post_type=prayer&post_status=pending',
-        ''
-    );
 }
 
-function prayer_settings_menu() {
-	add_submenu_page('edit.php?post_type=prayer', 'Settings', 'Settings', 'edit_posts', 'prayer_settings', 'prayer_settings_cb');
-}
-
-function prayer_feeds_menu() {
-	add_submenu_page('edit.php?post_type=prayer', 'Feeds', 'Feeds', 'edit_posts', 'prayer_feeds', 'prayer_feeds_cb');
-}
-
+/**
+ * Build the Settings Page
+ *
+ * This is a callback for prayer_settings_menu. It generates html to be
+ * displayed on this submenu page.
+ * 
+ * @return html
+ * @since  0.1.0
+ */
 function prayer_settings_cb() {
 	?>
    	<div class="wrap">
@@ -54,6 +95,15 @@ function prayer_settings_cb() {
   	<?php
 }
 
+/**
+ * Build the Feeds Page
+ *
+ * This is a callback for prayer_feeds_menu. It generates html to be
+ * displayed on this submenu page.
+ * 
+ * @return html
+ * @since  0.1.0
+ */
 function prayer_feeds_cb() {
 	?>
    	<div class="wrap">
@@ -137,12 +187,15 @@ function prayer_feeds_cb() {
   	<?php
 }
 
-add_action( 'admin_menu', 'prayer_pending_menu', 0 );
-add_action( 'admin_menu' , 'prayer_feeds_menu', 0 );
-add_action( 'admin_menu' , 'prayer_settings_menu', 0 );
-
-/*Change menu-order*/
-
+/**
+ * Reorder Submenues
+ *
+ * Reorders submenus for the prayer admin links section.
+ * 
+ * @param  array Menu Order
+ * @return array Menu Order
+ * @since  0.1.0
+ */
 function echo_prayer_submenu_order( $menu_ord ) {
     global $submenu;
 
@@ -161,4 +214,3 @@ function echo_prayer_submenu_order( $menu_ord ) {
 
     return $menu_ord;
 }
-add_filter( 'custom_menu_order', 'echo_prayer_submenu_order' );

@@ -1,11 +1,15 @@
 <?php
- 
 /**
  * Template loader for PW Sample Plugin.
  *
- * Only need to specify class properties here.
- *
+ * @package   Echo
+ * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
+ * @link      https://github.com/kalebheitzman/echo
+ * @copyright 2015 Kaleb Heitzman
+ * @license   GPL-2.0+
+ * @version   0.1.0
  */
+
 class Echo_Template_Loader extends Gamajo_Template_Loader {
  
 	/**

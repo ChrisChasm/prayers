@@ -1,12 +1,38 @@
 <?php
+/**
+ * Plugin Helpers
+ *
+ * Repeatable pieces of code to use through out the plugin.
+ * 
+ * @package   Echo
+ * @author    Kaleb Heitzman <kalebheitzman@gmail.com>
+ * @link      https://github.com/kalebheitzman/echo
+ * @copyright 2015 Kaleb Heitzman
+ * @license   GPL-2.0+
+ * @version   0.1.0
+ */
 
+/**
+ * Parse Location
+ *
+ * Takes a location string, such as Raleigh, NC and passes it to the Google
+ * geocode API. The API returns a JSON encoded response where location data
+ * like latitude, longitude, country codes, etc are extracted.
+ * 
+ * @param  string User inputted location
+ * @return array Parsed location data
+ * @since 0.1.0 
+ */
 function echo_parse_location( $location = null ) {
 	if ( is_null($location) ) return;
 	
+    // prep the address
 	$prepAddr = str_replace(' ', '+', $location);
+    // send the address to google
 	$geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
+    // decode the output
     $output= json_decode($geocode);
-
+    // build a parsed location array to return
     $parsed_location['formatted_address'] = $output->results[0]->formatted_address; // Lexington, KY, USA
     $parsed_location['lat'] = $output->results[0]->geometry->location->lat;
     $parsed_location['long'] = $output->results[0]->geometry->location->lng;
@@ -16,6 +42,16 @@ function echo_parse_location( $location = null ) {
     return $parsed_location;
 }
 
+/**
+ * Save Location Data to Meta
+ *
+ * Saves location to different meta fields. I may serialize this into one meta
+ * field for the future to save on db calls.
+ * 
+ * @param integer ID
+ * @param array Parsed location data
+ * @since 0.1.0
+ */
 function echo_save_location_meta( $id = 0, $location = null ) {
     if ( is_null($location) || $id == 0 ) return;
 
