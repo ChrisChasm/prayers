@@ -6,13 +6,13 @@
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/echo
  * @copyright 2015 Kaleb Heitzman
- * @license   GPL-2.0+
- * @version   0.1.0
+ * @license   GPL-3.0
+ * @version   0.9.0
  */
 
 /**
  * Register Frontend Styles and Scripts
- * @since  0.1.0
+ * @since  0.9.0
  */
 function echo_register_styles() {
 	// styles

@@ -10,8 +10,8 @@
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/echo
  * @copyright 2015 Kaleb Heitzman
- * @license   GPL-2.0+
- * @version   0.1.0
+ * @license   GPL-3.0
+ * @version   0.9.0
  */
 
 /**
@@ -23,7 +23,7 @@
  * 
  * @param  array Columns to generate for the admin page
  * @return array Columns to be displayed for the padmin page
- * @since  0.1.0
+ * @since  0.9.0
  */
 function echo_prayers_columns_head( $columns ) {
 	// unset the author column
@@ -54,7 +54,7 @@ function echo_prayers_columns_head( $columns ) {
  * 
  * @param  string Column Name to check agains
  * @param  integer Post ID to generate info on
- * @since  0.1.0 
+ * @since  0.9.0 
  */
 function echo_prayers_columns( $column_name, $post_ID ) {
 	// get the post meta to use in building the new column values

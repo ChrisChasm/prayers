@@ -9,8 +9,8 @@
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/echo
  * @copyright 2015 Kaleb Heitzman
- * @license   GPL-2.0+
- * @version   0.1.0
+ * @license   GPL-3.0
+ * @version   0.9.0
  */
 
 /**
@@ -18,7 +18,7 @@
  * @param  integer ID
  * @param  string Taxonomy Name
  * @return html Output for template
- * @since  0.1.0
+ * @since  0.9.0
  */
 function echo_get_terms_list( $id = 0, $taxonomy = null ) {
 	if ( is_null($taxonomy) ) { return 'Taxonomy not supplied'; }
@@ -55,7 +55,7 @@ function echo_get_terms_list( $id = 0, $taxonomy = null ) {
  * 
  * @param  integer ID
  * @return string html content
- * @since  0.1.0
+ * @since  0.9.0
  */
 function echo_get_prayed_button( $id = 0 ) {
 	if ( $id == 0 ) return;
@@ -85,7 +85,7 @@ function echo_get_prayed_button( $id = 0 ) {
  * Get Prayer Location
  * @param  integer ID
  * @return html Location string
- * @since  0.1.0
+ * @since  0.9.0
  */
 function echo_get_prayer_location( $id = 0 ) {
 	if ( $id == 0) { return; }
@@ -100,7 +100,7 @@ function echo_get_prayer_location( $id = 0 ) {
  * Get Name of Prayer Request Submitter
  * @param  integer ID
  * @return string Name of submitter
- * @since  0.1.0
+ * @since  0.9.0
  */
 function echo_get_prayer_name( $id = 0 ) {
 	if ( $id == 0) { return; }
@@ -115,7 +115,7 @@ function echo_get_prayer_name( $id = 0 ) {
  * Get Prayer Count
  * @param  integer ID
  * @return string
- * @since  0.1.0
+ * @since  0.9.0
  */
 function echo_get_prayer_count( $id = 0 ) {
 	if ($id == 0) return 0;
@@ -140,7 +140,7 @@ function echo_get_prayer_count( $id = 0 ) {
  * @param  integer ID
  * @param  integer Size of avatar
  * @return string Html string with avatar image
- * @since  0.1.0 
+ * @since  0.9.0 
  */
 function echo_get_avatar( $id = 0, $size = 26 ) {
 	if ($id == 0) return;

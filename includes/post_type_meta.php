@@ -12,13 +12,13 @@
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/echo
  * @copyright 2015 Kaleb Heitzman
- * @license   GPL-2.0+
- * @version   0.1.0
+ * @license   GPL-3.0
+ * @version   0.9.0
  */
 
 /**
  * Build Prayer Meta Box
- * @since  0.1.0
+ * @since  0.9.0
  */
 function add_prayer_metaboxes() {
 	add_meta_box(
@@ -34,7 +34,7 @@ function add_prayer_metaboxes() {
  * HTML Output Callback
  * @param  object Post object
  * @return html
- * @since 0.1.0
+ * @since 0.9.0
  */
 function prayer_answered_cb( $post ) {
     // Noncename needed to verify where the data originated
@@ -140,7 +140,7 @@ function prayer_answered_cb( $post ) {
 /**
  * Save the meta information
  * @param  integer Post ID
- * @since  0.1.0
+ * @since  0.9.0
  */
 function prayer_meta_save( $post_id = 0 ) {
 	if ( $post_id == 0 ) return;

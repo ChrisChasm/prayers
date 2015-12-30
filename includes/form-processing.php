@@ -9,8 +9,8 @@
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/echo
  * @copyright 2015 Kaleb Heitzman
- * @license   GPL-2.0+
- * @version   0.1.0
+ * @license   GPL-3.0
+ * @version   0.9.0
  */
 
 /**
@@ -19,7 +19,7 @@
  * Processes frontend prayer form submissions based on the [prayers_form]
  * shortcode. Checks against a nonce to prevent cross site hacking. 
  *
- * @since  0.1.0
+ * @since  0.9.0
  */
 function echo_prayer_form_submission() {
 	// check to see if this is a prayer submission
@@ -71,7 +71,7 @@ function echo_prayer_form_submission() {
  * Process prayer click submissions by incremting the prayer count for
  * individual prayer posts.
  *
- * @since 0.1.0 
+ * @since 0.9.0 
  */
 function echo_prayed_click_submit() {
 	// check to see if this is a prayer click submission

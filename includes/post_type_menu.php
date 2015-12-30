@@ -10,14 +10,14 @@
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/echo
  * @copyright 2015 Kaleb Heitzman
- * @license   GPL-2.0+
- * @version   0.1.0
+ * @license   GPL-3.0
+ * @version   0.9.0
  */
 
 /**
  * Build Settings Menu
  * @return hook
- * @since 0.1.0 
+ * @since 0.9.0 
  */
 function prayer_settings_menu() {
 	add_submenu_page('edit.php?post_type=prayer', 'Settings', 'Settings', 'edit_posts', 'prayer_settings', 'prayer_settings_cb');
@@ -26,7 +26,7 @@ function prayer_settings_menu() {
 /**
  * Build Feeds Menu
  * @return hook
- * @since  0.1.0
+ * @since  0.9.0
  */
 function prayer_feeds_menu() {
 	add_submenu_page('edit.php?post_type=prayer', 'Feeds', 'Feeds', 'edit_posts', 'prayer_feeds', 'prayer_feeds_cb');
@@ -39,7 +39,7 @@ function prayer_feeds_menu() {
  * admin links section of the sidebar.
  * 
  * @return html
- * @since  0.1.0
+ * @since  0.9.0
  */
 function prayer_pending_menu() {
 
@@ -68,7 +68,7 @@ function prayer_pending_menu() {
  * displayed on this submenu page.
  * 
  * @return html
- * @since  0.1.0
+ * @since  0.9.0
  */
 function prayer_settings_cb() {
 	?>
@@ -102,7 +102,7 @@ function prayer_settings_cb() {
  * displayed on this submenu page.
  * 
  * @return html
- * @since  0.1.0
+ * @since  0.9.0
  */
 function prayer_feeds_cb() {
 	?>
@@ -194,7 +194,7 @@ function prayer_feeds_cb() {
  * 
  * @param  array Menu Order
  * @return array Menu Order
- * @since  0.1.0
+ * @since  0.9.0
  */
 function echo_prayer_submenu_order( $menu_ord ) {
     global $submenu;

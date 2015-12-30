@@ -12,8 +12,8 @@
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/echo
  * @copyright 2015 Kaleb Heitzman
- * @license   GPL-2.0+
- * @version   0.1.0
+ * @license   GPL-3.0
+ * @version   0.9.0
  */
 
 /**
@@ -28,7 +28,7 @@
  *
  * @param  array Custom Attributes
  * @return html
- * @since  0.1.0 
+ * @since  0.9.0 
  */
 function echo_prayers_shortcode( $atts ) {
 	// set shortcode atts to pass to the template
@@ -59,7 +59,7 @@ function echo_prayers_shortcode( $atts ) {
  * 
  * @param  array Custom Attributes
  * @return html
- * @since  0.1.0 
+ * @since  0.9.0 
  */
 function echo_prayers_form_shortcode( $atts ) {
 	// Attributes
@@ -86,7 +86,7 @@ function echo_prayers_form_shortcode( $atts ) {
  * 
  * @param  array Custom Atafsdftributes
  * @return html
- * @since  0.1.0 
+ * @since  0.9.0 
  */
 function echo_prayers_map_shortcode( $atts ) {
 	// Attributes

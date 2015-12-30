@@ -12,7 +12,7 @@
  * @link      https://github.com/kalebheitzman/echo
  * @copyright 2015 Kaleb Heitzman
  * @license   GPL-3.0
- * @version   0.1.0
+ * @version   0.9.0
  */
 
 // If this file is called directly, abort.
@@ -33,7 +33,7 @@ define( 'ECHO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
  *
  * Future: find a better way to require dependencies other than wp_die.
  *
- * @since 0.1.0 
+ * @since 0.9.0 
  */
 function echo_plugin_activate(){
 
@@ -52,7 +52,7 @@ register_activation_hook( __FILE__, 'echo_plugin_activate' );
  * will load templates from your themes/your_theme/templates directory first 
  * and then search for templates in plugins/echo/templates
  *
- * @since  0.1.0
+ * @since  0.9.0
  */
 require ECHO_PLUGIN_DIR . 'includes/class-gamajo-template-loader.php';
 require ECHO_PLUGIN_DIR . 'includes/class-echo-template-loader.php';
@@ -63,7 +63,7 @@ require ECHO_PLUGIN_DIR . 'includes/class-echo-template-loader.php';
  * Provideds helpers to be used inside of template files for things like
  * buttons, lists, etc.
  *
- * @since 0.1.0
+ * @since 0.9.0
  */
 require ECHO_PLUGIN_DIR . 'includes/helpers-template.php';
 
@@ -74,7 +74,7 @@ require ECHO_PLUGIN_DIR . 'includes/helpers-template.php';
  * anywhere else in the plugin. This is where repeatable function calls
  * (outside of shortcodes) will be stored.
  *
- * @since 0.1.0
+ * @since 0.9.0
  */
 require ECHO_PLUGIN_DIR . 'includes/helpers-plugin.php';
 
@@ -85,7 +85,7 @@ require ECHO_PLUGIN_DIR . 'includes/helpers-plugin.php';
  * and js files. In the future I may provide less/sass and coffeescript files
  * as well for advanced functionality. 
  *
- * @since 0.1.0
+ * @since 0.9.0
  */
 
 // load frontend styles
@@ -104,7 +104,7 @@ add_action( 'admin_enqueue_scripts', 'echo_register_admin_styles' );
  * are used as well to construct the different data functionalities that this
  * plugin provides.
  *
- * @since 0.1.0
+ * @since 0.9.0
  */
 require ECHO_PLUGIN_DIR . 'includes/post_type_prayer.php';
 add_action( 'init', 'prayer_post_type', 0 );
@@ -117,7 +117,7 @@ add_action( 'init', 'prayer_post_type', 0 );
  * location, etc. You can find the Prayer Meta Box in the editing sidebar
  * area.
  *
- * @since 0.1.0
+ * @since 0.9.0
  */
 require ECHO_PLUGIN_DIR . 'includes/post_type_meta.php';
 add_action( 'add_meta_boxes', 'add_prayer_metaboxes', 0 );
@@ -131,7 +131,7 @@ add_action( 'save_post', 'prayer_meta_save' );
  * slugs used are prayer_category and prayer_tag. You can query off of these
  * slugs for any custom queries that you create. 
  *
- * @since 0.1.0
+ * @since 0.9.0
  */
 require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_category.php';
 require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_post_tag.php';
@@ -146,7 +146,7 @@ add_action( 'init', 'prayer_post_tag_taxonomy', 2 );
  *
  * Future ideas: MailChimp integration page
  *
- * @since  0.1.0
+ * @since  0.9.0
  */
 require ECHO_PLUGIN_DIR . 'includes/post_type_menu.php';
 add_action( 'admin_menu', 'prayer_pending_menu', 0 );
@@ -161,7 +161,7 @@ add_filter( 'custom_menu_order', 'echo_prayer_submenu_order' );
  * of wordpress. This includes shortcodes for prayer listings, a front-end
  * submission form, and prayer locations-based map.
  *
- * @since 0.1.0
+ * @since 0.9.0
  */
 require ECHO_PLUGIN_DIR . 'includes/shortcodes.php';
 add_shortcode( 'echo_prayers', 'echo_prayers_shortcode' );
@@ -175,7 +175,7 @@ add_shortcode( 'echo_prayers_map', 'echo_prayers_map_shortcode' );
  * table with relevant data to the request like location, whether the prayer
  * has been answered, etc.
  *
- * @since 0.1.0
+ * @since 0.9.0
  */
 require ECHO_PLUGIN_DIR . 'includes/post_type_columns.php';
 add_filter( 'manage_prayer_posts_columns', 'echo_prayers_columns_head' );
@@ -191,7 +191,7 @@ add_action( 'manage_prayer_posts_custom_column', 'echo_prayers_columns', 10, 2 )
  * make on the backend. Currently this includes a function to process frontend
  * form submissions and saving metadata on the backend.
  *
- * @since 0.1.0
+ * @since 0.9.0
  */
 require ECHO_PLUGIN_DIR . 'includes/form-processing.php';
 add_action( 'init', 'echo_prayer_form_submission' );
