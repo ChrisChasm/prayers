@@ -29,7 +29,7 @@ A: Click on Prayers in the sidebar menu and then new prayer.
 Q: Are there shortcodes available?
 A: There are 3 shortcodes available.
 
-[prayers]
+[prayers limit="10" start_date="last month" end_date="today"]
 
 [prayer_form]
 
