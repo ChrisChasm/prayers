@@ -13,7 +13,7 @@ Lets an organization share, update, and manage prayer requests via their website
 == Description ==
 Lets an organization share, update, and manage prayer requests via their website. 
 
-Frontend (read anonymous) users can submit requests via an embeddable prayer form using the shortcode [prayer_form]. They can also click a \"pray\" button that lets the original poster know their request has been prayed for by someone else. Each request displays a count of how many times it has been prayed for. All requests can be categorized and tagged like a post.
+Frontend (read anonymous) users can submit requests via an embeddable prayer form using the shortcode [prayer_form]. They can also click a "pray" button that lets the original poster know their request has been prayed for by someone else. Each request displays a count of how many times it has been prayed for. All requests can be categorized and tagged like a post.
 
 Authorized users can track and manage prayer requests via a custom admin page. They can approve requests, mark them as answered as well as look at several other pieces of information stored with each request like geolocation data (displayable on a frontend map).
 
@@ -27,7 +27,13 @@ Q: How do I create a request?
 A: Click on Prayers in the sidebar menu and then new prayer.
 
 Q: Are there shortcodes available?
-A: Yes please see http://...
+A: There are 3 shortcodes available.
+
+[prayers]
+
+[prayer_form]
+
+[prayer_map]
 
 == Screenshots ==
 1. Prayer Listing
