@@ -15,15 +15,6 @@
  */
 
 /**
- * Build Settings Menu
- * @return hook
- * @since 0.9.0 
- */
-function prayer_settings_menu() {
-	add_submenu_page('edit.php?post_type=prayer', 'Settings', 'Settings', 'edit_posts', 'prayer_settings', 'prayer_settings_cb');
-}
-
-/**
  * Build Feeds Menu
  * @return hook
  * @since  0.9.0
@@ -59,40 +50,6 @@ function prayer_pending_menu() {
 	        ''
 	    );
 	}
-}
-
-/**
- * Build the Settings Page
- *
- * This is a callback for prayer_settings_menu. It generates html to be
- * displayed on this submenu page.
- * 
- * @return html
- * @since  0.9.0
- */
-function prayer_settings_cb() {
-	?>
-   	<div class="wrap">
-    	<h2>Prayer Settings</h2>
-   	</div>
-
-   	<div id="col-container">
-
-   		<div id="col-right">
-    		<div class="col-wrap">
-    			<p>Column Right</p>
-    		</div>
-    	</div>
-
-    	<div id="col-left">
-    		<div class="col-wrap">
-    		<p>Column Left</p>
-    		</div>
-    	</div>
-
-   	</div>
-
-  	<?php
 }
 
 /**
