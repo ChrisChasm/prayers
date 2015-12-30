@@ -17,10 +17,10 @@ Frontend (read anonymous) users can submit requests via an embeddable prayer for
 
 Authorized users can track and manage prayer requests via a custom admin page. They can approve requests, mark them as answered as well as look at several other pieces of information stored with each request like geolocation data (displayable on a frontend map).
 
-This plugin also provides JSON feeds for other services to consume and requires the [WP REST API](https://wordpress.org/plugins/rest-api/) be installed and activated first. You can access the Feeds through the Prayer admin menu.
+This plugin also provides JSON feeds for other services to consume and requires the WP REST API (https://wordpress.org/plugins/rest-api/) be installed and activated first. You can access the Feeds through the Prayer admin menu.
 
 == Installation ==
-Download echo into your /wp-content/plugins directory.
+Download echo into your /wp-content/plugins directory. Navigate to Plugins and activate Echo. Upon activation, the plugin will create a new passwordless user named Echo to associate frontend submissions with.
 
 == Frequently Asked Questions ==
 Q: Are there shortcodes available?
