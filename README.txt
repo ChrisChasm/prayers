@@ -23,17 +23,23 @@ This plugin also provides JSON feeds for other services to consume and requires 
 Download echo into your /wp-content/plugins directory.
 
 == Frequently Asked Questions ==
-Q: How do I create a request?
-A: Click on Prayers in the sidebar menu and then new prayer.
-
 Q: Are there shortcodes available?
 A: There are 3 shortcodes available.
 
-[prayers limit="10" start_date="last month" end_date="today"]
+[echo_prayers limit="10" start_date="last month" end_date="today"]
 
-[prayer_form]
+[echo_prayers_form]
 
-[prayer_map]
+[echo_prayers_map]
+
+Q: How do I create a prayer listing?
+A: Embed the [echo_prayers] shortcode on any standard page.
+
+Q: How do users submit prayer requests from my website?
+A: Embed the [echo_prayers_form] shortcode on any standard page.
+
+Q: How do I display a prayer map?
+A: Embed the [echo_prayers_map] shortcode on any page. Full-width pages work well with the prayer map.
 
 == Screenshots ==
 1. Prayer Listing
