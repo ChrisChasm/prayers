@@ -37,7 +37,7 @@ function prayer_pending_menu() {
 	        '',
 	        'Pending' . $post_count_string,
 	        'edit_posts',
-	        'edit.php?post_type=prayer&post_status=pending',
+	        'edit.php?post_type=prayer&post_status=pending&orderby=date&order=desc',
 	        ''
 	    );
 	}

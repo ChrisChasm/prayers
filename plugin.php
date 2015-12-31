@@ -3,7 +3,7 @@
  * Plugin Name: Echo Prayer App
  * Plugin URI: http://github.com/kalebheitzman/echo
  * Description: Lets an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume and requires the <a href="https://wordpress.org/plugins/rest-api/">WP REST API</a> be installed and activated first.
- * Version: 1.0
+ * Version: 0.9.0
  * Author: Kaleb Heitzman
  * Author URI: http://github.com/kalebheitzman/echo
  *
@@ -24,26 +24,17 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'ECHO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 /**
- * Activate Plugin
+ * Install and Uninstall hooks
  *
- * Requires WP REST API plugin for JSON feeds
- * Installs a user to associate front end prayer submissions to. If there is a
- * cleaner way than using wp_die to require dependencies for plugins then I'll
- * add it in.
+ * Creates settings, echo user, as well as cleans up the database on an 
+ * uninstall.
  *
- * Future: find a better way to require dependencies other than wp_die.
- *
- * @since 0.9.0 
+ * @since 0.9.0
  */
-function echo_plugin_activate(){
-
-    // Require parent plugin
-    if ( ! is_plugin_active( 'rest-api/plugin.php' ) and current_user_can( 'activate_plugins' ) ) {
-        // Stop activation redirect and show error
-        wp_die('Sorry, but this plugin requires the <a href="https://wordpress.org/plugins/rest-api/">WP REST API (Version 2)</a> to be installed and active. <br><a href="' . admin_url( 'plugins.php' ) . '">&laquo; Return to Plugins</a>');
-    }
-}
+require ECHO_PLUGIN_DIR . 'includes/install.php';
 register_activation_hook( __FILE__, 'echo_plugin_activate' );
+register_deactivation_hook( __FILE__, 'echo_plugin_deactivate' );
+register_uninstall_hook( __FILE__, 'echo_plugin_uninstall' );
 
 /**
  * Template Loader
@@ -77,6 +68,17 @@ require ECHO_PLUGIN_DIR . 'includes/helpers-template.php';
  * @since 0.9.0
  */
 require ECHO_PLUGIN_DIR . 'includes/helpers-plugin.php';
+
+/**
+ * Notifications
+ *
+ * Instantiate a notifications class to notifiy users about various prayer
+ * actions. This includes things like incoming prayer requests, prayers being
+ * answered, etc.
+ *
+ * @since 0.9.0
+ */
+require ECHO_PLUGIN_DIR . 'includes/class-echo-notifications.php';
 
 /**
  * Front and Admin Styles
@@ -160,7 +162,7 @@ add_filter( 'custom_menu_order', 'echo_prayer_submenu_order' );
  *
  * @since  0.9.0 
  */
-require ECHO_PLUGIN_DIR . 'includes/settings.php';
+require ECHO_PLUGIN_DIR . 'includes/class-echo-settings.php';
 //add_action( 'admin_menu', 'echo_add_admin_menu' );
 //add_action( 'admin_init', 'echo_settings_init' );
 

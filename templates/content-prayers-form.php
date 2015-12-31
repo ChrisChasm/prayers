@@ -1,8 +1,14 @@
 <?php 
 
-if (count($_POST) > 0): ?>
+if (count($_POST) > 0): 
 
-	<p>Thanks for submitting your prayer request.</p>
+	// get custom notification
+	$echo_options = get_option( 'echo_settings_options' );
+	$response = $echo_options['prayer_form_response'];
+
+	echo $response;
+
+	?>
 	
 	<?php else: ?>
 	

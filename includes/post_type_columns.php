@@ -27,6 +27,7 @@
  */
 function echo_prayers_columns_head( $columns ) {
 	// unset the author column
+	$author = $columns['author'];
 	unset($columns['author']);
 	// store the data column in order to shift it to the end of the table
 	$date = $columns['date'];
@@ -39,7 +40,8 @@ function echo_prayers_columns_head( $columns ) {
 	$columns['taxonomy-prayer_category'] = $category;
 	$columns['prayer_count'] = __( 'Prayed', 'echo' );
 	$columns['prayer_answered'] = __( 'Answered?', 'echo' );
-	$columns['prayer_anonymous'] = __( 'Anonymous?', 'echo' );
+	$columns['prayer_anonymous'] = __( 'Anon?', 'echo' );
+	$columns['author'] = $author;
 	// reinit the data column
 	$columns['date'] = $date;
 	// return the updated columns list

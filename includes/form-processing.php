@@ -38,11 +38,15 @@ function echo_prayer_form_submission() {
 		if ( ! $prayer_category ) {
 			$prayer_category = wp_insert_term( $prayer_category, 'prayer_category', array( 'parent' => 0 ) );
 		}
+
+		// get the echo user
+		$user = get_user_by( 'login', 'echo' );
+
 		// build a prayer entry to be insterted into the db
 		$prayer = array(
 			'comment_status' => 'closed',
 			'ping_status' => 'closed',
-			'post_author' => 0,
+			'post_author' => $user->id,
 			'post_title' => $post['prayer_title'],
 			'post_content' => $post['prayer_content'],
 			'post_status' => 'pending',
