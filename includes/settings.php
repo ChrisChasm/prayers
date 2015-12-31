@@ -102,18 +102,18 @@ class EchoSettings {
 			'echo_settings_setting_section' // section
 		);
 
-		add_settings_field(
-			'primary_color_2', // id
+		add_settings_field( // #2582EA
+			'primary_color', // id
 			'Primary Color', // title
-			array( $this, 'primary_color_2_callback' ), // callback
+			array( $this, 'primary_color_callback' ), // callback
 			'echo-settings-admin', // page
 			'echo_settings_setting_section' // section
 		);
 
-		add_settings_field(
-			'secondary_color_3', // id
+		add_settings_field( // #45D680
+			'secondary_color', // id
 			'Secondary Color', // title
-			array( $this, 'secondary_color_3_callback' ), // callback
+			array( $this, 'secondary_color_callback' ), // callback
 			'echo-settings-admin', // page
 			'echo_settings_setting_section' // section
 		);
@@ -161,12 +161,12 @@ class EchoSettings {
 			$sanitary_values['mailchimp_api_key_1'] = sanitize_text_field( $input['mailchimp_api_key_1'] );
 		}
 
-		if ( isset( $input['primary_color_2'] ) ) {
-			$sanitary_values['primary_color_2'] = sanitize_text_field( $input['primary_color_2'] );
+		if ( isset( $input['primary_color'] ) ) {
+			$sanitary_values['primary_color'] = sanitize_text_field( $input['primary_color'] );
 		}
 
-		if ( isset( $input['secondary_color_3'] ) ) {
-			$sanitary_values['secondary_color_3'] = sanitize_text_field( $input['secondary_color_3'] );
+		if ( isset( $input['secondary_color'] ) ) {
+			$sanitary_values['secondary_color'] = sanitize_text_field( $input['secondary_color'] );
 		}
 
 		if ( isset( $input['categories_enabled_4'] ) ) {
@@ -210,17 +210,17 @@ class EchoSettings {
 		);
 	}
 
-	public function primary_color_2_callback() {
+	public function primary_color_callback() {
 		printf(
-			'<input class="regular-text color-field" type="text" name="echo_settings_option_name[primary_color_2]" id="primary_color_2" value="%s">',
-			isset( $this->echo_settings_options['primary_color_2'] ) ? esc_attr( $this->echo_settings_options['primary_color_2']) : ''
+			'<input class="regular-text color-field" type="text" name="echo_settings_option_name[primary_color]" id="primary_color" value="%s">',
+			isset( $this->echo_settings_options['primary_color'] ) ? esc_attr( $this->echo_settings_options['primary_color']) : '#2582EA'
 		);
 	}
 
-	public function secondary_color_3_callback() {
+	public function secondary_color_callback() {
 		printf(
-			'<input class="regular-text color-field" type="text" name="echo_settings_option_name[secondary_color_3]" id="secondary_color_3" value="%s">',
-			isset( $this->echo_settings_options['secondary_color_3'] ) ? esc_attr( $this->echo_settings_options['secondary_color_3']) : ''
+			'<input class="regular-text color-field" type="text" name="echo_settings_option_name[secondary_color]" id="secondary_color" value="%s">',
+			isset( $this->echo_settings_options['secondary_color'] ) ? esc_attr( $this->echo_settings_options['secondary_color']) : '#45D680'
 		);
 	}
 
@@ -285,8 +285,8 @@ if ( is_admin() )
  * $echo_settings_options = get_option( 'echo_settings_option_name' ); // Array of All Options
  * $notification_email_0 = $echo_settings_options['notification_email_0']; // Notification Email
  * $mailchimp_api_key_1 = $echo_settings_options['mailchimp_api_key_1']; // MailChimp API Key
- * $primary_color_2 = $echo_settings_options['primary_color_2']; // Primary Color
- * $secondary_color_3 = $echo_settings_options['secondary_color_3']; // Secondary Color
+ * $primary_color = $echo_settings_options['primary_color']; // Primary Color
+ * $secondary_color = $echo_settings_options['secondary_color']; // Secondary Color
  * $categories_enabled_4 = $echo_settings_options['categories_enabled_4']; // Categories Enabled
  * $tags_enabled_5 = $echo_settings_options['tags_enabled_5']; // Tags Enabled
  * $default_category_6 = $echo_settings_options['default_category_6']; // Default Category
