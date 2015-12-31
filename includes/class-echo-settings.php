@@ -49,7 +49,7 @@ class EchoSettings {
 
 		<div class="wrap">
 			<h2>Echo Prayer Settings</h2>
-			<p>Adjust Echo to fit your website. For documentation visit <a href="" target="_blank">documentation.md</a> on our github <a href="https://github.com/kalebheitzman/echo" taget="_blank">project page.</a></p>
+			<p>Adjust Echo to fit your website. For documentation visit <a href="https://github.com/kalebheitzman/echo/blob/master/documentation.md" target="_blank">documentation.md</a> on our github <a href="https://github.com/kalebheitzman/echo" taget="_blank">project page.</a></p>
 
 			<?php settings_errors(); ?>
 
