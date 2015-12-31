@@ -36,7 +36,7 @@ class EchoSettings {
 
 	public function echo_settings_add_plugin_page() {
 		add_menu_page(
-			'Echo Settings', // page_title
+			'Echo Prayer Settings', // page_title
 			'Echo', // menu_title
 			'manage_options', // capability
 			'echo-settings', // menu_slug
@@ -50,7 +50,7 @@ class EchoSettings {
 		$this->echo_settings_options = get_option( 'echo_settings_option_name' ); ?>
 
 		<div class="wrap">
-			<h2>Echo Settings</h2>
+			<h2>Echo Prayer Settings</h2>
 			<p>Echo Prayer Settings</p>
 			<?php settings_errors(); ?>
 
@@ -198,7 +198,7 @@ class EchoSettings {
 
 	public function notification_email_0_callback() {
 		printf(
-			'<input class="regular-text" type="text" name="echo_settings_option_name[notification_email_0]" id="notification_email_0" value="%s">',
+			'<input class="regular-text" type="text" name="echo_settings_option_name[notification_email_0]" id="notification_email_0" value="%s" placeholder="prayer@example.com">',
 			isset( $this->echo_settings_options['notification_email_0'] ) ? esc_attr( $this->echo_settings_options['notification_email_0']) : ''
 		);
 	}
@@ -249,7 +249,7 @@ class EchoSettings {
 
 	public function prayer_form_response_7_callback() {
 		printf(
-			'<textarea class="large-text" rows="5" name="echo_settings_option_name[prayer_form_response_7]" id="prayer_form_response_7">%s</textarea>',
+			'<textarea class="large-text" rows="5" name="echo_settings_option_name[prayer_form_response_7]" id="prayer_form_response_7" placeholder="Thanks for submitting your prayer request.">%s</textarea>',
 			isset( $this->echo_settings_options['prayer_form_response_7'] ) ? esc_attr( $this->echo_settings_options['prayer_form_response_7']) : ''
 		);
 	}
@@ -273,7 +273,7 @@ class EchoSettings {
 	function echo_prayer_feeds_page_cb() {
 		$templates = new Echo_Template_Loader;
 		// start a buffer to capture output
-		$output = $templates->get_template_part( 'content', 'feeds' );
+		$output = $templates->get_template_part( 'admin', 'feeds' );
 	}
 
 }

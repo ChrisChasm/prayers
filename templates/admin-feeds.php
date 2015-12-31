@@ -1,5 +1,5 @@
 <div class="wrap">
-	<h2>Prayer Feeds</h2>
+	<h2>Echo Prayer Feeds</h2>
 
 	<div id="col-container">
 
@@ -23,10 +23,6 @@
 		    			<tr>
 			    			<td>By Category</td>
 			    			<td><a target="_blank" href="<?php echo get_site_url(); ?>/prayers/feed?prayer_category=north-america"><?php echo get_site_url(); ?>/prayers/feed?prayer_category=missions</a></td>
-		    			</tr>
-		    			<tr>
-			    			<td>By Location</td>
-			    			<td><a target="_blank" href="<?php echo get_site_url(); ?>/prayers/feed?prayer_location=north-america"><?php echo get_site_url(); ?>/prayers/feed?prayer_location=north-america</a></td>
 		    			</tr>
 		    			<tr>
 			    			<td>By Tags</td>
