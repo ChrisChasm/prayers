@@ -150,7 +150,6 @@ add_action( 'init', 'prayer_post_tag_taxonomy', 2 );
  */
 require ECHO_PLUGIN_DIR . 'includes/post_type_menu.php';
 add_action( 'admin_menu', 'prayer_pending_menu', 0 );
-add_action( 'admin_menu' , 'prayer_feeds_menu', 0 );
 add_filter( 'custom_menu_order', 'echo_prayer_submenu_order' );
 
 /**

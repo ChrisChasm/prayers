@@ -14,22 +14,34 @@
  */
 
 class EchoSettings {
-	
+
 	private $echo_settings_options;
 
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'echo_settings_add_plugin_page' ) );
 		add_action( 'admin_init', array( $this, 'echo_settings_page_init' ) );
+
+		add_action( 'admin_menu' , array( $this, 'echo_prayer_feeds_page' ) );
+
+	}
+
+	/**
+	 * Build Feeds Menu
+	 * @return hook
+	 * @since  0.9.0
+	 */
+	public function echo_prayer_feeds_page() {
+		add_submenu_page('echo-settings', 'Feeds', 'Feeds', 'edit_posts', 'echo-feeds', array( $this, 'echo_prayer_feeds_page_cb') );
 	}
 
 	public function echo_settings_add_plugin_page() {
 		add_menu_page(
 			'Echo Settings', // page_title
-			'Echo Settings', // menu_title
+			'Echo', // menu_title
 			'manage_options', // capability
 			'echo-settings', // menu_slug
 			array( $this, 'echo_settings_create_admin_page' ), // function
-			'dashicons-admin-generic', // icon_url
+			'dashicons-heart', // icon_url
 			81 // position
 		);
 	}
@@ -75,6 +87,14 @@ class EchoSettings {
 		);
 
 		add_settings_field(
+			'prayer_form_response_7', // id
+			'Prayer Form Response', // title
+			array( $this, 'prayer_form_response_7_callback' ), // callback
+			'echo-settings-admin', // page
+			'echo_settings_setting_section' // section
+		);
+
+		add_settings_field(
 			'mailchimp_api_key_1', // id
 			'MailChimp API Key', // title
 			array( $this, 'mailchimp_api_key_1_callback' ), // callback
@@ -114,13 +134,21 @@ class EchoSettings {
 			'echo_settings_setting_section' // section
 		);
 
-		add_settings_field(
+		/*add_settings_field(
 			'default_category_6', // id
 			'Default Category', // title
 			array( $this, 'default_category_6_callback' ), // callback
 			'echo-settings-admin', // page
 			'echo_settings_setting_section' // section
-		);
+		);*/
+
+		/*add_settings_field(
+			'example_radio_8', // id
+			'Example Radio', // title
+			array( $this, 'example_radio_8_callback' ), // callback
+			'echo-settings-admin', // page
+			'echo_settings_setting_section' // section
+		);*/
 	}
 
 	public function echo_settings_sanitize($input) {
@@ -153,6 +181,14 @@ class EchoSettings {
 			$sanitary_values['default_category_6'] = $input['default_category_6'];
 		}
 
+		if ( isset( $input['prayer_form_response_7'] ) ) {
+			$sanitary_values['prayer_form_response_7'] = esc_textarea( $input['prayer_form_response_7'] );
+		}
+
+		if ( isset( $input['example_radio_8'] ) ) {
+			$sanitary_values['example_radio_8'] = $input['example_radio_8'];
+		}
+
 		return $sanitary_values;
 	}
 
@@ -176,14 +212,14 @@ class EchoSettings {
 
 	public function primary_color_2_callback() {
 		printf(
-			'<input class="regular-text" type="text" name="echo_settings_option_name[primary_color_2]" id="primary_color_2" value="%s">',
+			'<input class="regular-text color-field" type="text" name="echo_settings_option_name[primary_color_2]" id="primary_color_2" value="%s">',
 			isset( $this->echo_settings_options['primary_color_2'] ) ? esc_attr( $this->echo_settings_options['primary_color_2']) : ''
 		);
 	}
 
 	public function secondary_color_3_callback() {
 		printf(
-			'<input class="regular-text" type="text" name="echo_settings_option_name[secondary_color_3]" id="secondary_color_3" value="%s">',
+			'<input class="regular-text color-field" type="text" name="echo_settings_option_name[secondary_color_3]" id="secondary_color_3" value="%s">',
 			isset( $this->echo_settings_options['secondary_color_3'] ) ? esc_attr( $this->echo_settings_options['secondary_color_3']) : ''
 		);
 	}
@@ -211,6 +247,35 @@ class EchoSettings {
 		</select> <?php
 	}
 
+	public function prayer_form_response_7_callback() {
+		printf(
+			'<textarea class="large-text" rows="5" name="echo_settings_option_name[prayer_form_response_7]" id="prayer_form_response_7">%s</textarea>',
+			isset( $this->echo_settings_options['prayer_form_response_7'] ) ? esc_attr( $this->echo_settings_options['prayer_form_response_7']) : ''
+		);
+	}
+
+	public function example_radio_8_callback() {
+		?> <fieldset><?php $checked = ( isset( $this->echo_settings_options['example_radio_8'] ) && $this->echo_settings_options['example_radio_8'] === '1' ) ? 'checked' : '' ; ?>
+		<label for="example_radio_8-0"><input type="radio" name="echo_settings_option_name[example_radio_8]" id="example_radio_8-0" value="1" <?php echo $checked; ?>> Yes</label><br>
+		<?php $checked = ( isset( $this->echo_settings_options['example_radio_8'] ) && $this->echo_settings_options['example_radio_8'] === '0' ) ? 'checked' : '' ; ?>
+		<label for="example_radio_8-1"><input type="radio" name="echo_settings_option_name[example_radio_8]" id="example_radio_8-1" value="0" <?php echo $checked; ?>> No</label></fieldset> <?php
+	}
+
+	/**
+	 * Build the Feeds Page
+	 *
+	 * This is a callback for prayer_feeds_menu. It generates html to be
+	 * displayed on this submenu page.
+	 * 
+	 * @return html
+	 * @since  0.9.0
+	 */
+	function echo_prayer_feeds_page_cb() {
+		$templates = new Echo_Template_Loader;
+		// start a buffer to capture output
+		$output = $templates->get_template_part( 'content', 'feeds' );
+	}
+
 }
 if ( is_admin() )
 	$echo_settings = new EchoSettings();
@@ -225,4 +290,7 @@ if ( is_admin() )
  * $categories_enabled_4 = $echo_settings_options['categories_enabled_4']; // Categories Enabled
  * $tags_enabled_5 = $echo_settings_options['tags_enabled_5']; // Tags Enabled
  * $default_category_6 = $echo_settings_options['default_category_6']; // Default Category
+ * $prayer_form_response_7 = $echo_settings_options['prayer_form_response_7']; // Example Textarea
+ * $example_radio_8 = $echo_settings_options['example_radio_8']; // Example Radio
  */
+
