@@ -79,25 +79,25 @@ class EchoSettings {
 		);
 
 		add_settings_field(
-			'notification_email_0', // id
+			'notification_email', // id
 			'Notification Email', // title
-			array( $this, 'notification_email_0_callback' ), // callback
+			array( $this, 'notification_email_callback' ), // callback
 			'echo-settings-admin', // page
 			'echo_settings_setting_section' // section
 		);
 
 		add_settings_field(
-			'prayer_form_response_7', // id
+			'prayer_form_response', // id
 			'Prayer Form Response', // title
-			array( $this, 'prayer_form_response_7_callback' ), // callback
+			array( $this, 'prayer_form_response_callback' ), // callback
 			'echo-settings-admin', // page
 			'echo_settings_setting_section' // section
 		);
 
 		add_settings_field(
-			'mailchimp_api_key_1', // id
+			'mailchimp_api_key', // id
 			'MailChimp API Key', // title
-			array( $this, 'mailchimp_api_key_1_callback' ), // callback
+			array( $this, 'mailchimp_api_key_callback' ), // callback
 			'echo-settings-admin', // page
 			'echo_settings_setting_section' // section
 		);
@@ -119,33 +119,33 @@ class EchoSettings {
 		);
 
 		add_settings_field(
-			'categories_enabled_4', // id
+			'categories_enabled', // id
 			'Categories Enabled', // title
-			array( $this, 'categories_enabled_4_callback' ), // callback
+			array( $this, 'categories_enabled_callback' ), // callback
 			'echo-settings-admin', // page
 			'echo_settings_setting_section' // section
 		);
 
 		add_settings_field(
-			'tags_enabled_5', // id
+			'tags_enabled', // id
 			'Tags Enabled', // title
-			array( $this, 'tags_enabled_5_callback' ), // callback
+			array( $this, 'tags_enabled_callback' ), // callback
 			'echo-settings-admin', // page
 			'echo_settings_setting_section' // section
 		);
 
 		/*add_settings_field(
-			'default_category_6', // id
+			'default_category', // id
 			'Default Category', // title
-			array( $this, 'default_category_6_callback' ), // callback
+			array( $this, 'default_category_callback' ), // callback
 			'echo-settings-admin', // page
 			'echo_settings_setting_section' // section
 		);*/
 
 		/*add_settings_field(
-			'example_radio_8', // id
+			'example_radio', // id
 			'Example Radio', // title
-			array( $this, 'example_radio_8_callback' ), // callback
+			array( $this, 'example_radio_callback' ), // callback
 			'echo-settings-admin', // page
 			'echo_settings_setting_section' // section
 		);*/
@@ -153,12 +153,12 @@ class EchoSettings {
 
 	public function echo_settings_sanitize($input) {
 		$sanitary_values = array();
-		if ( isset( $input['notification_email_0'] ) ) {
-			$sanitary_values['notification_email_0'] = sanitize_text_field( $input['notification_email_0'] );
+		if ( isset( $input['notification_email'] ) ) {
+			$sanitary_values['notification_email'] = sanitize_text_field( $input['notification_email'] );
 		}
 
-		if ( isset( $input['mailchimp_api_key_1'] ) ) {
-			$sanitary_values['mailchimp_api_key_1'] = sanitize_text_field( $input['mailchimp_api_key_1'] );
+		if ( isset( $input['mailchimp_api_key'] ) ) {
+			$sanitary_values['mailchimp_api_key'] = sanitize_text_field( $input['mailchimp_api_key'] );
 		}
 
 		if ( isset( $input['primary_color'] ) ) {
@@ -169,24 +169,24 @@ class EchoSettings {
 			$sanitary_values['secondary_color'] = sanitize_text_field( $input['secondary_color'] );
 		}
 
-		if ( isset( $input['categories_enabled_4'] ) ) {
-			$sanitary_values['categories_enabled_4'] = $input['categories_enabled_4'];
+		if ( isset( $input['categories_enabled'] ) ) {
+			$sanitary_values['categories_enabled'] = $input['categories_enabled'];
 		}
 
-		if ( isset( $input['tags_enabled_5'] ) ) {
-			$sanitary_values['tags_enabled_5'] = $input['tags_enabled_5'];
+		if ( isset( $input['tags_enabled'] ) ) {
+			$sanitary_values['tags_enabled'] = $input['tags_enabled'];
 		}
 
-		if ( isset( $input['default_category_6'] ) ) {
-			$sanitary_values['default_category_6'] = $input['default_category_6'];
+		if ( isset( $input['default_category'] ) ) {
+			$sanitary_values['default_category'] = $input['default_category'];
 		}
 
-		if ( isset( $input['prayer_form_response_7'] ) ) {
-			$sanitary_values['prayer_form_response_7'] = esc_textarea( $input['prayer_form_response_7'] );
+		if ( isset( $input['prayer_form_response'] ) ) {
+			$sanitary_values['prayer_form_response'] = esc_textarea( $input['prayer_form_response'] );
 		}
 
-		if ( isset( $input['example_radio_8'] ) ) {
-			$sanitary_values['example_radio_8'] = $input['example_radio_8'];
+		if ( isset( $input['example_radio'] ) ) {
+			$sanitary_values['example_radio'] = $input['example_radio'];
 		}
 
 		return $sanitary_values;
@@ -196,17 +196,17 @@ class EchoSettings {
 		
 	}
 
-	public function notification_email_0_callback() {
+	public function notification_email_callback() {
 		printf(
-			'<input class="regular-text" type="text" name="echo_settings_option_name[notification_email_0]" id="notification_email_0" value="%s" placeholder="prayer@example.com">',
-			isset( $this->echo_settings_options['notification_email_0'] ) ? esc_attr( $this->echo_settings_options['notification_email_0']) : ''
+			'<input class="regular-text" type="text" name="echo_settings_option_name[notification_email]" id="notification_email" value="%s" placeholder="prayer@example.com">',
+			isset( $this->echo_settings_options['notification_email'] ) ? esc_attr( $this->echo_settings_options['notification_email']) : ''
 		);
 	}
 
-	public function mailchimp_api_key_1_callback() {
+	public function mailchimp_api_key_callback() {
 		printf(
-			'<input class="regular-text" type="text" name="echo_settings_option_name[mailchimp_api_key_1]" id="mailchimp_api_key_1" value="%s">',
-			isset( $this->echo_settings_options['mailchimp_api_key_1'] ) ? esc_attr( $this->echo_settings_options['mailchimp_api_key_1']) : ''
+			'<input class="regular-text" type="text" name="echo_settings_option_name[mailchimp_api_key]" id="mailchimp_api_key" value="%s">',
+			isset( $this->echo_settings_options['mailchimp_api_key'] ) ? esc_attr( $this->echo_settings_options['mailchimp_api_key']) : ''
 		);
 	}
 
@@ -224,41 +224,41 @@ class EchoSettings {
 		);
 	}
 
-	public function categories_enabled_4_callback() {
-		?> <fieldset><?php $checked = ( isset( $this->echo_settings_options['categories_enabled_4'] ) && $this->echo_settings_options['categories_enabled_4'] === '1' ) ? 'checked' : '' ; ?>
-		<label for="categories_enabled_4-0"><input type="radio" name="echo_settings_option_name[categories_enabled_4]" id="categories_enabled_4-0" value="1" <?php echo $checked; ?>> Yes</label><br>
-		<?php $checked = ( isset( $this->echo_settings_options['categories_enabled_4'] ) && $this->echo_settings_options['categories_enabled_4'] === '0' ) ? 'checked' : '' ; ?>
-		<label for="categories_enabled_4-1"><input type="radio" name="echo_settings_option_name[categories_enabled_4]" id="categories_enabled_4-1" value="0" <?php echo $checked; ?>> No</label></fieldset> <?php
+	public function categories_enabled_callback() {
+		?> <fieldset><?php $checked = ( isset( $this->echo_settings_options['categories_enabled'] ) && $this->echo_settings_options['categories_enabled'] === '1' ) ? 'checked' : '' ; ?>
+		<label for="categories_enabled-0"><input type="radio" name="echo_settings_option_name[categories_enabled]" id="categories_enabled-0" value="1" <?php echo $checked; ?>> Yes</label><br>
+		<?php $checked = ( isset( $this->echo_settings_options['categories_enabled'] ) && $this->echo_settings_options['categories_enabled'] === '0' ) ? 'checked' : '' ; ?>
+		<label for="categories_enabled-1"><input type="radio" name="echo_settings_option_name[categories_enabled]" id="categories_enabled-1" value="0" <?php echo $checked; ?>> No</label></fieldset> <?php
 	}
 
-	public function tags_enabled_5_callback() {
-		?> <fieldset><?php $checked = ( isset( $this->echo_settings_options['tags_enabled_5'] ) && $this->echo_settings_options['tags_enabled_5'] === '1' ) ? 'checked' : '' ; ?>
-		<label for="tags_enabled_5-0"><input type="radio" name="echo_settings_option_name[tags_enabled_5]" id="tags_enabled_5-0" value="1" <?php echo $checked; ?>> Yes</label><br>
-		<?php $checked = ( isset( $this->echo_settings_options['tags_enabled_5'] ) && $this->echo_settings_options['tags_enabled_5'] === '0' ) ? 'checked' : '' ; ?>
-		<label for="tags_enabled_5-1"><input type="radio" name="echo_settings_option_name[tags_enabled_5]" id="tags_enabled_5-1" value="0" <?php echo $checked; ?>> No</label></fieldset> <?php
+	public function tags_enabled_callback() {
+		?> <fieldset><?php $checked = ( isset( $this->echo_settings_options['tags_enabled'] ) && $this->echo_settings_options['tags_enabled'] === '1' ) ? 'checked' : '' ; ?>
+		<label for="tags_enabled-0"><input type="radio" name="echo_settings_option_name[tags_enabled]" id="tags_enabled-0" value="1" <?php echo $checked; ?>> Yes</label><br>
+		<?php $checked = ( isset( $this->echo_settings_options['tags_enabled'] ) && $this->echo_settings_options['tags_enabled'] === '0' ) ? 'checked' : '' ; ?>
+		<label for="tags_enabled-1"><input type="radio" name="echo_settings_option_name[tags_enabled]" id="tags_enabled-1" value="0" <?php echo $checked; ?>> No</label></fieldset> <?php
 	}
 
-	public function default_category_6_callback() {
-		?> <select name="echo_settings_option_name[default_category_6]" id="default_category_6">
-			<?php $selected = (isset( $this->echo_settings_options['default_category_6'] ) && $this->echo_settings_options['default_category_6'] === '1') ? 'selected' : '' ; ?>
+	public function default_category_callback() {
+		?> <select name="echo_settings_option_name[default_category]" id="default_category">
+			<?php $selected = (isset( $this->echo_settings_options['default_category'] ) && $this->echo_settings_options['default_category'] === '1') ? 'selected' : '' ; ?>
 			<option value="1" <?php echo $selected; ?>>Yes</option>
-			<?php $selected = (isset( $this->echo_settings_options['default_category_6'] ) && $this->echo_settings_options['default_category_6'] === '0') ? 'selected' : '' ; ?>
+			<?php $selected = (isset( $this->echo_settings_options['default_category'] ) && $this->echo_settings_options['default_category'] === '0') ? 'selected' : '' ; ?>
 			<option value="0" <?php echo $selected; ?>>No</option>
 		</select> <?php
 	}
 
-	public function prayer_form_response_7_callback() {
+	public function prayer_form_response_callback() {
 		printf(
-			'<textarea class="large-text" rows="5" name="echo_settings_option_name[prayer_form_response_7]" id="prayer_form_response_7" placeholder="Thanks for submitting your prayer request.">%s</textarea>',
-			isset( $this->echo_settings_options['prayer_form_response_7'] ) ? esc_attr( $this->echo_settings_options['prayer_form_response_7']) : ''
+			'<textarea class="large-text" rows="5" name="echo_settings_option_name[prayer_form_response]" id="prayer_form_response" placeholder="Thanks for submitting your prayer request.">%s</textarea>',
+			isset( $this->echo_settings_options['prayer_form_response'] ) ? esc_attr( $this->echo_settings_options['prayer_form_response']) : ''
 		);
 	}
 
-	public function example_radio_8_callback() {
-		?> <fieldset><?php $checked = ( isset( $this->echo_settings_options['example_radio_8'] ) && $this->echo_settings_options['example_radio_8'] === '1' ) ? 'checked' : '' ; ?>
-		<label for="example_radio_8-0"><input type="radio" name="echo_settings_option_name[example_radio_8]" id="example_radio_8-0" value="1" <?php echo $checked; ?>> Yes</label><br>
-		<?php $checked = ( isset( $this->echo_settings_options['example_radio_8'] ) && $this->echo_settings_options['example_radio_8'] === '0' ) ? 'checked' : '' ; ?>
-		<label for="example_radio_8-1"><input type="radio" name="echo_settings_option_name[example_radio_8]" id="example_radio_8-1" value="0" <?php echo $checked; ?>> No</label></fieldset> <?php
+	public function example_radio_callback() {
+		?> <fieldset><?php $checked = ( isset( $this->echo_settings_options['example_radio'] ) && $this->echo_settings_options['example_radio'] === '1' ) ? 'checked' : '' ; ?>
+		<label for="example_radio-0"><input type="radio" name="echo_settings_option_name[example_radio]" id="example_radio-0" value="1" <?php echo $checked; ?>> Yes</label><br>
+		<?php $checked = ( isset( $this->echo_settings_options['example_radio'] ) && $this->echo_settings_options['example_radio'] === '0' ) ? 'checked' : '' ; ?>
+		<label for="example_radio-1"><input type="radio" name="echo_settings_option_name[example_radio]" id="example_radio-1" value="0" <?php echo $checked; ?>> No</label></fieldset> <?php
 	}
 
 	/**
@@ -283,14 +283,14 @@ if ( is_admin() )
 /* 
  * Retrieve this value with:
  * $echo_settings_options = get_option( 'echo_settings_option_name' ); // Array of All Options
- * $notification_email_0 = $echo_settings_options['notification_email_0']; // Notification Email
- * $mailchimp_api_key_1 = $echo_settings_options['mailchimp_api_key_1']; // MailChimp API Key
+ * $notification_email = $echo_settings_options['notification_email']; // Notification Email
+ * $mailchimp_api_key = $echo_settings_options['mailchimp_api_key']; // MailChimp API Key
  * $primary_color = $echo_settings_options['primary_color']; // Primary Color
  * $secondary_color = $echo_settings_options['secondary_color']; // Secondary Color
- * $categories_enabled_4 = $echo_settings_options['categories_enabled_4']; // Categories Enabled
- * $tags_enabled_5 = $echo_settings_options['tags_enabled_5']; // Tags Enabled
- * $default_category_6 = $echo_settings_options['default_category_6']; // Default Category
- * $prayer_form_response_7 = $echo_settings_options['prayer_form_response_7']; // Example Textarea
- * $example_radio_8 = $echo_settings_options['example_radio_8']; // Example Radio
+ * $categories_enabled = $echo_settings_options['categories_enabled']; // Categories Enabled
+ * $tags_enabled = $echo_settings_options['tags_enabled']; // Tags Enabled
+ * $default_category = $echo_settings_options['default_category']; // Default Category
+ * $prayer_form_response = $echo_settings_options['prayer_form_response']; // Example Textarea
+ * $example_radio = $echo_settings_options['example_radio']; // Example Radio
  */
 
