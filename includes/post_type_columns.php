@@ -40,7 +40,7 @@ function echo_prayers_columns_head( $columns ) {
 	$columns['taxonomy-prayer_category'] = $category;
 	$columns['prayer_count'] = __( 'Prayed', 'echo' );
 	$columns['prayer_answered'] = __( 'Answered?', 'echo' );
-	$columns['prayer_anonymous'] = __( 'Anon?', 'echo' );
+	// $columns['prayer_anonymous'] = __( 'Anon?', 'echo' );
 	$columns['author'] = $author;
 	// reinit the data column
 	$columns['date'] = $date;

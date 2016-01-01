@@ -56,7 +56,6 @@ function echo_prayer_form_submission() {
 			'post_type' => 'prayer',
 			'tax_input' => [ 'prayer_category' => $prayer_category['term_taxonomy_id'], 'prayer_tag' => $tags ],
 		);
-		var_dump($prayer);
 		// create the pending prayer request
 		$prayer_id = wp_insert_post($prayer);
 		// add meta to the prayer after insert. You have to get a post id

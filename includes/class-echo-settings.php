@@ -20,20 +20,18 @@ class EchoSettings {
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'echo_settings_add_plugin_page' ) );
 		add_action( 'admin_init', array( $this, 'echo_settings_page_init' ) );
-		add_action( 'admin_menu' , array( $this, 'echo_prayer_feeds_page' ) );
-	}
-
-	/**
-	 * Build Feeds Menu
-	 * @return hook
-	 * @since  0.9.0
-	 */
-	public function echo_prayer_feeds_page() {
-		add_submenu_page('echo-settings', 'Feeds', 'Feeds', 'edit_posts', 'echo-feeds', array( $this, 'echo_prayer_feeds_page_cb') );
 	}
 
 	public function echo_settings_add_plugin_page() {
-		add_menu_page(
+		add_submenu_page(
+	        'edit.php?post_type=prayer',
+	        'Echo Prayer Settings',
+	        'Settings',
+	        'edit_posts',
+	        'settings',
+	        array( $this, 'echo_settings_create_admin_page' )
+	    );
+		/*add_menu_page(
 			'Echo Prayer Settings', // page_title
 			'Echo', // menu_title
 			'manage_options', // capability
@@ -41,7 +39,7 @@ class EchoSettings {
 			array( $this, 'echo_settings_create_admin_page' ), // function
 			'dashicons-heart', // icon_url
 			81 // position
-		);
+		);*/
 	}
 
 	public function echo_settings_create_admin_page() {
@@ -353,21 +351,6 @@ class EchoSettings {
 		<label for="example_radio-0"><input type="radio" name="echo_settings_options[example_radio]" id="example_radio-0" value="1" <?php echo $checked; ?>> Yes</label><br>
 		<?php $checked = ( isset( $this->echo_settings_options['example_radio'] ) && $this->echo_settings_options['example_radio'] === '0' ) ? 'checked' : '' ; ?>
 		<label for="example_radio-1"><input type="radio" name="echo_settings_options[example_radio]" id="example_radio-1" value="0" <?php echo $checked; ?>> No</label></fieldset> <?php
-	}
-
-	/**
-	 * Build the Feeds Page
-	 *
-	 * This is a callback for prayer_feeds_menu. It generates html to be
-	 * displayed on this submenu page.
-	 * 
-	 * @return html
-	 * @since  0.9.0
-	 */
-	function echo_prayer_feeds_page_cb() {
-		$templates = new Echo_Template_Loader;
-		// start a buffer to capture output
-		$output = $templates->get_template_part( 'admin', 'feeds' );
 	}
 
 }
