@@ -162,6 +162,9 @@ class Echo_Form_Processing {
 		$location = Echo_Plugin_Helper::parse_location($data['prayer_location']);
 		Echo_Plugin_Helper::save_location_meta( $prayer_id, $location );
 
+		// Notify Echo designated user
+		$mailresults = Echo_Notifications::new_request( $data );
+		
 		return true;
 	}
 
