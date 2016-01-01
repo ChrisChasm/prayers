@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Echo Prayer App
+ * Plugin Name: Echo Prayers
  * Plugin URI: http://github.com/kalebheitzman/echo
  * Description: Lets an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume and requires the <a href="https://wordpress.org/plugins/rest-api/">WP REST API</a> be installed and activated first.
  * Version: 0.9.0
@@ -24,6 +24,30 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'ECHO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 /**
+ * Autoloader
+ *
+ * Autmagically loads classes from the echo/includes. Instantiates them in the
+ * plugin file using the i.e. $echo_prayers = new EchoPrayers; format.
+ */
+spl_autoload_register(function ( $class ) {
+	if ( is_readable( ECHO_PLUGIN_DIR . "includes/{$class}.php" ) )
+		require ECHO_PLUGIN_DIR . "includes/{$class}.php";		
+});
+require 'vendor/autoload.php';
+
+/**
+ * Prayer Post Type
+ *
+ * This defines the Prayer custom post type. A majority of the prayer app data
+ * will be stored under this custom post type. Taxonomy and heavy use of meta
+ * are used as well to construct the different data functionalities that this
+ * plugin provides.
+ * 
+ * @since 0.9.0
+ */
+$echo_post_type_prayer = new Echo_Post_Type_Prayer;
+
+/**
  * Install and Uninstall hooks
  *
  * Creates settings, echo user, as well as cleans up the database on an 
@@ -31,10 +55,8 @@ define( 'ECHO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
  *
  * @since 0.9.0
  */
-require ECHO_PLUGIN_DIR . 'includes/install.php';
-register_activation_hook( __FILE__, 'echo_plugin_activate' );
-register_deactivation_hook( __FILE__, 'echo_plugin_deactivate' );
-register_uninstall_hook( __FILE__, 'echo_plugin_uninstall' );
+if ( is_admin() )
+	$echo_setup = new Echo_Plugin_Setup;
 
 /**
  * Template Loader
@@ -45,29 +67,7 @@ register_uninstall_hook( __FILE__, 'echo_plugin_uninstall' );
  *
  * @since  0.9.0
  */
-require ECHO_PLUGIN_DIR . 'includes/class-gamajo-template-loader.php';
-require ECHO_PLUGIN_DIR . 'includes/class-echo-template-loader.php';
-
-/**
- * Template Helpers
- *
- * Provideds helpers to be used inside of template files for things like
- * buttons, lists, etc.
- *
- * @since 0.9.0
- */
-require ECHO_PLUGIN_DIR . 'includes/helpers-template.php';
-
-/**
- * Plugin Helpers
- *
- * Plugin helpers that provide various helpers and functions that don't fit
- * anywhere else in the plugin. This is where repeatable function calls
- * (outside of shortcodes) will be stored.
- *
- * @since 0.9.0
- */
-require ECHO_PLUGIN_DIR . 'includes/helpers-plugin.php';
+$echo_templates = new Echo_Template_Loader;
 
 /**
  * Notifications
@@ -78,7 +78,8 @@ require ECHO_PLUGIN_DIR . 'includes/helpers-plugin.php';
  *
  * @since 0.9.0
  */
-require ECHO_PLUGIN_DIR . 'includes/class-echo-notifications.php';
+if ( is_admin() )
+	$echoNotifications = new Echo_Notifications;
 
 /**
  * Front and Admin Styles
@@ -91,25 +92,11 @@ require ECHO_PLUGIN_DIR . 'includes/class-echo-notifications.php';
  */
 
 // load frontend styles
-require ECHO_PLUGIN_DIR . 'includes/scripts-frontend.php';
-add_action( 'wp_enqueue_scripts', 'echo_register_styles' );
+$echo_frontend_scripts = new Echo_Frontend_Scripts;
 
 // load admin backend styles
-require ECHO_PLUGIN_DIR . 'includes/scripts-admin.php';
-add_action( 'admin_enqueue_scripts', 'echo_register_admin_styles' );
-
-/**
- * Prayer Post Type
- *
- * This defines the Prayer custom post type. A majority of the prayer app data
- * will be stored under this custom post type. Taxonomy and heavy use of meta
- * are used as well to construct the different data functionalities that this
- * plugin provides.
- *
- * @since 0.9.0
- */
-require ECHO_PLUGIN_DIR . 'includes/post_type_prayer.php';
-add_action( 'init', 'prayer_post_type', 0 );
+if ( is_admin() )
+	$echo_admin_scripts = new Echo_Admin_Scripts;
 
 /**
  * Prayer Post Meta
@@ -121,9 +108,7 @@ add_action( 'init', 'prayer_post_type', 0 );
  *
  * @since 0.9.0
  */
-require ECHO_PLUGIN_DIR . 'includes/post_type_meta.php';
-add_action( 'add_meta_boxes', 'add_prayer_metaboxes', 0 );
-add_action( 'save_post', 'prayer_meta_save' );
+$echo_meta = new Echo_Meta;
 
 /**
  * Prayer Taxonomies
@@ -135,10 +120,8 @@ add_action( 'save_post', 'prayer_meta_save' );
  *
  * @since 0.9.0
  */
-require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_category.php';
-require ECHO_PLUGIN_DIR . 'includes/taxonomy_prayer_post_tag.php';
-add_action( 'init', 'prayer_category_taxonomy', 1 );
-add_action( 'init', 'prayer_post_tag_taxonomy', 2 );
+$echo_taxonomy_category = new Echo_Taxonomy_Category;
+$echo_taxonomy_tags = new Echo_Taxonomy_Tags;
 
 /**
  * Prayer Post Type Menu
@@ -150,9 +133,18 @@ add_action( 'init', 'prayer_post_tag_taxonomy', 2 );
  *
  * @since  0.9.0
  */
-require ECHO_PLUGIN_DIR . 'includes/post_type_menu.php';
-add_action( 'admin_menu', 'prayer_pending_menu', 0 );
-add_filter( 'custom_menu_order', 'echo_prayer_submenu_order' );
+if ( is_admin() )
+    $echo_submenu_pages = new Echo_Submenu_Pages;
+
+/**
+ * Virtual Pages
+ *
+ * Creates virtual pages like form confirmation that Echo can manage from 
+ * settings without having to create and link pages from within WP.
+ *
+ * @since  0.9.0
+ */
+$echo_virtual_pages = new Echo_Virtual_Pages;
 
 /**
  * Echo Prayer Plugin Settings
@@ -162,9 +154,8 @@ add_filter( 'custom_menu_order', 'echo_prayer_submenu_order' );
  *
  * @since  0.9.0 
  */
-require ECHO_PLUGIN_DIR . 'includes/class-echo-settings.php';
-//add_action( 'admin_menu', 'echo_add_admin_menu' );
-//add_action( 'admin_init', 'echo_settings_init' );
+if ( is_admin() )
+	$echo_settings = new Echo_Settings;
 
 /**
  * Shortcodes
@@ -175,10 +166,7 @@ require ECHO_PLUGIN_DIR . 'includes/class-echo-settings.php';
  *
  * @since 0.9.0
  */
-require ECHO_PLUGIN_DIR . 'includes/shortcodes.php';
-add_shortcode( 'echo_prayers', 'echo_prayers_shortcode' );
-add_shortcode( 'echo_prayers_form', 'echo_prayers_form_shortcode' );
-add_shortcode( 'echo_prayers_map', 'echo_prayers_map_shortcode' );
+$echo_shortcodes = new Echo_Shortcodes;
 
 /**
  * Admin Prayer Listing Page Columns
@@ -189,9 +177,8 @@ add_shortcode( 'echo_prayers_map', 'echo_prayers_map_shortcode' );
  *
  * @since 0.9.0
  */
-require ECHO_PLUGIN_DIR . 'includes/post_type_columns.php';
-add_filter( 'manage_prayer_posts_columns', 'echo_prayers_columns_head' );
-add_action( 'manage_prayer_posts_custom_column', 'echo_prayers_columns', 10, 2 );
+if ( is_admin() )
+	$echo_admin_columns = new Echo_Admin_Columns;
 
 /**
  * Data Saving
@@ -205,6 +192,5 @@ add_action( 'manage_prayer_posts_custom_column', 'echo_prayers_columns', 10, 2 )
  *
  * @since 0.9.0
  */
-require ECHO_PLUGIN_DIR . 'includes/form-processing.php';
-add_action( 'init', 'echo_prayer_form_submission' );
-add_action( 'init', 'echo_prayed_click_submit');
+$echo_form_processing = new Echo_Form_Processing;
+

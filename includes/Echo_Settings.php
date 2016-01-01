@@ -13,7 +13,7 @@
  * @version   0.9.0
  */
 
-class EchoSettings {
+class Echo_Settings {
 
 	private $echo_settings_options;
 
@@ -354,8 +354,6 @@ class EchoSettings {
 	}
 
 }
-if ( is_admin() )
-	$echo_settings = new EchoSettings();
 
 /* 
  * Retrieve this value with:

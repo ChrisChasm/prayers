@@ -15,4 +15,3 @@ class Echo_Notifications
 {
 
 }
-$echoNotifications = new Echo_Notifications();

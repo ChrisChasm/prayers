@@ -27,18 +27,19 @@ th#prayer_anonymous {
 
 /* location styles in location column */
 .echo-admin {}
-.echo-location {}
-.echo-location .avatar {
+.echo-location {
+	width: 250px;
+}
+.echo-location div.avatar {
 	float: left;
-	margin-right: 0.25em;
-	display: inline-block;
+	width: 35px;
 }
 .echo-location .avatar img {
 
 }
 .echo-location .details {
-	position: absolute;
-	margin-left: 35px;
+	width: 215px;
+	float: left;
 }
 
 /* Pending count button in sidebar */
