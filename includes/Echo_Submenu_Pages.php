@@ -66,6 +66,7 @@ class Echo_Submenu_Pages
      */
     public function echo_prayer_submenu_order( $menu_ord ) {
     
+        // get pending review count
         global $wpdb;
         $query = "SELECT COUNT(*) FROM wp_posts WHERE post_status = 'pending' AND post_type = 'prayer'";
         $post_count = $wpdb->get_var($query);

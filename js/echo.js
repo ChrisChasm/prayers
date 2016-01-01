@@ -68,5 +68,8 @@
 			event.preventDefault();
 		});
 
+		// form validation
+		$('#echo-prayer-form').validate();
+
 	});
 })(jQuery);

@@ -97,8 +97,9 @@ li.prayer-avatar-small img {
 .prayer-form label.hide { 
 	display: none; 
 }
-.echo.form-errors {
-  padding: 1em;
+.echo.form-errors,
+label.error {
+  padding: 0.5em 1em;
   border: 1px solid #FF8488;
   background: #FFD7DB;
   border-radius: 4px;

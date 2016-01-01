@@ -33,24 +33,24 @@ if ( ! empty( $_SESSION['post'] ) ) {
 
 	<p class="prayer-title">
 		<label for="prayer_title" class="hide"><?php echo __('Prayer title', 'prayer') ?></label>
-		<input type="text" name="prayer_title" placeholder="Prayer title (required)" value="<?php echo $post_data['prayer_title'] ?>" />
+		<input type="text" name="prayer_title" minlength="6" required placeholder="Prayer title (required)" value="<?php echo $post_data['prayer_title'] ?>" />
 	</p>
 
 	<p class="prayer-content">
 		<label for="prayer_content" class="hide"><?php echo __('Prayer Request', 'prayer') ?></label>
-		<textarea name="prayer_content" rows="4" placeholder="Please enter your request here (required)."><?php echo $post_data['prayer_content'] ?></textarea>
+		<textarea name="prayer_content" minlength="6" required rows="4" placeholder="Please enter your request here (required)."><?php echo $post_data['prayer_content'] ?></textarea>
 	</p>
 
 	<p><strong>Your contact information</strong></p>
 
 	<p class="prayer-name">
 		<label for="prayer_name" class="hide"><?php echo __('Your name', 'prayer') ?></label>
-		<input type="text" name="prayer_name" placeholder="Your name (required)" value="<?php echo $post_data['prayer_name'] ?>" />
+		<input type="text" name="prayer_name" required placeholder="Your name (required)" value="<?php echo $post_data['prayer_name'] ?>" />
 	</p>
 
 	<p class="prayer-email">
 		<label for="prayer_email" class="hide"><?php echo __('Your email', 'prayer') ?></label>
-		<input type="text" name="prayer_email" placeholder="Your email (required)" value="<?php echo $post_data['prayer_email'] ?>" />
+		<input type="email" name="prayer_email" required placeholder="Your email (required)" value="<?php echo $post_data['prayer_email'] ?>" />
 	</p>
 
 	<p><strong>Place your request on the map?</strong><br />
