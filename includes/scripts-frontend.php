@@ -15,9 +15,38 @@
  * @since  0.9.0
  */
 function echo_register_styles() {
+
 	// styles
 	wp_register_style( 'echo-css', plugins_url( '/echo/css/echo.css', dir(__FILE__) ), array(), '20151228', 'all' );
 	wp_enqueue_style( 'echo-css');
+
+	// load colors
+	// get echo options
+	$echo_options = get_option( 'echo_settings_options' );
+	$button_primary_color = $echo_options['button_primary_color'];
+	$button_secondary_color = $echo_options['button_secondary_color'];
+	$button_text_color = $echo_options['button_text_color'];
+	$taxonomy_background_color = $echo_options['taxonomy_background_color'];
+	$taxonomy_text_color = $echo_options['taxonomy_text_color'];
+	ob_start();
+	?>
+span.echo-pray-button input[type="submit"] {
+	background: <?php echo $button_primary_color ?>;
+	color: <?php echo $button_text_color ?>;
+}
+span.echo-pray-button:hover input[type="submit"],
+span.echo-pray-button form.prayed-for input[type="submit"]  {
+	background: <?php echo $button_secondary_color ?>;
+	color: <?php echo $button_text_color ?>;
+}
+span.echo-prayer-count,
+span.echo-box {
+	background: <?php echo $taxonomy_background_color; ?>;
+	color: <?php echo $taxonomy_text_color; ?>;
+}<?php
+	$custom_css = ob_get_clean();
+	wp_add_inline_style( 'echo-css', $custom_css );
+
 	// scripts
 	wp_register_script( 'echo-js', plugins_url( '/echo/js/echo.js', dir(__FILE__) ), array(), '20151228', 'all' );
 	wp_enqueue_script( 'echo-js');	

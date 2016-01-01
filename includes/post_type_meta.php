@@ -100,7 +100,7 @@ function prayer_answered_cb( $post ) {
 		<input type="text" name="meta-prayer-email" value="<?php echo $email; ?>" />
 	</p>
 
-	<p><strong>Location Info</strong></p>
+	<p><strong>Geolocation Info</strong></p>
 
 	<?php // build the location output
 	$location = $post_meta['meta-prayer-location'][0];
@@ -109,6 +109,15 @@ function prayer_answered_cb( $post ) {
 	<p>
 		<label for="meta-prayer-location"><?php echo __('Location', 'prayer') ?></label>
 		<input type="text" name="meta-prayer-location" value="<?php echo $location; ?>" />
+	</p>
+
+	<?php // build the lang output
+	$lang = $post_meta['meta-prayer-lang'][0];
+	?>
+
+	<p>
+		<label for="meta-prayer-lang"><?php echo __('Language', 'prayer') ?></label>
+		<input type="text" name="meta-prayer-lang" value="<?php echo $lang; ?>" />
 	</p>
 
 	<?php // if location is set, build the geocoded data and display it
@@ -187,6 +196,11 @@ function prayer_meta_save( $post_id = 0 ) {
     // Checks for input and sanitizes/saves if needed
     if( isset( $_POST[ 'meta-prayer-count' ] ) ) {
     	update_post_meta( $post_id, 'meta-prayer-count', sanitize_text_field( $_POST[ 'meta-prayer-count' ] ) );
+    }
+
+    // Checks for input and sanitizes/saves if needed
+    if ( isset( $POST[ 'meta-prayer-lang' ] ) ) {
+    	update_post_meta( $post_id, 'meta-prayer-lang', sanitize_text_field($_POST['meta-prayer-lang']) );
     }
 
 }

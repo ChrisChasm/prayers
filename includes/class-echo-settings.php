@@ -49,7 +49,7 @@ class EchoSettings {
 
 		<div class="wrap">
 			<h2>Echo Prayer Settings</h2>
-			<p>Adjust Echo to fit your website. For documentation visit <a href="https://github.com/kalebheitzman/echo/blob/master/documentation.md" target="_blank">documentation.md</a> on our github <a href="https://github.com/kalebheitzman/echo" taget="_blank">project page.</a></p>
+			<p>Adjust Echo to fit your website. For documentation visit <a href="https://github.com/kalebheitzman/echo/blob/master/documentation.md" target="_blank">documentation.md</a> on our github <a href="https://github.com/kalebheitzman/echo" target="_blank">project page.</a></p>
 
 			<?php settings_errors(); ?>
 
@@ -110,17 +110,41 @@ class EchoSettings {
 		);*/
 
 		add_settings_field( // #2582EA
-			'primary_color', // id
-			'Primary Color', // title
-			array( $this, 'primary_color_callback' ), // callback
+			'button_primary_color', // id
+			'Button Background Color', // title
+			array( $this, 'button_primary_color_callback' ), // callback
 			'echo-settings-admin', // page
 			'echo_settings_setting_section' // section
 		);
 
 		add_settings_field( // #45D680
-			'secondary_color', // id
-			'Secondary Color', // title
-			array( $this, 'secondary_color_callback' ), // callback
+			'button_secondary_color', // id
+			'Button Active Background Color', // title
+			array( $this, 'button_secondary_color_callback' ), // callback
+			'echo-settings-admin', // page
+			'echo_settings_setting_section' // section
+		);
+
+		add_settings_field( // #fff
+			'button_text_color', // id
+			'Button Text Color', // title
+			array( $this, 'button_text_color_callback' ), // callback
+			'echo-settings-admin', // page
+			'echo_settings_setting_section' // section
+		);
+
+		add_settings_field( // #efefef
+			'taxonomy_text_color', // id
+			'Taxonomy Text Color', // title
+			array( $this, 'taxonomy_text_color_callback' ), // callback
+			'echo-settings-admin', // page
+			'echo_settings_setting_section' // section
+		);
+
+		add_settings_field( // #333
+			'taxonomy_background_color', // id
+			'Taxonomy Background Color', // title
+			array( $this, 'taxonomy_background_color_callback' ), // callback
 			'echo-settings-admin', // page
 			'echo_settings_setting_section' // section
 		);
@@ -173,12 +197,24 @@ class EchoSettings {
 			$sanitary_values['mailchimp_api_key'] = sanitize_text_field( $input['mailchimp_api_key'] );
 		}
 
-		if ( isset( $input['primary_color'] ) ) {
-			$sanitary_values['primary_color'] = sanitize_text_field( $input['primary_color'] );
+		if ( isset( $input['button_primary_color'] ) ) {
+			$sanitary_values['button_primary_color'] = sanitize_text_field( $input['button_primary_color'] );
 		}
 
-		if ( isset( $input['secondary_color'] ) ) {
-			$sanitary_values['secondary_color'] = sanitize_text_field( $input['secondary_color'] );
+		if ( isset( $input['button_secondary_color'] ) ) {
+			$sanitary_values['button_secondary_color'] = sanitize_text_field( $input['button_secondary_color'] );
+		}
+
+		if ( isset( $input['button_text_color'] ) ) {
+			$sanitary_values['button_text_color'] = sanitize_text_field( $input['button_text_color'] );
+		}
+
+		if ( isset( $input['taxonomy_background_color'] ) ) {
+			$sanitary_values['taxonomy_background_color'] = sanitize_text_field( $input['taxonomy_background_color'] );
+		}
+
+		if ( isset( $input['taxonomy_text_color'] ) ) {
+			$sanitary_values['taxonomy_text_color'] = sanitize_text_field( $input['taxonomy_text_color'] );
 		}
 
 		if ( isset( $input['categories_enabled'] ) ) {
@@ -222,7 +258,7 @@ class EchoSettings {
 			'selected' => $this->echo_settings_options['notification_user'],
 		);
 		wp_dropdown_users( $args ); 
-		echo ' <small>' . __( 'User that recieves an email when a new prayer request is submitted.', 'echo' ) . '</small>';
+		echo ' <small>' . __( 'User that is notified by email when a new prayer request is submitted.', 'echo' ) . '</small>';
 		?>
 		<?php
 	}
@@ -234,20 +270,44 @@ class EchoSettings {
 		);
 	}
 
-	public function primary_color_callback() {
+	public function button_primary_color_callback() {
 		printf(
-			'<input class="regular-text color-field" type="text" name="echo_settings_options[primary_color]" id="primary_color" value="%s">',
-			isset( $this->echo_settings_options['primary_color'] ) ? esc_attr( $this->echo_settings_options['primary_color']) : '#2582EA'
+			'<input class="regular-text color-field" type="text" name="echo_settings_options[button_primary_color]" id="button_primary_color" value="%s">',
+			isset( $this->echo_settings_options['button_primary_color'] ) ? esc_attr( $this->echo_settings_options['button_primary_color']) : '#2582EA'
 		);
-		echo ' <small>' . __( 'Color of prayer buttons.', 'echo' ) . '</small>';
+		echo ' <small>' . __( 'Color of prayer button.', 'echo' ) . '</small>';
 	}
 
-	public function secondary_color_callback() {
+	public function button_secondary_color_callback() {
 		printf(
-			'<input class="regular-text color-field" type="text" name="echo_settings_options[secondary_color]" id="secondary_color" value="%s">',
-			isset( $this->echo_settings_options['secondary_color'] ) ? esc_attr( $this->echo_settings_options['secondary_color']) : '#45D680'
+			'<input class="regular-text color-field" type="text" name="echo_settings_options[button_secondary_color]" id="button_secondary_color" value="%s">',
+			isset( $this->echo_settings_options['button_secondary_color'] ) ? esc_attr( $this->echo_settings_options['button_secondary_color']) : '#45D680'
 		);
-		echo ' <small>' . __( 'Color of highlighted prayer buttons.', 'echo' ) . '</small>';
+		echo ' <small>' . __( 'Color of highlighted prayer button.', 'echo' ) . '</small>';
+	}
+
+	public function button_text_color_callback() {
+		printf(
+			'<input class="regular-text color-field" type="text" name="echo_settings_options[button_text_color]" id="button_text_color" value="%s">',
+			isset( $this->echo_settings_options['button_text_color'] ) ? esc_attr( $this->echo_settings_options['button_text_color']) : '#fff'
+		);
+		echo ' <small>' . __( 'Text color of prayer button.', 'echo' ) . '</small>';
+	}
+
+	public function taxonomy_background_color_callback() {
+		printf(
+			'<input class="regular-text color-field" type="text" name="echo_settings_options[taxonomy_background_color]" id="taxonomy_background_color" value="%s">',
+			isset( $this->echo_settings_options['taxonomy_background_color'] ) ? esc_attr( $this->echo_settings_options['taxonomy_background_color']) : '#efefef'
+		);
+		echo ' <small>' . __( 'Text color of taxonomy pill.', 'echo' ) . '</small>';
+	}
+
+	public function taxonomy_text_color_callback() {
+		printf(
+			'<input class="regular-text color-field" type="text" name="echo_settings_options[taxonomy_text_color]" id="taxonomy_text_color" value="%s">',
+			isset( $this->echo_settings_options['taxonomy_text_color'] ) ? esc_attr( $this->echo_settings_options['taxonomy_text_color']) : '#333'
+		);
+		echo ' <small>' . __( 'Text color of taxonomy pill.', 'echo' ) . '</small>';
 	}
 
 	public function categories_enabled_callback() {
@@ -255,7 +315,7 @@ class EchoSettings {
 		<label for="categories_enabled-0"><input type="radio" name="echo_settings_options[categories_enabled]" id="categories_enabled-0" value="1" <?php echo $checked; ?>> Yes</label>
 		<?php $checked = ( isset( $this->echo_settings_options['categories_enabled'] ) && $this->echo_settings_options['categories_enabled'] === '0' ) ? 'checked' : '' ; ?>
 		<label for="categories_enabled-1"><input type="radio" name="echo_settings_options[categories_enabled]" id="categories_enabled-1" value="0" <?php echo $checked; ?>> No</label>
-		<?php echo '<small>' . __( 'Enable users to select a category for thier prayer request?', 'echo' ) . '</small>'; ?>
+		<?php echo '<small>' . __( 'Enable frontend users to select a category for thier prayer request?', 'echo' ) . '</small>'; ?>
 		</fieldset> <?php
 
 	}
@@ -265,7 +325,7 @@ class EchoSettings {
 		<label for="tags_enabled-0"><input type="radio" name="echo_settings_options[tags_enabled]" id="tags_enabled-0" value="1" <?php echo $checked; ?>> Yes</label>
 		<?php $checked = ( isset( $this->echo_settings_options['tags_enabled'] ) && $this->echo_settings_options['tags_enabled'] === '0' ) ? 'checked' : '' ; ?>
 		<label for="tags_enabled-1"><input type="radio" name="echo_settings_options[tags_enabled]" id="tags_enabled-1" value="0" <?php echo $checked; ?>> No</label>
-		<?php echo '<small>' . __( 'Enable users to tag thier prayer request?', 'echo' ) . '</small>'; ?>
+		<?php echo '<small>' . __( 'Enable frontend users to tag thier prayer request?', 'echo' ) . '</small>'; ?>
 		</fieldset> <?php
 	}
 
@@ -320,8 +380,8 @@ if ( is_admin() )
  * $notification_email = $echo_settings_options['notification_email']; // Notification Email
  * $notification_user = $echo_settings_options['notification_user']; // Notification User
  * $mailchimp_api_key = $echo_settings_options['mailchimp_api_key']; // MailChimp API Key
- * $primary_color = $echo_settings_options['primary_color']; // Primary Color
- * $secondary_color = $echo_settings_options['secondary_color']; // Secondary Color
+ * $button_primary_color = $echo_settings_options['button_primary_color']; // Primary Color
+ * $button_secondary_color = $echo_settings_options['button_secondary_color']; // Secondary Color
  * $categories_enabled = $echo_settings_options['categories_enabled']; // Categories Enabled
  * $tags_enabled = $echo_settings_options['tags_enabled']; // Tags Enabled
  * $default_category = $echo_settings_options['default_category']; // Default Category

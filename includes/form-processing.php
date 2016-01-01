@@ -32,13 +32,16 @@ function echo_prayer_form_submission() {
 	    }
 	    // get the post
 		$post = $_POST;
-		// check to make sure the taxonomy term exists
+
+		// check to make sure the taxonomy term exists and insert if it does not
 		$prayer_category = term_exists( $post['prayer_category'], 'prayer_category', 0 );
-		// insert the term if it does not
 		if ( ! $prayer_category ) {
 			$prayer_category = wp_insert_term( $prayer_category, 'prayer_category', array( 'parent' => 0 ) );
 		}
 
+		// check for taxonomy tags
+		$tags = explode( ',', $post['prayer_tags'] );
+	
 		// get the echo user
 		$user = get_user_by( 'login', 'echo' );
 
@@ -51,8 +54,9 @@ function echo_prayer_form_submission() {
 			'post_content' => $post['prayer_content'],
 			'post_status' => 'pending',
 			'post_type' => 'prayer',
-			'tax_input' => [ 'prayer_category' => $prayer_category['term_taxonomy_id'], 'prayer_location' => $prayer_location['term_taxonomy_id'] ],
+			'tax_input' => [ 'prayer_category' => $prayer_category['term_taxonomy_id'], 'prayer_tag' => $tags ],
 		);
+		var_dump($prayer);
 		// create the pending prayer request
 		$prayer_id = wp_insert_post($prayer);
 		// add meta to the prayer after insert. You have to get a post id
@@ -63,6 +67,9 @@ function echo_prayer_form_submission() {
 		add_post_meta( $prayer_id, 'meta-prayer-name', $post['prayer_name'] );
 		add_post_meta( $prayer_id, 'meta-prayer-email', $post['prayer_email'] );
 		add_post_meta( $prayer_id, 'meta-prayer-location', $post['prayer_location'] );
+		// set the language of the post
+		$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
+		add_post_meta( $prayer_id, 'meta-prayer-lang', $lang );
 		// calculate coordinates and store them 
 		$location = echo_parse_location($post['prayer_location']);
 		echo_save_location_meta( $prayer_id, $location );

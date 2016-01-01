@@ -42,7 +42,7 @@
 				<div class="echo prayer-meta">
 					<ul>
 
-						<li class="prayer-avatar-small"><?php echo echo_get_avatar( $id ); ?></li>
+						<li class="prayer-avatar-small"><?php echo echo_get_avatar( $id, 27 ); ?></li>
 						<li><?php echo echo_get_prayed_button( $id ); ?></li>
 						<?php if ( $prayer_answered ): ?>
 							<li class="echo prayer-answered"><span class="echo prayer-answered">Answered</span></li>

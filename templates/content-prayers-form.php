@@ -1,12 +1,14 @@
 <?php 
 
+// get echo options
+$echo_options = get_option( 'echo_settings_options' );
+
 if (count($_POST) > 0): 
 
 	// get custom notification
-	$echo_options = get_option( 'echo_settings_options' );
 	$response = $echo_options['prayer_form_response'];
 
-	echo $response;
+	echo wpautop( $response );
 
 	?>
 	
@@ -19,6 +21,8 @@ if (count($_POST) > 0):
 	<form method="post" id="echo-prayer-form" class="echo form" action="">
 		<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>
 
+		<p><strong>Your prayer request</strong></p>
+
 		<p class="prayer-title">
 			<label for="prayer_title" class="hide"><?php echo __('Prayer title', 'prayer') ?></label>
 			<input type="text" name="prayer_title" placeholder="Prayer title" />
@@ -29,7 +33,7 @@ if (count($_POST) > 0):
 			<textarea name="prayer_content" rows="4" placeholder="Please enter your request here..."></textarea>
 		</p>
 
-		<p>Contact Information to let you know when we've prayed for you.</p>
+		<p><strong>Your contact information</strong></p>
 
 		<p class="prayer-name">
 			<label for="prayer_name" class="hide"><?php echo __('Your name', 'prayer') ?></label>
@@ -41,7 +45,8 @@ if (count($_POST) > 0):
 			<input type="text" name="prayer_email" placeholder="Your email" />
 		</p>
 
-		<p>Place your request on the map? City and state is fine, we don't need a full address.</p>
+		<p><strong>Place your request on the map?</strong><br />
+		<small>City and state is fine, we don't need a full address.</small></p>
 
 		<p class="prayer-address">
 			<label for="prayer_location" class="hide"><?php echo __('Your city, state, province, country', 'prayer') ?></label>
@@ -49,19 +54,22 @@ if (count($_POST) > 0):
 		</p>
 
 		<?php
+		// check to see if categories are enabled
+		$categories_enabled = $echo_options['categories_enabled'];
 
-		$prayer_category = array( 'prayer_category' );
-		$args = array(
-			'orderby' => 'name',
-			'order' => 'ASC',
-			'hide_empty' => false
-		);
-		$prayer_categories = get_terms($prayer_category, $args);
+		if ($categories_enabled == '1'):
+			$prayer_category = array( 'prayer_category' );
+			$args = array(
+				'orderby' => 'name',
+				'order' => 'ASC',
+				'hide_empty' => false
+			);
+			$prayer_categories = get_terms($prayer_category, $args);
 		?>
 
 		<p class="prayer-categories inline-form-elements">
 			<label for="prayer_category">
-				<strong><?php echo __('Categories'); ?></strong>
+				<strong><?php echo __('Categories', 'echo'); ?></strong>
 			</label><br />
 			<?php foreach ($prayer_categories as $category): ?>
 				<label for="<?php echo $category->slug; ?>">
@@ -70,30 +78,24 @@ if (count($_POST) > 0):
 			<?php endforeach; ?>
 		</p>
 
-		<?php
+		<?php endif; // categories enabled
 
-		$prayer_location = array( 'prayer_location' );
-		$args = array(
-			'orderby' => 'name',
-			'order' => 'ASC',
-			'hide_empty' => false
-		);
-		$prayer_locations = get_terms($prayer_location, $args);
+		// check to see if tags are enabled
+		$tags_enabled = $echo_options['tags_enabled'];
+		if ( $tags_enabled == '1' ):
+
 		?>
 
-<?php /* Geographic Location
-
-		<p class="prayer-location inline-form-elements">
-			<label for="prayer_location">
-				<strong><?php echo __('Locations'); ?></strong>
-			</label><br />
-			<?php foreach ($prayer_locations as $location): ?>
-				<label for="<?php echo $location->slug; ?>">
-					<input type="radio" name="prayer_location" value="<?php echo $location->slug; ?>" /> <?php echo $location->name ?> &nbsp;
-				</label>
-			<?php endforeach; ?>
+		<p class="prayer-tags">
+			<label for="prayer_tags">
+				<strong><?php echo __('Tags', 'echo'); ?></strong>
+				<input type="text" name="prayer_tags" value="" placeholder="healing, doctors, africa" />
+			</label>
+			<small>Comma-separated list of tags for your request</small>
 		</p>
-*/ ?>
+
+		<?php endif; // tags enabled ?>
+		
 		<p class="prayer-anonymous inline-form-elements">
 			<label>
 				<strong><?php echo __('Would you like this prayer request to be anonymous?', 'prayer' ); ?></strong>
@@ -104,7 +106,7 @@ if (count($_POST) > 0):
 			</label>
 		</p>
 
-		<p>
+		<p>	
 			<input type="submit" value="Send Prayer" />
 			<input type="hidden" name="prayer-submission" value="1" />
 		</p>
