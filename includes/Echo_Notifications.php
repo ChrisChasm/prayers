@@ -26,13 +26,20 @@ class Echo_Notifications
 		// get user to notify
 		$user = get_user_by( 'login', 'echo' );
 		$email = $user->data->user_email;
+
 		if ( ! empty( $email ) ) {
 
 			$subject = __('New Web Prayer Request', 'echo' );
 
-			$body = "{$data['prayer_content']}\r\n\n";
-			$body .= "From: {$data['prayer_name']} <{$data['prayer_email']}>";
-			$body .= "Location: {$data['prayer_location']} \r\n";
+			// set var to be accessible in the called template
+			set_query_var( 'data', $data );
+
+			// load templates
+			$templates = new Echo_Template_Loader;
+			// start a buffer to capture output
+			ob_start();
+			$templates->get_template_part( 'email', 'notification' );
+			$body = ob_get_clean();
 
 			return wp_mail( $email, $subject, $body );
 		}
