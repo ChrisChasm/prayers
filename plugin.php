@@ -194,3 +194,12 @@ if ( is_admin() )
  */
 $echo_form_processing = new Echo_Form_Processing;
 
+/**
+ * Echo Rewrites
+ * 
+ * Rewrites for the json api.
+ *
+ * @since  0.9.0
+ */
+$echo_rewrites = new Echo_Rewrites;
+
