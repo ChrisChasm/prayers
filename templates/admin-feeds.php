@@ -45,13 +45,10 @@
 					    	<td>By Most Recent </td><td><a target="_blank" href="<?php echo get_site_url(); ?>/wp-json/wp/v2/prayers"><?php echo get_site_url(); ?>/wp-json/wp/v2/prayers</a></td>
 						</tr>
 						<tr>
-					    	<td>By Locations </td><td><a target="_blank" href="#"><?php echo get_site_url(); ?>/prayers/json?location=north_america</a></td>
+					    	<td>By Most Recent </td><td><a target="_blank" href="<?php echo get_site_url(); ?>/wp-json/wp/v2/prayers?filter=[prayer_category]=missions"><?php echo get_site_url(); ?>/wp-json/wp/v2/prayers?filter=[prayer_category]=missions</a></td>
 						</tr>
 						<tr>
-					    	<td>By Categories </td><td><a target="_blank" href="#"><?php echo get_site_url(); ?>/prayers/json?category=missions</a></td>
-						</tr>
-						<tr>
-					    	<td>By Tags </td><td><a target="_blank" href="#"><?php echo get_site_url(); ?>/prayers/json?tags=health,supplies</a></td>
+					    	<td>By Tags </td><td><a target="_blank" href="<?php echo get_site_url(); ?>/wp-json/wp/v2/prayers?filter=[prayer_tag]=africa"><?php echo get_site_url(); ?>/wp-json/wp/v2/prayers?filter=[prayer_tag]=africa</a></td>
 					    </tr>
 					</tbody>
 		    	</table>

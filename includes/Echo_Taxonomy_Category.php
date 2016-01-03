@@ -53,7 +53,9 @@ class Echo_Taxonomy_Category
 			'show_admin_column'          => true,
 			'show_in_nav_menus'          => true,
 			'show_tagcloud'              => false,
-			//'update_count_callback'      => 'prayer_category_count_cb',	
+			//'update_count_callback'      => 'prayer_category_count_cb',
+			'rest_base'          		 => 'prayer-category',
+        	'rest_controller_class' 	 => 'WP_REST_Terms_Controller',	
 		);
 		register_taxonomy( 'prayer_category', array( 'prayer' ), $args );
 

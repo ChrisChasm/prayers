@@ -195,11 +195,11 @@ if ( is_admin() )
 $echo_form_processing = new Echo_Form_Processing;
 
 /**
- * Echo Rewrites
- * 
- * Rewrites for the json api.
+ * Echo Prayer JSON API
+ *
+ * Outputs JSON responses from /prayers/api.
  *
  * @since  0.9.0
  */
-$echo_rewrites = new Echo_Rewrites;
+$echo_api = new Echo_API;
 
