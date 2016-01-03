@@ -70,7 +70,7 @@ if ( ! empty( $_SESSION['post'] ) ) {
 		$args = array(
 			'orderby' => 'name',
 			'order' => 'ASC',
-			'hide_empty' => false
+			'hide_empty' => false 
 		);
 		$prayer_categories = get_terms($prayer_category, $args);
 	?>
@@ -79,11 +79,13 @@ if ( ! empty( $_SESSION['post'] ) ) {
 		<label for="prayer_category">
 			<strong><?php echo __('Categories', 'echo'); ?></strong>
 		</label><br />
-		<?php foreach ($prayer_categories as $category): ?>
+		<?php foreach ($prayer_categories as $key => $category): ?>
 			<label for="<?php echo $category->slug; ?>">
-				<input type="radio" name="prayer_category" value="<?php echo $category->slug; ?>" /> <?php echo $category->name ?> &nbsp;
+				<input type="radio" name="prayer_category" value="<?php echo $category->slug; ?>"  <?php if ( $key == 0 ) echo "required"; ?>/> <?php echo $category->name ?> &nbsp;
 			</label>
 		<?php endforeach; ?>
+		<br />
+		<label for="prayer_category" class="error" style="display:none;"><?php echo __( 'Please choose a category.', 'echo' ) ?></label>
 	</p>
 
 	<?php endif; // categories enabled
