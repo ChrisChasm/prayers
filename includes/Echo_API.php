@@ -20,19 +20,37 @@ class Echo_API
 	 */
 	public function __construct()
 	{
-		add_action( 'rest_api_init', array( $this, 'api' ) );
-		add_action( 'rest_api_init', array( $this, 'api_category' ) );
-		add_action( 'rest_api_init', array( $this, 'api_tags' ) );
-		add_action( 'rest_api_init', array( $this, 'api_location' ) );
+		add_action( 'rest_api_init', function() {
+			register_rest_route( 'echo/v1', '/prayers', array(
+				'methods' => 'GET',
+				'callback' => array( $this, 'api' )
+			) );
+		});
 	}
 
 	/**
 	 * GET /prayers/api
 	 * @since 0.9.0
 	 */
-	public function api() 
+	public function api( WP_REST_Request $request ) 
 	{
-		
+		var_dump($request); die();
+		// You can access parameters via direct array access on the object:
+	    $param = $request['some_param'];
+
+	    // Or via the helper method:
+	    $param = $request->get_param( 'some_param' );
+
+	    // You can get the combined, merged set of parameters:
+	    $parameters = $request->get_params();
+
+	    // The individual sets of parameters are also available, if needed:
+	    $parameters = $request->get_url_params();
+	    $parameters = $request->get_query_params();
+	    $parameters = $request->get_body_params();
+	    $parameters = $request->get_default_params();
+
+		return [];
 	}
 
 	/**
@@ -41,7 +59,7 @@ class Echo_API
 	 */
 	public function api_category()
 	{
-
+		return [];
 	}
 
 	/**
@@ -50,7 +68,7 @@ class Echo_API
 	 */
 	public function api_tags()
 	{
-		
+		return [];
 	}
 
 	/**
@@ -59,7 +77,7 @@ class Echo_API
 	 */
 	public function api_location()
 	{
-		
+		return [];
 	}
 
 }
