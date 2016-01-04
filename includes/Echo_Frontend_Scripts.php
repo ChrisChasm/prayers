@@ -26,7 +26,7 @@ class Echo_Frontend_Scripts
 	public function echo_register_scripts() {
 
 		// styles
-		wp_register_style( 'echo-css', plugins_url( '/echo/css/echo.css', dir(__FILE__) ), array(), '20151228', 'all' );
+		wp_register_style( 'echo-css', plugins_url( '/echo/css/echo.css', 'echo' ), array(), '20151228', 'all' );
 		wp_enqueue_style( 'echo-css');
 
 		// load colors
@@ -57,9 +57,9 @@ class Echo_Frontend_Scripts
 		wp_add_inline_style( 'echo-css', $custom_css );
 
 		// scripts
-		wp_register_script( 'jquery-validation', plugins_url( '/echo/bower_components/jquery-validation/dist/jquery.validate.min.js', dir(__FILE__) ), array( 'jquery' ) );
-		wp_register_script( 'jquery-validation-extras', plugins_url( '/echo/bower_components/jquery-validation/dist/additional-methods.min.js', dir(__FILE__) ), array( 'jquery' ) );
-		wp_register_script( 'echo-js', plugins_url( '/echo/js/echo.js', dir(__FILE__) ), array( 'jquery' ), '20160101', 'all' );
+		wp_register_script( 'jquery-validation', plugins_url( '/echo/bower_components/jquery-validation/dist/jquery.validate.min.js', 'echo' ), array( 'jquery' ) );
+		wp_register_script( 'jquery-validation-extras', plugins_url( '/echo/bower_components/jquery-validation/dist/additional-methods.min.js', 'echo' ), array( 'jquery' ) );
+		wp_register_script( 'echo-js', plugins_url( '/echo/js/echo.js', 'echo' ), array( 'jquery' ), '20160101', 'all' );
 
 		wp_enqueue_script( 'jquery-validation' );
 		wp_enqueue_script( 'jquery-validation-extras' );
