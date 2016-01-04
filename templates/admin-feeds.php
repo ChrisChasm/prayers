@@ -1,4 +1,4 @@
-<div class="wrap">
+	<div class="wrap">
 	<h2>Echo Prayer Feeds</h2>
 
 	<div id="col-container">
@@ -41,6 +41,12 @@
 	    				</tr>
     				</thead>
     				<tbody>
+    					<tr>
+    						<td>By Most Recent</td>
+    						<td>
+    							<a href="<?php echo get_site_url(); ?>/wp-json/echo/v1" target="_blank"><?php echo get_site_url(); ?>/wp-json/echo/v1</a>
+    						</td>
+    					</tr>
 		    			<tr>
 					    	<td>By Most Recent </td><td><a target="_blank" href="<?php echo get_site_url(); ?>/wp-json/wp/v2/prayers"><?php echo get_site_url(); ?>/wp-json/wp/v2/prayers</a></td>
 						</tr>
