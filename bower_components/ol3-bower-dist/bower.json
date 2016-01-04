@@ -1,0 +1,25 @@
+{
+  "name": "ol3-bower-dist",
+  "authors": [
+    "juristr <juri.strumpflohner@gmail.com>"
+  ],
+  "description": "Bower dist package taken from the official ol3 npm repo",
+  "main": [
+    "dist/ol.js",
+    "dist/ol.css"
+  ],
+  "keywords": [
+    "openlayers",
+    "ol3",
+    "gis"
+  ],
+  "license": "MIT",
+  "homepage": "http://openlayers.org/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

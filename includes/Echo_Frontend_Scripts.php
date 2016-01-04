@@ -26,7 +26,7 @@ class Echo_Frontend_Scripts
 	public function echo_register_scripts() {
 
 		// styles
-		wp_register_style( 'echo-css', plugins_url( '/echo/css/echo.css', 'echo' ), array(), '20151228', 'all' );
+		wp_register_style( 'echo-css', plugins_url( '/echo/css/echo.css', 'echo' ), array(), '0.9.0', 'all' );
 		wp_enqueue_style( 'echo-css');
 
 		// load colors
@@ -59,11 +59,22 @@ class Echo_Frontend_Scripts
 		// scripts
 		wp_register_script( 'jquery-validation', plugins_url( '/echo/bower_components/jquery-validation/dist/jquery.validate.min.js', 'echo' ), array( 'jquery' ) );
 		wp_register_script( 'jquery-validation-extras', plugins_url( '/echo/bower_components/jquery-validation/dist/additional-methods.min.js', 'echo' ), array( 'jquery' ) );
-		wp_register_script( 'echo-js', plugins_url( '/echo/js/echo.js', 'echo' ), array( 'jquery' ), '20160101', 'all' );
+		wp_register_script( 'echo-js', plugins_url( '/echo/js/echo.js', 'echo' ), array( 'jquery' ), '0.9.0', 'all' );
 
 		wp_enqueue_script( 'jquery-validation' );
 		wp_enqueue_script( 'jquery-validation-extras' );
 		wp_enqueue_script( 'echo-js');	
+
+		// map scripts & styles
+		
+		wp_register_style( 'openlayers', plugins_url( '/echo/bower_components/ol3-bower-dist/dist/ol.css', 'echo' ), array(), null, 'all' );
+		wp_enqueue_style( 'openlayers' );
+
+		wp_register_script( 'openlayers', plugins_url( '/echo/bower_components/ol3-bower-dist/dist/ol.js' ), array( 'jquery') );
+		wp_register_script( 'echo-map-js', plugins_url( '/echo/js/echo-map.js', 'echo' ), array( 'openlayers'), '0.9.0', 'all' );
+		
+		wp_enqueue_script( 'openlayers' );
+		wp_enqueue_script( 'echo-map-js');
 	}
 
 }
