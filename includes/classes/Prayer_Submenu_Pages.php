@@ -50,9 +50,9 @@ class Prayer_Submenu_Pages
      * @since  0.9.0
      */
     public function prayer_feeds_page_cb() {
-        $templates = new Prayer_Template_Loader;
-        // start a buffer to capture output
-        $output = $templates->get_template_part( 'admin', 'feeds' );
+        // load the metabox html
+        $views = plugin_dir_path( __FILE__ ) . "../views/";
+        include_once( $views . 'admin-feeds.php' );
     }
 
     /**
