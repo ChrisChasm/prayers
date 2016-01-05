@@ -58,12 +58,17 @@ span.prayer-update-count {
 	padding: 0;
 }
 
-#prayer-notes {
+#prayer-notes,
+#prayer-responses {
 	padding-top: 6px;
 }
-#prayer-notes textarea {
+#prayer-notes textarea,
+#prayer-responses textarea {
     width:         100%;
     margin-bottom: 10px;
+}
+#prayer-responses textarea {
+	height: 100px;
 }
 #prayer-navigation {
   overflow:hidden;

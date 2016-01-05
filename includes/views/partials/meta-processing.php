@@ -31,34 +31,27 @@
 			<label><input type="radio" name="prayer-answered" value="0" <?php echo $answeredFalse; ?> /><span>No </span></label>
 			<label><input type="radio" name="prayer-answered" value="1" <?php echo $answeredTrue; ?> /><span>Yes </span></label>
 		</p>
-
 	</div><!--.column-->
 
 	<div class="column">
-		<?php // build the submitter name input
-			$name = $post_meta['prayer-name'][0];
+		<?php // build the prayed_for radio buttons
+		$prayer_prayed = $post_meta['prayer-prayed'][0];
+		if ( $prayer_prayed == "1" ) {
+			$prayed_checked = 'checked="checked"';
+		}
 		?>
-
 		<p>
-			<label for="prayer-name"><?php echo __('Name', 'prayer') ?></label>
-			<input type="text" name="prayer-name" value="<?php echo $name; ?>" />
+			<label><input type="checkbox"e name="prayer-prayed" value="1" <?php echo $prayed_checked; ?> /><span><?php echo __( 'Staff Prayed', 'prayer' ) ?></span></label>
 		</p>
 
-		<?php // build the email input
-			$email = $post_meta['prayer-email'][0];
-		?>
-
 		<p>
-			<label for="prayer-email"><?php echo __('Email', 'prayer') ?></label>
-			<input type="text" name="prayer-email" value="<?php echo $email; ?>" />
+			<label><input type="checkbox" name="prayed-notification-sent" value="1" <?php echo $prayed_notification_checked ?>><?php echo __( 'Follow-up email sent', 'prayer' ) ?></inpu>
 		</p>
 	</div><!--.column-->
 
-	<div class="column">
-		<?php // build the prayer count input
+	<div class="column"><?php // build the prayer count input
 			$count = $post_meta['prayer-count'][0];
 		?>
-
 		<p>
 			<label for="prayer-count"><?php echo __('Prayed Count', 'prayer') ?></label>
 			<input type="text" name="prayer-count" value="<?php echo $count; ?>" size="7" />

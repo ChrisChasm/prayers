@@ -48,7 +48,7 @@ class Prayer_Frontend_Scripts
 		background: <?php echo $button_secondary_color ?>;
 		color: <?php echo $button_text_color ?>;
 	}
-	span.prayer-prayer-count,
+	span.prayer-count,
 	span.prayer-box {
 		background: <?php echo $taxonomy_background_color; ?>;
 		color: <?php echo $taxonomy_text_color; ?>;
@@ -56,25 +56,6 @@ class Prayer_Frontend_Scripts
 		$custom_css = ob_get_clean();
 		wp_add_inline_style( 'prayer-css', $custom_css );
 
-		// scripts
-		wp_register_script( 'jquery-validation', plugins_url( '/prayer/bower_components/jquery-validation/dist/jquery.validate.min.js', 'prayer' ), array( 'jquery' ) );
-		wp_register_script( 'jquery-validation-extras', plugins_url( '/prayer/bower_components/jquery-validation/dist/additional-methods.min.js', 'prayer' ), array( 'jquery' ) );
-		wp_register_script( 'prayer-js', plugins_url( '/prayer/js/prayer.js', 'prayer' ), array( 'jquery' ), '0.9.0', 'all' );
-
-		wp_enqueue_script( 'jquery-validation' );
-		wp_enqueue_script( 'jquery-validation-extras' );
-		wp_enqueue_script( 'prayer-js');	
-
-		// map scripts & styles
-		
-		wp_register_style( 'openlayers', plugins_url( '/prayer/bower_components/ol3-bower-dist/dist/ol.css', 'prayer' ), array(), null, 'all' );
-		wp_enqueue_style( 'openlayers' );
-
-		wp_register_script( 'openlayers', plugins_url( '/prayer/bower_components/ol3-bower-dist/dist/ol.js' ), array( 'jquery') );
-		wp_register_script( 'prayer-map-js', plugins_url( '/prayer/js/prayer-map.js', 'prayer' ), array( 'openlayers'), '0.9.0', 'all' );
-		
-		wp_enqueue_script( 'openlayers' );
-		wp_enqueue_script( 'prayer-map-js');
 	}
 
 }

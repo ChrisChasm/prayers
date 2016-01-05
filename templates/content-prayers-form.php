@@ -7,7 +7,7 @@ if ( ! empty( $_SESSION['errors'] ) ) {
 	$errors = $_SESSION['errors'];
 
 	?>
-	<div class="echo form-errors">
+	<div class="prayer form-errors">
 		<ul>
 		<?php foreach( $errors as $error ) {
 			?>
@@ -26,7 +26,7 @@ if ( ! empty( $_SESSION['post'] ) ) {
 
 
 		
-<form method="post" id="prayer-prayer-form" class="echo form" action="">
+<form method="post" id="prayer-form" class="prayer form" action="">
 	<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>
 
 	<p><strong>Your prayer request</strong></p>
