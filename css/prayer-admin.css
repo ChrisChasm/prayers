@@ -69,3 +69,8 @@ span.prayer-update-count {
   width: 33.3%;
   float: left;
 }
+#prayer-navigation .column.align-right {
+	width: 30.3%;
+	margin-right: 3%;
+	text-align: right;
+}

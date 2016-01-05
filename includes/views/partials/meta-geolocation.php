@@ -20,7 +20,7 @@
 		</p>
 	</div><!--.column-->
 
-	<div class="column">
+	<div class="column align-right">
 		<?php // if location is set, build the geocoded data and display it
 		if ( ! empty($location) ):
 
@@ -46,7 +46,9 @@
 	</div><!--.column-->
 
 	<div class="column">
-		<img src="https://maps.googleapis.com/maps/api/staticmap?center=<?php echo $latitude ?>,<?php echo $longitude ?>&zoom=11&size=400x150&maptype=roadmap" />
+		<?php if ( ! empty($location) ): ?>
+			<img src="https://maps.googleapis.com/maps/api/staticmap?center=<?php echo $latitude ?>,<?php echo $longitude ?>&zoom=11&size=400x150&maptype=roadmap" />
+		<?php endif; ?>
 	</div><!--.column-->
 
 </div>
