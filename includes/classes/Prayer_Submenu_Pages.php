@@ -38,12 +38,20 @@ class Prayer_Submenu_Pages
             'feeds',
             array( $this, 'prayer_feeds_page_cb' )
         );
+        add_submenu_page(
+            'edit.php?post_type=prayer',
+            'MailChimp',
+            'MailChimp',
+            'edit_posts',
+            'mailchimp',
+            array( $this, 'prayer_mailchimp_page_cb' )
+        );
     }
 
     /**
      * Build the Feeds Page
      *
-     * This is a callback for prayer_feeds_menu. It generates html to be
+     * This is a callback for prayer_feeds_page. It generates html to be
      * displayed on this submenu page.
      * 
      * @return html
@@ -53,6 +61,21 @@ class Prayer_Submenu_Pages
         // load the metabox html
         $views = plugin_dir_path( __FILE__ ) . "../views/";
         include_once( $views . 'admin-feeds.php' );
+    }
+
+    /**
+     * Build the MailChimp Admin Page
+     *
+     * This is a callback for prayer_mailchimp_page. It generates html to be
+     * displayed on this submenu page.
+     * 
+     * @return html
+     * @since  0.9.0
+     */
+    public function prayer_mailchimp_page_cb() {
+        // load the metabox html
+        $views = plugin_dir_path( __FILE__ ) . "../views/";
+        include_once( $views . 'admin-mailchimp.php' );
     }
 
     /**
@@ -82,8 +105,9 @@ class Prayer_Submenu_Pages
         $arr[] = $submenu['edit.php?post_type=prayer'][10]; // add new
         $arr[] = $submenu['edit.php?post_type=prayer'][15]; // categoris
         $arr[] = $submenu['edit.php?post_type=prayer'][16]; // tags
+        $arr[] = $submenu['edit.php?post_type=prayer'][18]; // mailchimp
         $arr[] = $submenu['edit.php?post_type=prayer'][17]; // feeds
-        $arr[] = $submenu['edit.php?post_type=prayer'][18]; // feeds
+        $arr[] = $submenu['edit.php?post_type=prayer'][19]; // settings
 
         $all_prayers = $arr[0][0];
         $arr[0][0] = $all_prayers . $post_count_string;

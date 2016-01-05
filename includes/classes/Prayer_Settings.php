@@ -75,20 +75,20 @@ class Prayer_Settings {
 		);
 
 		add_settings_field(
+			'mailchimp_api_key', // id
+			'MailChimp API Key', // title
+			array( $this, 'mailchimp_api_key_callback' ), // callback
+			'prayer-settings-admin', // page
+			'prayer_settings_setting_section' // section
+		);
+
+		add_settings_field(
 			'prayer_form_response', // id
 			'Prayer Form Response', // title
 			array( $this, 'prayer_form_response_callback' ), // callback
 			'prayer-settings-admin', // page
 			'prayer_settings_setting_section' // section
 		);
-
-		/*add_settings_field(
-			'mailchimp_api_key', // id
-			'MailChimp API Key', // title
-			array( $this, 'mailchimp_api_key_callback' ), // callback
-			'prayer-settings-admin', // page
-			'prayer_settings_setting_section' // section
-		);*/
 
 		add_settings_field( // #2582EA
 			'button_primary_color', // id
@@ -207,7 +207,7 @@ class Prayer_Settings {
 		}
 
 		if ( isset( $input['prayer_form_response'] ) ) {
-			$sanitary_values['prayer_form_response'] = wp_kses( $input['prayer_form_response'] );
+			$sanitary_values['prayer_form_response'] = wp_kses( $input['prayer_form_response'], array() );
 		}
 
 		if ( isset( $input['example_radio'] ) ) {
@@ -245,6 +245,7 @@ class Prayer_Settings {
 			'<input class="regular-text" type="text" name="prayer_settings_options[mailchimp_api_key]" id="mailchimp_api_key" value="%s">',
 			isset( $this->prayer_settings_options['mailchimp_api_key'] ) ? esc_attr( $this->prayer_settings_options['mailchimp_api_key']) : ''
 		);
+		echo '<span> <a href="http://admin.mailchimp.com/account/api/" target="_blank">Get a MailChimp API Key</a></span>';
 	}
 
 	public function button_primary_color_callback() {
