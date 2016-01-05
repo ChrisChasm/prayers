@@ -38,7 +38,7 @@ class Prayer_Template_Helper
 			} 
 			// build the output for each category
 			foreach ($categories_list as $category) {
-				$output .= '<span class="echo prayer-box category taxonomy-' . $taxonomy . '">';
+				$output .= '<span class="prayer prayer-box category taxonomy-' . $taxonomy . '">';
 				$output .= $category;
 				$output .= '</span>';
 			}
@@ -68,8 +68,8 @@ class Prayer_Template_Helper
 		}
 		// build the prayer button
 		?>
-			<div class="prayer-prayer-button" data-prayer-id="<?php the_ID(); ?>">
-				<span class="prayer-prayer-count prayer-<?php the_ID(); ?>"><?php echo $prayer_count; ?></span>
+			<div class="prayer-button" data-prayer-id="<?php the_ID(); ?>">
+				<span class="prayer-count prayer-<?php the_ID(); ?>"><?php echo $prayer_count; ?></span>
 				<span class="prayer-pray-button">
 					<form class="prayer-prayed" action="" method="post" data-prayer-id="<?php the_ID(); ?>">
 						<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>	
@@ -110,7 +110,7 @@ class Prayer_Template_Helper
 		$prayer_name = get_post_meta( $id, 'prayer-name', 1);
 		if ( empty($prayer_name) ) { return; }
 		// build the html
-		?><span class="prayer-prayer-name"><?php echo $prayer_name; ?></span><?
+		?><?php echo $prayer_name; ?><?
 	}
 
 	/**
@@ -128,10 +128,10 @@ class Prayer_Template_Helper
 		}
 		// set language specific output
 		if ($prayer_count == 1) {
-			$output = __("Prayed once", "echo");
+			$output = __("Prayed once", "prayer");
 		}
 		else {
-			$output = __("Prayed", "echo") . " " . $prayer_count . " " . __("times", "echo");		
+			$output = __("Prayed", "prayer") . " " . $prayer_count . " " . __("times", "prayer");		
 		}
 		// return the html
 		return $output;

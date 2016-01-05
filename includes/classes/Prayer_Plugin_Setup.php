@@ -18,11 +18,12 @@ class Prayer_Plugin_Setup
     protected $plugin_path;
 
     public function __construct() {
-        $this->plugin_path = realpath( plugin_dir_path(__FILE__) . "../plugin.php" );
+        $path = realpath( plugin_dir_path(__FILE__) . "../../plugin.php" );
+        $this->plugin_path = $path;
 
-        register_activation_hook( $this->plugin_path, array( 'PrayerPluginSetup', 'plugin_activate' ) );
-        register_deactivation_hook( $this->plugin_path, array( 'PrayerPluginSetup', 'plugin_deactivate' ) );
-        register_uninstall_hook( $this->plugin_path, array( 'PrayerPluginSetup', 'plugin_uninstall' ) );
+        register_activation_hook( $this->plugin_path, array( 'Prayer_Plugin_Setup', 'plugin_activate' ) );
+        register_deactivation_hook( $this->plugin_path, array( 'Prayer_Plugin_Setup', 'plugin_deactivate' ) );
+        register_uninstall_hook( $this->plugin_path, array( 'Prayer_Plugin_Setup', 'plugin_uninstall' ) );
     }
    
     /**
@@ -39,15 +40,19 @@ class Prayer_Plugin_Setup
         }
 
         // install default options
-        if ( ! get_option( 'prayer_settings_options' ) ) {
-            $op = array(
-                'primary_color' => '#2582EA',
-                'secondary_color' => '#45D680',
-                'categories_enabled' => '1',
-                'tags_enabled' => '1',
-                'prayer_form_response' => __('Thanks for submitting your prayer request.', 'prayer'),
+        if ( ! get_option('prayer_settings_options') ) {
+            $options = array(
+                'notification_user' => 1,
+                'prayer_form_response' => __( 'We have recieved your prayer request.', 'prayer' ),
+                'button_primary_color' => '#2582EA',
+                'button_secondary_color' => '#45D680',
+                'button_text_color' => '#ffffff',
+                'taxonomy_background_color' => '#efefef',
+                'taxonomy_text_color' => '#333333',
+                'categories_enabled' => "1",
+                'tags_enabled' => "1",
             );
-            add_option( 'prayer_settings_options', $op );
+            add_option( 'prayer_settings_options', $options );
         }
 
 
@@ -63,7 +68,7 @@ class Prayer_Plugin_Setup
                     'nickname' => 'Prayer',
                     'display_name' => 'Prayer',
                     'first_name' => 'Prayer',
-                    'description' => 'User for Prayer Prayer Plugin submission.',
+                    'description' => 'User for Prayer Plugin submission.',
                     'role' => 'contributer'
                 );
             wp_update_user( $userdata );

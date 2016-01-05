@@ -149,6 +149,16 @@ class Prayer_Meta
 	    	update_post_meta( $post_id, 'prayer-lang', sanitize_text_field($_POST['prayer-lang']) );
 	    }
 
+	    // Checks for input and sanitizes/saves if needed
+	    if ( isset( $_POST[ 'prayer-prayed' ] ) ) {
+	    	update_post_meta( $post_id, 'prayer-prayed', sanitize_text_field($_POST['prayer-prayed']) );
+	    }
+
+	    // 
+	    if ( ! empty( $_POST['prayer-response'] ) ) {
+	    	update_post_meta( $post_id, 'prayer-response', esc_textarea( $_POST['prayer-response'] ) );
+	    }
+
 	    // If the 'Resources' inputs exist, iterate through them and sanitize them
 		if ( ! empty( $_POST['prayer-notes'] ) ) {
 		 

@@ -1,5 +1,5 @@
 	<div class="wrap">
-	<h2>Prayer Prayer Feeds</h2>
+	<h2>Prayer Feeds</h2>
 
 	<div id="col-container">
 

@@ -1,7 +1,8 @@
 /*
- Prayer Prayer App frontend javascript
+ Prayer App frontend javascript
  */
 (function($) {
+	
 	$(document).ready(function() {
 
 		// create and access an echo object in localStorage. This is for
@@ -11,17 +12,19 @@
 		var db = localStorage.getItem('prayer');
 		var items = JSON.parse(db);
 
-		// disable prayer button for prayers already clicked
-		$('form.prayer-prayed').each(function( index, value ) {
-			// get items from the database 
-			var prayer_id = $(this).attr('data-prayer-id');
-			// request has already been prayed for
-			if (items.prayers.indexOf(prayer_id) > -1) {						
-				$(this).addClass('prayed-for');
-				$('input[type="submit"]', this).prop('disabled', true);
-				$('input[type="submit"]', this).prop('value', 'Prayed');
-			}
-		});
+		if ( items != null ) {
+			// disable prayer button for prayers already clicked
+			$('form.prayer-prayed').each(function( index, value ) {
+				// get items from the database 
+				var prayer_id = $(this).attr('data-prayer-id');
+				// request has already been prayed for
+				if (items.prayers.indexOf(prayer_id) > -1) {						
+					$(this).addClass('prayed-for');
+					$('input[type="submit"]', this).prop('disabled', true);
+					$('input[type="submit"]', this).prop('value', 'Prayed');
+				}
+			});
+		}
 
 		// record prayed for request
 		$('form.prayer-prayed').submit( function( event ) {
@@ -31,10 +34,10 @@
 			var prayer_id = $form.attr('data-prayer-id');
 
 			// update the prayer count
-			var count = parseInt( $('span.prayer-prayer-count.prayer-' + prayer_id).text(), 10 );
+			var count = parseInt( $('span.prayer-count.prayer-' + prayer_id).text(), 10 );
 
 			// update visual display
-			$('span.prayer-prayer-count.prayer-' + prayer_id).text(count+1);
+			$('span.prayer-count.prayer-' + prayer_id).text(count+1);
 			$form.addClass('prayed-for');
 			$('input[type="submit"]', $form).prop('disabled', true);
 			$('input[type="submit"]', $form).prop('value', 'Prayed');
@@ -45,7 +48,7 @@
 				// store this click in local storage to prevent abuse
 				var items = localStorage.getItem('prayer');
 
-				// localStorage prayer-prayers key doesn't exist
+				// localStorage prayers key doesn't exist
 				if (items == null) {
 					items = { prayers: [ prayer_id ] };
 				}
@@ -67,9 +70,6 @@
 			// prevent form submission, aka page reload
 			event.preventDefault();
 		});
-
-		// form validation
-		$('#prayer-prayer-form').validate();
 
 	});
 })(jQuery);

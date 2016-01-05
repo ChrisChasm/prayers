@@ -2,7 +2,7 @@
 /**
  * Prayer Virtual Pages
  *
- * Virtual pages used with the Prayer Prayer Plugin.
+ * Virtual pages used with the Prayer Plugin.
  * 
  * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>

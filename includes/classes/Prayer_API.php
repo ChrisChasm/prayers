@@ -1,6 +1,6 @@
 <?php
 /**
- * Prayer Prayer JSON API
+ * Prayer JSON API
  *
  * Outputs JSON responses from /prayers/api.
  * 

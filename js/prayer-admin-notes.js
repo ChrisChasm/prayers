@@ -20,7 +20,8 @@ function createInputElement( $ ) {
     $inputElement =
         $( '<textarea />' )
             .attr( 'name', 'prayer-notes[' + iInputCount + ']' )
-            .attr( 'id', 'prayer-note-' + iInputCount );
+            .attr( 'id', 'prayer-note-' + iInputCount )
+            .attr( 'placeholder', 'Enter a note' );
   
     return $inputElement;
  

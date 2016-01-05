@@ -147,7 +147,7 @@ if ( is_admin() )
 $prayer_virtual_pages = new Prayer_Virtual_Pages;
 
 /**
- * Prayer Prayer Plugin Settings
+ * Prayer Plugin Settings
  *
  * Creates a settings page for the plugin. Allows setting options like colors
  * enabling/disabling features, etc.
@@ -166,7 +166,9 @@ if ( is_admin() )
  *
  * @since 0.9.0
  */
-$prayer_shortcodes = new Prayer_Shortcodes;
+Prayer_Shortcode_Prayers::init();
+Prayer_Shortcode_Form::init();
+Prayer_Shortcode_Map::init();
 
 /**
  * Admin Prayer Listing Page Columns
@@ -195,7 +197,7 @@ if ( is_admin() )
 $prayer_form_processing = new Prayer_Form_Processing;
 
 /**
- * Prayer Prayer JSON API
+ * Prayer JSON API
  *
  * Outputs JSON responses from /prayers/api.
  *

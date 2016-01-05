@@ -1,5 +1,5 @@
 /*
- Prayer Prayer Map
+ Prayer Map
  */
 (function($) {
 	$(document).ready(function() {

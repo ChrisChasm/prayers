@@ -25,7 +25,7 @@
 	$query = new WP_Query( $args );
 	if ( $query->have_posts() ) : ?>
 
-	<ul id="prayer-prayers" class="echo prayer-listing">
+	<ul id="prayers" class="prayer prayer-listing">
 	
 		<?php while ( $query->have_posts() ):
 			$query->the_post(); 
@@ -39,13 +39,13 @@
 					<a href="<?php the_permalink(); ?>"><?php the_title() ?></a>
 				</h3>
 
-				<div class="echo prayer-meta">
+				<div class="prayer prayer-meta">
 					<ul>
 
 						<li class="prayer-avatar-small"><?php echo Prayer_Template_Helper::get_avatar( $id, 27 ); ?></li>
 						<li><?php echo Prayer_Template_Helper::get_prayed_button( $id ); ?></li>
 						<?php if ( $prayer_answered ): ?>
-							<li class="echo prayer-answered"><span class="echo prayer-answered">Answered</span></li>
+							<li class="prayer prayer-answered"><span class="prayer prayer-answered">Answered</span></li>
 						<?php endif; ?>
 						<?php if ( ! empty( Prayer_Template_Helper::get_prayer_location($id) ) ): ?>
 							<li><?php echo Prayer_Template_Helper::get_prayer_location($id); ?></li>
@@ -57,7 +57,7 @@
 				</div>
 
 				<div class="prayer-content">
-					<span class="echo prayer-name"><?php echo Prayer_Template_Helper::get_prayer_name($id); ?></span>
+					<span class="prayer prayer-name"><?php echo Prayer_Template_Helper::get_prayer_name($id); ?></span>
 					<?php the_content() ?>
 				</div>
 				

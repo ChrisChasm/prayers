@@ -1,2 +1,2 @@
-# Prayer Prayer Plugin Documentation
+# Prayer Plugin Documentation
 
