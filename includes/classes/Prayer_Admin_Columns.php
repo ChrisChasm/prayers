@@ -72,20 +72,20 @@ class Prayer_Admin_Columns
 		// get the post meta to use in building the new column values
 		$post_meta = get_post_meta( $post_ID );
 		// geocoded info
-		$lat = $post_meta['meta-prayer-location-latitude'][0];
-		$long = $post_meta['meta-prayer-location-longitude'][0];
+		$lat = $post_meta['prayer-location-latitude'][0];
+		$long = $post_meta['prayer-location-longitude'][0];
 		// prayer count column
 		if ($column_name == 'prayer_count' ) {
-			$prayer_count = $post_meta['meta-prayer-count'][0];
+			$prayer_count = $post_meta['prayer-count'][0];
 			echo $prayer_count;
 		}
 		// prayer location column
 		if ($column_name == 'prayer_location' ) {
 			// get needed vars to build the html
-			$prayer_name = $post_meta['meta-prayer-name'][0];
-			$prayer_email = $post_meta['meta-prayer-email'][0];
-			$prayer_location = $post_meta['meta-prayer-location'][0];
-			$prayer_country = $post_meta['meta-prayer-location-country-long'][0];
+			$prayer_name = $post_meta['prayer-name'][0];
+			$prayer_email = $post_meta['prayer-email'][0];
+			$prayer_location = $post_meta['prayer-location'][0];
+			$prayer_country = $post_meta['prayer-location-country-long'][0];
 			// build the html for the prayer location column
 			?>
 				<div class="prayer-admin prayer-location">
@@ -105,7 +105,7 @@ class Prayer_Admin_Columns
 		}
 		// Answered prayer column using conditional to check
 		if ($column_name == 'prayer_answered') {
-			$answered = $post_meta['meta-prayer-answered'][0];
+			$answered = $post_meta['prayer-answered'][0];
 			if ($answered) {
 				echo '<span class="prayer-">Yes</span>';
 			}
@@ -115,7 +115,7 @@ class Prayer_Admin_Columns
 		}
 		// Is Anonymous? column using conditional to check
 		if ($column_name == 'prayer_anonymous') {
-			$anonymous = $post_meta['meta-prayer-anonymous'][0];
+			$anonymous = $post_meta['prayer-anonymous'][0];
 			if ($anonymous) {
 				echo "Yes";
 			}

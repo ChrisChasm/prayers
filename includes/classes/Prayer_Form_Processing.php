@@ -149,15 +149,15 @@ class Prayer_Form_Processing {
 		$prayer_id = wp_insert_post($prayer);
 		// add meta to the prayer after insert. You have to get a post id
 		// before being able to insert meta.
-		add_post_meta( $prayer_id, 'meta-prayer-anonymous', $data['prayer_anonymous'] );
-		add_post_meta( $prayer_id, 'meta-prayer-answered', 0);
-		add_post_meta( $prayer_id, 'meta-prayer-count', 0);
-		add_post_meta( $prayer_id, 'meta-prayer-name', $data['prayer_name'] );
-		add_post_meta( $prayer_id, 'meta-prayer-email', $data['prayer_email'] );
-		add_post_meta( $prayer_id, 'meta-prayer-location', $data['prayer_location'] );
+		add_post_meta( $prayer_id, 'prayer-anonymous', $data['prayer_anonymous'] );
+		add_post_meta( $prayer_id, 'prayer-answered', 0);
+		add_post_meta( $prayer_id, 'prayer-count', 0);
+		add_post_meta( $prayer_id, 'prayer-name', $data['prayer_name'] );
+		add_post_meta( $prayer_id, 'prayer-email', $data['prayer_email'] );
+		add_post_meta( $prayer_id, 'prayer-location', $data['prayer_location'] );
 		// set the language of the post
 		$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
-		add_post_meta( $prayer_id, 'meta-prayer-lang', $lang );
+		add_post_meta( $prayer_id, 'prayer-lang', $lang );
 		// calculate coordinates and store them 
 		$location = Prayer_Plugin_Helper::parse_location($data['prayer_location']);
 		Prayer_Plugin_Helper::save_location_meta( $prayer_id, $location );
@@ -188,14 +188,14 @@ class Prayer_Form_Processing {
 		    // get the post data to work with
 			$post = $_POST;
 			// get the current prayer count or set to 0 if it's empty
-			$count = get_post_meta( $post['prayer_id'], 'meta-prayer-count', 1 );
+			$count = get_post_meta( $post['prayer_id'], 'prayer-count', 1 );
 			if ( empty($count) ) {
 				$count = 0;
 			}
 			// increase the count by 1
 			$count++;
 			// update the prayer count
-			update_post_meta( $post['prayer_id'], 'meta-prayer-count', $count );
+			update_post_meta( $post['prayer_id'], 'prayer-count', $count );
 		}
 	}
 }

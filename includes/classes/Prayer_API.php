@@ -87,7 +87,7 @@ class Prayer_API
 			'posts_per_page' => $limit,
 			'meta_query' => array(
 				array(
-					'key' => 'meta-prayer-anonymous', // filters out anonymous prayers
+					'key' => 'prayer-anonymous', // filters out anonymous prayers
 					'value' => 0,
 					'compare' => 'LIKE',
 				),
@@ -105,27 +105,27 @@ class Prayer_API
 			//$prayers[$key]->meta = $meta;
 
 			// set the prayer count
-			$prayers[$key]->prayer_count = $meta['meta-prayer-count'][0];
+			$prayers[$key]->prayer_count = $meta['prayer-count'][0];
 
 			// set the user info
 			$prayers[$key]->submitter = array(
-				'name' => $meta['meta-prayer-name'][0]
+				'name' => $meta['prayer-name'][0]
 			);
 
 			// set the location data
-			$lon = $meta['meta-prayer-location-longitude'];
-			$lat = $meta['meta-prayer-location-latitude'];
-			$add = $meta['meta-prayer-location-formatted-address'];
-			$c_long = $meta['meta-prayer-location-country-long'];
-			$c_short = $meta['meta-prayer-location-country-short'];
+			$lon = $meta['prayer-location-longitude'];
+			$lat = $meta['prayer-location-latitude'];
+			$add = $meta['prayer-location-formatted-address'];
+			$c_long = $meta['prayer-location-country-long'];
+			$c_short = $meta['prayer-location-country-short'];
 			$prayers[$key]->geocode = array(
-				'place' => $meta['meta-prayer-location'][0],
+				'place' => $meta['prayer-location'][0],
 				'longitude' => $lon[ sizeof($lon)-1 ],
 				'latitude' => $lat[ sizeof($lat)-1 ],
 				'formatted' => $add[ sizeof($add)-1 ],
 				'c_long' => $c_long[0],
 				'c_short' => $c_short[0],
-				'lang' => $meta['meta-prayer-lang'][0],
+				'lang' => $meta['prayer-lang'][0],
 			);
 
 			// set the category data

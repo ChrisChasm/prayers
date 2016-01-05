@@ -62,7 +62,7 @@ class Prayer_Template_Helper
 	static public function get_prayed_button( $id = 0 ) {
 		if ( $id == 0 ) return;
 		// get the current prayer count and set to 0 if it's empty
-		$prayer_count = get_post_meta( $id, 'meta-prayer-count', 1);
+		$prayer_count = get_post_meta( $id, 'prayer-count', 1);
 		if ( empty($prayer_count) ) {
 			$prayer_count = 0;
 		}
@@ -92,7 +92,7 @@ class Prayer_Template_Helper
 	static public function get_prayer_location( $id = 0 ) {
 		if ( $id == 0) { return; }
 		// get the prayer location
-		$prayer_location = get_post_meta( $id, 'meta-prayer-location', 1);
+		$prayer_location = get_post_meta( $id, 'prayer-location', 1);
 		if ( empty($prayer_location) ) { return; }
 		// build the html
 		?><span class="prayer-box"><?php echo $prayer_location; ?></span><?
@@ -107,7 +107,7 @@ class Prayer_Template_Helper
 	static public function get_prayer_name( $id = 0 ) {
 		if ( $id == 0) { return; }
 		// get the submitter name
-		$prayer_name = get_post_meta( $id, 'meta-prayer-name', 1);
+		$prayer_name = get_post_meta( $id, 'prayer-name', 1);
 		if ( empty($prayer_name) ) { return; }
 		// build the html
 		?><span class="prayer-prayer-name"><?php echo $prayer_name; ?></span><?
@@ -122,7 +122,7 @@ class Prayer_Template_Helper
 	static public function get_prayer_count( $id = 0 ) {
 		if ($id == 0) return 0;
 		// get the prayer count and set to 0 if it doesn't exist
-		$prayer_count = get_post_meta( $id, 'meta-prayer-count', 1);
+		$prayer_count = get_post_meta( $id, 'prayer-count', 1);
 		if ( empty($prayer_count) ) {
 			$prayer_count = 0;
 		}
@@ -147,7 +147,7 @@ class Prayer_Template_Helper
 	static public function get_avatar( $id = 0, $size = 26 ) {
 		if ($id == 0) return;
 		// get te email associated with the prayer posting and build avatar
-		$email = get_post_meta( $id, 'meta-prayer-email', 1);
+		$email = get_post_meta( $id, 'prayer-email', 1);
 		// return the html
 		return get_avatar( $email, $size );
 	}

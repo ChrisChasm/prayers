@@ -28,8 +28,14 @@ class Prayer_Admin_Scripts
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_register_style( 'prayer-admin-css', plugins_url( '/prayer/css/prayer-admin.css', 'prayer' ), array(), '20151228', 'all' );
 		wp_enqueue_style( 'prayer-admin-css');
+
 		// scripts
-		wp_register_script( 'prayer-admin-js', plugins_url( '/prayer/js/prayer-admin.js', 'prayer' ), array( 'wp-color-picker' ), '20151228', 'all' );
-		wp_enqueue_script( 'prayer-admin-js');	
+		wp_register_script( 'prayer-admin-settings', plugins_url( '/prayer/js/prayer-admin-settings.js', 'prayer' ), array( 'wp-color-picker' ), '20151228', 'all' );
+		wp_register_script( 'prayer-admin-tabs', plugins_url( '/prayer/js/prayer-admin-tabs.js', 'prayer' ), array( 'wp-color-picker' ), '20151228', 'all' );
+		wp_register_script( 'prayer-admin-notes', plugins_url( '/prayer/js/prayer-admin-notes.js', 'prayer' ), array( 'wp-color-picker' ), '20151228', 'all' );
+
+		wp_enqueue_script( 'prayer-admin-settings');	
+		wp_enqueue_script( 'prayer-admin-tabs');	
+		wp_enqueue_script( 'prayer-admin-notes');	
 	}
 }

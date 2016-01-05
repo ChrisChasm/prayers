@@ -57,10 +57,10 @@ class Prayer_Plugin_Helper
     static public function save_location_meta( $id = 0, $location = null ) {
         if ( is_null($location) || $id == 0 ) return;
 
-        add_post_meta( $id, 'meta-prayer-location-latitude', $location['lat'] );
-        add_post_meta( $id, 'meta-prayer-location-longitude', $location['long'] );
-        add_post_meta( $id, 'meta-prayer-location-formatted-address', $location['formatted_address'] );
-        add_post_meta( $id, 'meta-prayer-location-country-long', $location['country_long'] );
-        add_post_meta( $id, 'meta-prayer-location-country-short', $location['country_short'] );
+        add_post_meta( $id, 'prayer-location-latitude', $location['lat'] );
+        add_post_meta( $id, 'prayer-location-longitude', $location['long'] );
+        add_post_meta( $id, 'prayer-location-formatted-address', $location['formatted_address'] );
+        add_post_meta( $id, 'prayer-location-country-long', $location['country_long'] );
+        add_post_meta( $id, 'prayer-location-country-short', $location['country_short'] );
     }
 }

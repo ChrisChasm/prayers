@@ -14,7 +14,7 @@
 		'posts_per_page' => $limit,
 		/*'meta_query' => array(
 			array(
-				'key' => 'meta-prayer-anonymous', // filters out anonymous prayers
+				'key' => 'prayer-anonymous', // filters out anonymous prayers
 				'value' => 0,
 				'compare' => 'LIKE',
 			),

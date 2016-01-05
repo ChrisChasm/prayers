@@ -44,15 +44,10 @@
                         .children( 'div:nth-child( ' + ( tabIndex + 2 ) + ')' )
                         .removeClass( 'hidden' );
  
- 
                 }
- 
  
             });
         });
-
-        // enable colorpicker field
-        $('.color-field').wpColorPicker();
  
     });
  

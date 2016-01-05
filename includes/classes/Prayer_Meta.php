@@ -101,48 +101,74 @@ class Prayer_Meta
 	    $is_valid_nonce = ( isset( $_POST[ 'prayer_nonce' ] ) && wp_verify_nonce( $_POST[ 'prayer_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
 	 
 	    // Exits script depending on save status
-	    if ( $is_autosave || $is_revision || !$is_valid_nonce ) {
+	    if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
 	        return;
 	    }
 
 	    // Checks for input and sanitizes/saves if needed
-	    if( isset( $_POST[ 'meta-prayer-answered' ] ) ) {
-	        update_post_meta( $post_id, 'meta-prayer-answered', sanitize_text_field( $_POST[ 'meta-prayer-answered' ] ) );
+	    if( isset( $_POST[ 'prayer-answered' ] ) ) {
+	        update_post_meta( $post_id, 'prayer-answered', sanitize_text_field( $_POST[ 'prayer-answered' ] ) );
 	    }
 
 	    // Checks for input and sanitizes/saves if needed
-	    if( isset( $_POST[ 'meta-prayer-anonymous' ] ) ) {
-	        update_post_meta( $post_id, 'meta-prayer-anonymous', sanitize_text_field( $_POST[ 'meta-prayer-anonymous' ] ) );
+	    if( isset( $_POST[ 'prayer-anonymous' ] ) ) {
+	        update_post_meta( $post_id, 'prayer-anonymous', sanitize_text_field( $_POST[ 'prayer-anonymous' ] ) );
 	    }
 
 	    // Checks for input and sanitizes/saves if needed
-	    if( isset( $_POST[ 'meta-prayer-name' ] ) ) {
-	    	update_post_meta( $post_id, 'meta-prayer-name', sanitize_text_field( $_POST[ 'meta-prayer-name' ] ) );
+	    if( isset( $_POST[ 'prayer-name' ] ) ) {
+	    	update_post_meta( $post_id, 'prayer-name', sanitize_text_field( $_POST[ 'prayer-name' ] ) );
 	    }
 
 	    // Checks for input and sanitizes/saves if needed
-	    if( isset( $_POST[ 'meta-prayer-email' ] ) ) {
-	    	update_post_meta( $post_id, 'meta-prayer-email', sanitize_text_field( $_POST[ 'meta-prayer-email' ] ) );
+	    if( isset( $_POST[ 'prayer-email' ] ) ) {
+	    	update_post_meta( $post_id, 'prayer-email', sanitize_text_field( $_POST[ 'prayer-email' ] ) );
 	    }
 
 	    // Checks for input and sanitizes/saves if needed
-	    if( isset( $_POST[ 'meta-prayer-location' ] ) ) {
-	    	update_post_meta( $post_id, 'meta-prayer-location', sanitize_text_field( $_POST[ 'meta-prayer-location' ] ) );
+	    if( isset( $_POST[ 'prayer-lang' ] ) ) {
+	    	update_post_meta( $post_id, 'prayer-lang', sanitize_text_field( $_POST[ 'prayer-lang' ] ) );
+	    }
+
+	    // Checks for input and sanitizes/saves if needed
+	    if( isset( $_POST[ 'prayer-location' ] ) ) {
+	    	update_post_meta( $post_id, 'prayer-location', sanitize_text_field( $_POST[ 'prayer-location' ] ) );
 
 	    	// get geocoded data from location
-	    	$location = Prayer_Plugin_Helper::parse_location( sanitize_text_field( $_POST[ 'meta-prayer-location' ] ) );
+	    	$location = Prayer_Plugin_Helper::parse_location( sanitize_text_field( $_POST[ 'prayer-location' ] ) );
 	    	Prayer_Plugin_Helper::save_location_meta( $post_id, $location );
 	    }
 
 	    // Checks for input and sanitizes/saves if needed
-	    if( isset( $_POST[ 'meta-prayer-count' ] ) ) {
-	    	update_post_meta( $post_id, 'meta-prayer-count', sanitize_text_field( $_POST[ 'meta-prayer-count' ] ) );
+	    if( isset( $_POST[ 'prayer-count' ] ) ) {
+	    	update_post_meta( $post_id, 'prayer-count', sanitize_text_field( $_POST[ 'prayer-count' ] ) );
 	    }
 
 	    // Checks for input and sanitizes/saves if needed
-	    if ( isset( $POST[ 'meta-prayer-lang' ] ) ) {
-	    	update_post_meta( $post_id, 'meta-prayer-lang', sanitize_text_field($_POST['meta-prayer-lang']) );
+	    if ( isset( $POST[ 'prayer-lang' ] ) ) {
+	    	update_post_meta( $post_id, 'prayer-lang', sanitize_text_field($_POST['prayer-lang']) );
 	    }
+
+	    // If the 'Resources' inputs exist, iterate through them and sanitize them
+		if ( ! empty( $_POST['prayer-notes'] ) ) {
+		 
+		    $notes = $_POST['prayer-notes'];
+		    $sanitized_notes = array();
+		    foreach ( $notes as $note ) {
+		         
+		        $note = esc_textarea( strip_tags( $note ) );
+
+		        if ( ! empty ( $note ) ) {
+		        	$sanitized_notes[] = $note;
+		        }     
+		    }
+		    update_post_meta( $post_id, 'prayer-notes', $sanitized_notes );
+		 
+		} else {
+			if ( '' !== get_post_meta( $post_id, 'prayer-notes', true ) ) {
+				delete_post_meta( $post_id, 'prayer-notes' );
+			}
+		}
 
 	}
 

@@ -10,8 +10,9 @@
 		include ( 'partials/meta-notes.php' );
 		include ( 'partials/meta-geolocation.php' );
 		include ( 'partials/meta-details.php' ); 
+
+		// Add a nonce field for security
+        wp_nonce_field( 'prayer_save', 'prayer_nonce' );
 	?>
 	
 </div>
-
-<input type="hidden" name="prayer_nonce" value="<?php echo wp_create_nonce( 'prayer-nonce' ); ?>" />

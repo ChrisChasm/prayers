@@ -42,14 +42,12 @@ th#prayer_anonymous {
 
 /* Pending count button in sidebar */
 span.prayer-update-count {
-	background: #1B1E22;
+	background: #C43B0E;
+	color: #fff;
 	display: inline-block;
-	padding: .35em .65em;
+	padding: .35em .35em;
 	margin: -5px 0 -5px 5px;
 	border-radius: 2em;
-}
-span.prayer-update-count {
-	color: #9DA1A8;
 }
 
 /* Meta Nav */
@@ -58,4 +56,16 @@ span.prayer-update-count {
 }
 #prayer-navigation .nav-tab-wrapper {
 	padding: 0;
+}
+
+#prayer-notes textarea {
+    width:         100%;
+    margin-bottom: 10px;
+}
+#prayer-navigation {
+  overflow:hidden;
+}
+#prayer-navigation .column {
+  width: 33.3%;
+  float: left;
 }
