@@ -6,22 +6,22 @@
  * These pages will be listed under the Prayers admin links section in the 
  * sidebar.
  * 
- * @package   Echo
+ * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
- * @link      https://github.com/kalebheitzman/echo
+ * @link      https://github.com/kalebheitzman/prayer
  * @copyright 2015 Kaleb Heitzman
  * @license   GPL-3.0
  * @version   0.9.0
  */
 
-class Echo_Submenu_Pages 
+class Prayer_Submenu_Pages 
 {
     /**
-     * EchoSubmenuPages Class Construct
+     * PrayerSubmenuPages Class Construct
      */
     public function __construct() {
-        add_action( 'admin_menu' , array( $this, 'echo_prayer_feeds_page' ) );
-        add_filter( 'custom_menu_order', array( $this, 'echo_prayer_submenu_order' ) );
+        add_action( 'admin_menu' , array( $this, 'prayer_feeds_page' ) );
+        add_filter( 'custom_menu_order', array( $this, 'prayer_submenu_order' ) );
     }
 
     /**
@@ -29,14 +29,14 @@ class Echo_Submenu_Pages
      * @return hook
      * @since  0.9.0
      */
-    public function echo_prayer_feeds_page() {
+    public function prayer_feeds_page() {
         add_submenu_page(
             'edit.php?post_type=prayer', 
             'Feeds', 
             'Feeds', 
             'edit_posts', 
             'feeds',
-            array( $this, 'echo_prayer_feeds_page_cb' )
+            array( $this, 'prayer_feeds_page_cb' )
         );
     }
 
@@ -49,8 +49,8 @@ class Echo_Submenu_Pages
      * @return html
      * @since  0.9.0
      */
-    public function echo_prayer_feeds_page_cb() {
-        $templates = new Echo_Template_Loader;
+    public function prayer_feeds_page_cb() {
+        $templates = new Prayer_Template_Loader;
         // start a buffer to capture output
         $output = $templates->get_template_part( 'admin', 'feeds' );
     }
@@ -64,13 +64,13 @@ class Echo_Submenu_Pages
      * @return array Menu Order
      * @since  0.9.0
      */
-    public function echo_prayer_submenu_order( $menu_ord ) {
+    public function prayer_submenu_order( $menu_ord ) {
     
         // get pending review count
         global $wpdb;
         $query = "SELECT COUNT(*) FROM wp_posts WHERE post_status = 'pending' AND post_type = 'prayer'";
         $post_count = $wpdb->get_var($query);
-        $post_count_string = ' <span class="echo-update-count">' . $post_count . '</span>'; 
+        $post_count_string = ' <span class="prayer-update-count">' . $post_count . '</span>'; 
 
         global $submenu;
 

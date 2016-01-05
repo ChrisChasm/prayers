@@ -4,15 +4,15 @@
  *
  * Repeatable pieces of code to use through out the plugin.
  * 
- * @package   Echo
+ * @package   Prayer
  * @author    Kaleb Heitzman <kalebheitzman@gmail.com>
- * @link      https://github.com/kalebheitzman/echo
+ * @link      https://github.com/kalebheitzman/prayer
  * @copyright 2015 Kaleb Heitzman
  * @license   GPL-3.0
  * @version   0.9.0
  */
 
-class Echo_Plugin_Helper
+class Prayer_Plugin_Helper
 {
     /**
      * Parse Location

@@ -1,9 +1,7 @@
 /* Settings page form styles*/
-.echo-inline-radios label {
+.prayer-inline-radios label {
   padding-right: 1em;
 }
-
-
 
 /* Prayer list columns */
 th#title {
@@ -26,30 +24,38 @@ th#prayer_anonymous {
 }
 
 /* location styles in location column */
-.echo-admin {}
-.echo-location {
+.prayer-admin {}
+.prayer-location {
 	width: 250px;
 }
-.echo-location div.avatar {
+.prayer-location div.avatar {
 	float: left;
 	width: 35px;
 }
-.echo-location .avatar img {
+.prayer-location .avatar img {
 
 }
-.echo-location .details {
+.prayer-location .details {
 	width: 215px;
 	float: left;
 }
 
 /* Pending count button in sidebar */
-span.echo-update-count {
+span.prayer-update-count {
 	background: #1B1E22;
 	display: inline-block;
 	padding: .35em .65em;
 	margin: -5px 0 -5px 5px;
 	border-radius: 2em;
 }
-span.echo-update-count {
+span.prayer-update-count {
 	color: #9DA1A8;
+}
+
+/* Meta Nav */
+#prayer-navigation a.nav-tab {
+
+}
+#prayer-navigation .nav-tab-wrapper {
+	padding: 0;
 }

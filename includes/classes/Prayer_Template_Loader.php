@@ -2,15 +2,15 @@
 /**
  * Template loader for PW Sample Plugin.
  *
- * @package   Echo
+ * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
- * @link      https://github.com/kalebheitzman/echo
+ * @link      https://github.com/kalebheitzman/prayer
  * @copyright 2015 Kaleb Heitzman
  * @license   GPL-3.0
  * @version   0.9.0
  */
 
-class Echo_Template_Loader extends Gamajo_Template_Loader {
+class Prayer_Template_Loader extends Gamajo_Template_Loader {
  
 	/**
 	 * Prefix for filter names.
@@ -18,7 +18,7 @@ class Echo_Template_Loader extends Gamajo_Template_Loader {
 	 * @since 0.9.0
 	 * @type string
 	 */
-	protected $filter_prefix = 'echo';
+	protected $filter_prefix = 'prayer';
  
 	/**
 	 * Directory name where custom templates for this plugin should be found in the theme.
@@ -34,6 +34,6 @@ class Echo_Template_Loader extends Gamajo_Template_Loader {
 	 * @since 0.9.0
 	 * @type string
 	 */
-	protected $plugin_directory = ECHO_PLUGIN_DIR;
+	protected $plugin_directory = PRAYER_PLUGIN_DIR;
  
 }

@@ -4,14 +4,14 @@
   "authors": [
     "Kaleb Heitzman <kalebheitzman@gmail.com>"
   ],
-  "description": "Echo Wordpress Plugin",
+  "description": "Prayer Wordpress Plugin",
   "main": "plugin.php",
   "keywords": [
     "wordpress",
     "plugin"
   ],
   "license": "MIT",
-  "homepage": "http://github.org/kalebheitzman/echo",
+  "homepage": "http://github.org/kalebheitzman/prayer",
   "private": true,
   "ignore": [
     "**/.*",

@@ -5,15 +5,15 @@
  * Povides form processing functions for frontend submissions, prayer clicks,
  * etc. 
  * 
- * @package   Echo
+ * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
- * @link      https://github.com/kalebheitzman/echo
+ * @link      https://github.com/kalebheitzman/prayer
  * @copyright 2015 Kaleb Heitzman
  * @license   GPL-3.0
  * @version   0.9.0
  */
 
-class Echo_Form_Processing {
+class Prayer_Form_Processing {
 
 	/**
 	 * GUMP Validation Library
@@ -99,7 +99,7 @@ class Echo_Form_Processing {
 			} else {
 				// data saved, display confirmation
 				if ( $this->save_validated_data( $validated_data ) ) {
-					// get a virtual page created from Echo_Virtual_Pages
+					// get a virtual page created from Prayer_Virtual_Pages
 					$url = get_site_url() . "/prayers/confirmation";
 					// attempt redirect with js
 					printf("<script>location.href='/prayers/confirmation'</script>");
@@ -132,7 +132,7 @@ class Echo_Form_Processing {
 		$tags = explode( ',', $data['prayer_tags'] );
 	
 		// get the echo user
-		$user = get_user_by( 'login', 'echo' );
+		$user = get_user_by( 'login', 'prayer' );
 
 		// build a prayer entry to be insterted into the db
 		$prayer = array(
@@ -159,11 +159,11 @@ class Echo_Form_Processing {
 		$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
 		add_post_meta( $prayer_id, 'meta-prayer-lang', $lang );
 		// calculate coordinates and store them 
-		$location = Echo_Plugin_Helper::parse_location($data['prayer_location']);
-		Echo_Plugin_Helper::save_location_meta( $prayer_id, $location );
+		$location = Prayer_Plugin_Helper::parse_location($data['prayer_location']);
+		Prayer_Plugin_Helper::save_location_meta( $prayer_id, $location );
 
-		// Notify Echo designated user
-		$mailresults = Echo_Notifications::new_request( $data );
+		// Notify Prayer designated user
+		$mailresults = Prayer_Notifications::new_request( $data );
 		
 		return true;
 	}

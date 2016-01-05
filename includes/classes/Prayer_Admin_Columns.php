@@ -6,15 +6,15 @@
  * table with relevant data to the request like location, whether the prayer
  * has been answered, etc.
  * 
- * @package   Echo
+ * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
- * @link      https://github.com/kalebheitzman/echo
+ * @link      https://github.com/kalebheitzman/prayer
  * @copyright 2015 Kaleb Heitzman
  * @license   GPL-3.0
  * @version   0.9.0
  */
 
-class Echo_Admin_Columns
+class Prayer_Admin_Columns
 {
 	/**
 	 * Class Construct
@@ -46,11 +46,11 @@ class Echo_Admin_Columns
 		$category = $columns['taxonomy-prayer_category'];
 		unset($columns['taxonomy-prayer_category']);
 		// build additional columns for the listing
-		$columns['prayer_location'] = __( 'Location', 'echo' );
+		$columns['prayer_location'] = __( 'Location', 'prayer' );
 		$columns['taxonomy-prayer_category'] = $category;
-		$columns['prayer_count'] = __( 'Prayed', 'echo' );
-		$columns['prayer_answered'] = __( 'Answered?', 'echo' );
-		// $columns['prayer_anonymous'] = __( 'Anon?', 'echo' );
+		$columns['prayer_count'] = __( 'Prayed', 'prayer' );
+		$columns['prayer_answered'] = __( 'Answered?', 'prayer' );
+		// $columns['prayer_anonymous'] = __( 'Anon?', 'prayer' );
 		$columns['author'] = $author;
 		// reinit the data column
 		$columns['date'] = $date;
@@ -61,7 +61,7 @@ class Echo_Admin_Columns
 	/**
 	 * Generate HTML Prayer Columns
 	 *
-	 * Takes columns specificed in echo_prayers_columns_head and generates html
+	 * Takes columns specificed in prayers_columns_head and generates html
 	 * output relevant to each column and prayer post.
 	 * 
 	 * @param  string Column Name to check agains
@@ -88,7 +88,7 @@ class Echo_Admin_Columns
 			$prayer_country = $post_meta['meta-prayer-location-country-long'][0];
 			// build the html for the prayer location column
 			?>
-				<div class="echo-admin echo-location">
+				<div class="prayer-admin prayer-location">
 					<div class="avatar">
 						<?php echo get_avatar( $prayer_email, 26 ); ?>
 					</div>

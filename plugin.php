@@ -1,15 +1,15 @@
 <?php
 /**
- * Plugin Name: Echo Prayers
- * Plugin URI: http://github.com/kalebheitzman/echo
+ * Plugin Name: Prayers
+ * Plugin URI: http://github.com/kalebheitzman/prayer
  * Description: Lets an organization share and update prayer requests via their website. This plugin also provides JSON feeds for other services to consume and requires the <a href="https://wordpress.org/plugins/rest-api/">WP REST API</a> be installed and activated first.
  * Version: 0.9.0
  * Author: Kaleb Heitzman
- * Author URI: http://github.com/kalebheitzman/echo
+ * Author URI: http://github.com/kalebheitzman/prayer
  *
- * @package   Echo
+ * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
- * @link      https://github.com/kalebheitzman/echo
+ * @link      https://github.com/kalebheitzman/prayer
  * @copyright 2015 Kaleb Heitzman
  * @license   GPL-3.0
  * @version   0.9.0
@@ -21,17 +21,17 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // Define plugin directory constant
-define( 'ECHO_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'PRAYER_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 /**
  * Autoloader
  *
  * Autmagically loads classes from the echo/includes. Instantiates them in the
- * plugin file using the i.e. $echo_prayers = new EchoPrayers; format.
+ * plugin file using the i.e. $prayers = new PrayerPrayers; format.
  */
 spl_autoload_register(function ( $class ) {
-	if ( is_readable( ECHO_PLUGIN_DIR . "includes/{$class}.php" ) )
-		require ECHO_PLUGIN_DIR . "includes/{$class}.php";		
+	if ( is_readable( PRAYER_PLUGIN_DIR . "includes/classes/{$class}.php" ) )
+		require PRAYER_PLUGIN_DIR . "includes/classes/{$class}.php";		
 });
 require 'vendor/autoload.php';
 
@@ -45,7 +45,7 @@ require 'vendor/autoload.php';
  * 
  * @since 0.9.0
  */
-$echo_post_type_prayer = new Echo_Post_Type_Prayer;
+$prayer_post_type_prayer = new Prayer_Post_Type_Prayer;
 
 /**
  * Install and Uninstall hooks
@@ -56,18 +56,18 @@ $echo_post_type_prayer = new Echo_Post_Type_Prayer;
  * @since 0.9.0
  */
 if ( is_admin() )
-	$echo_setup = new Echo_Plugin_Setup;
+	$prayer_setup = new Prayer_Plugin_Setup;
 
 /**
  * Template Loader
  *
- * Allows template loading from plugin with echo_get_template_part(). This
+ * Allows template loading from plugin with prayer_get_template_part(). This
  * will load templates from your themes/your_theme/templates directory first 
- * and then search for templates in plugins/echo/templates
+ * and then search for templates in plugins/prayer/templates
  *
  * @since  0.9.0
  */
-$echo_templates = new Echo_Template_Loader;
+$prayer_templates = new Prayer_Template_Loader;
 
 /**
  * Notifications
@@ -79,7 +79,7 @@ $echo_templates = new Echo_Template_Loader;
  * @since 0.9.0
  */
 if ( is_admin() )
-	$echoNotifications = new Echo_Notifications;
+	$echoNotifications = new Prayer_Notifications;
 
 /**
  * Front and Admin Styles
@@ -92,11 +92,11 @@ if ( is_admin() )
  */
 
 // load frontend styles
-$echo_frontend_scripts = new Echo_Frontend_Scripts;
+$prayer_frontend_scripts = new Prayer_Frontend_Scripts;
 
 // load admin backend styles
 if ( is_admin() )
-	$echo_admin_scripts = new Echo_Admin_Scripts;
+	$prayer_admin_scripts = new Prayer_Admin_Scripts;
 
 /**
  * Prayer Post Meta
@@ -108,7 +108,7 @@ if ( is_admin() )
  *
  * @since 0.9.0
  */
-$echo_meta = new Echo_Meta;
+$prayer_meta = new Prayer_Meta( 'prayer', '0.9.0' );
 
 /**
  * Prayer Taxonomies
@@ -120,8 +120,8 @@ $echo_meta = new Echo_Meta;
  *
  * @since 0.9.0
  */
-$echo_taxonomy_category = new Echo_Taxonomy_Category;
-$echo_taxonomy_tags = new Echo_Taxonomy_Tags;
+$prayer_taxonomy_category = new Prayer_Taxonomy_Category;
+$prayer_taxonomy_tags = new Prayer_Taxonomy_Tags;
 
 /**
  * Prayer Post Type Menu
@@ -134,20 +134,20 @@ $echo_taxonomy_tags = new Echo_Taxonomy_Tags;
  * @since  0.9.0
  */
 if ( is_admin() )
-    $echo_submenu_pages = new Echo_Submenu_Pages;
+    $prayer_submenu_pages = new Prayer_Submenu_Pages;
 
 /**
  * Virtual Pages
  *
- * Creates virtual pages like form confirmation that Echo can manage from 
+ * Creates virtual pages like form confirmation that Prayer can manage from 
  * settings without having to create and link pages from within WP.
  *
  * @since  0.9.0
  */
-$echo_virtual_pages = new Echo_Virtual_Pages;
+$prayer_virtual_pages = new Prayer_Virtual_Pages;
 
 /**
- * Echo Prayer Plugin Settings
+ * Prayer Prayer Plugin Settings
  *
  * Creates a settings page for the plugin. Allows setting options like colors
  * enabling/disabling features, etc.
@@ -155,7 +155,7 @@ $echo_virtual_pages = new Echo_Virtual_Pages;
  * @since  0.9.0 
  */
 if ( is_admin() )
-	$echo_settings = new Echo_Settings;
+	$prayer_settings = new Prayer_Settings;
 
 /**
  * Shortcodes
@@ -166,7 +166,7 @@ if ( is_admin() )
  *
  * @since 0.9.0
  */
-$echo_shortcodes = new Echo_Shortcodes;
+$prayer_shortcodes = new Prayer_Shortcodes;
 
 /**
  * Admin Prayer Listing Page Columns
@@ -178,28 +178,28 @@ $echo_shortcodes = new Echo_Shortcodes;
  * @since 0.9.0
  */
 if ( is_admin() )
-	$echo_admin_columns = new Echo_Admin_Columns;
+	$prayer_admin_columns = new Prayer_Admin_Columns;
 
 /**
  * Data Saving
  *
- * Echo lets anonymous users submit prayers from the front end. These
+ * Prayer lets anonymous users submit prayers from the front end. These
  * submissions are saved to the Prayer custom post type and marked as pending
- * review. They are also associated with an Echo user/author to help sort out
+ * review. They are also associated with an Prayer user/author to help sort out
  * frontend submissions from submissions your authorized wordpress users can
  * make on the backend. Currently this includes a function to process frontend
  * form submissions and saving metadata on the backend.
  *
  * @since 0.9.0
  */
-$echo_form_processing = new Echo_Form_Processing;
+$prayer_form_processing = new Prayer_Form_Processing;
 
 /**
- * Echo Prayer JSON API
+ * Prayer Prayer JSON API
  *
  * Outputs JSON responses from /prayers/api.
  *
  * @since  0.9.0
  */
-$echo_api = new Echo_API;
+$prayer_api = new Prayer_API;
 

@@ -4,18 +4,18 @@
  *
  * Notifies users about incoming prayer requests.
  * 
- * @package   Echo
+ * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
- * @link      https://github.com/kalebheitzman/echo
+ * @link      https://github.com/kalebheitzman/prayer
  * @copyright 2015 Kaleb Heitzman
  * @license   GPL-3.0
  * @version   0.9.0
  */
-class Echo_Notifications
+class Prayer_Notifications
 {
 
 	/**
-	 * Notify Echo user of new request
+	 * Notify Prayer user of new request
 	 * @param  post
 	 * @since 0.9.0 
 	 */
@@ -24,18 +24,18 @@ class Echo_Notifications
 		if ( $data == null ) return;
 
 		// get user to notify
-		$user = get_user_by( 'login', 'echo' );
+		$user = get_user_by( 'login', 'prayer' );
 		$email = $user->data->user_email;
 
 		if ( ! empty( $email ) ) {
 
-			$subject = __('New Web Prayer Request', 'echo' );
+			$subject = __('New Web Prayer Request', 'prayer' );
 
 			// set var to be accessible in the called template
 			set_query_var( 'data', $data );
 
 			// load templates
-			$templates = new Echo_Template_Loader;
+			$templates = new Prayer_Template_Loader;
 			// start a buffer to capture output
 			ob_start();
 			$templates->get_template_part( 'email', 'notification' );

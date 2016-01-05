@@ -1,5 +1,5 @@
 	<div class="wrap">
-	<h2>Echo Prayer Feeds</h2>
+	<h2>Prayer Prayer Feeds</h2>
 
 	<div id="col-container">
 
@@ -44,7 +44,7 @@
     					<tr>
     						<td>By Most Recent</td>
     						<td>
-    							<a href="<?php echo get_site_url(); ?>/wp-json/echo/v1" target="_blank"><?php echo get_site_url(); ?>/wp-json/echo/v1</a>
+    							<a href="<?php echo get_site_url(); ?>/wp-json/prayer/v1" target="_blank"><?php echo get_site_url(); ?>/wp-json/prayer/v1</a>
     						</td>
     					</tr>
 		    			<tr>
@@ -65,7 +65,7 @@
 		<div id="col-left">
     		<div class="col-wrap">
 
-    			<p>Echo provides both RSS and JSON feeds for your prayer requests. This gives you the ability to allow subscribers to subsribe to RSS or integrate the prayers on your website into other third-party services.</p>
+    			<p>Prayer provides both RSS and JSON feeds for your prayer requests. This gives you the ability to allow subscribers to subsribe to RSS or integrate the prayers on your website into other third-party services.</p>
 
     			<p>These feeds only display published prayers.</p>
 

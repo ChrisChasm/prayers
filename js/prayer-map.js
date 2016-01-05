@@ -1,5 +1,5 @@
 /*
- Echo Prayer Map
+ Prayer Prayer Map
  */
 (function($) {
 	$(document).ready(function() {
@@ -22,6 +22,18 @@
 				zoom: 2
 			})
 		});
+
+		document.getElementById('zoom-out').onclick = function() {
+        	var view = map.getView();
+        	var zoom = view.getZoom();
+        	view.setZoom(zoom - 1);
+      	};
+
+      	document.getElementById('zoom-in').onclick = function() {
+       		var view = map.getView();
+        	var zoom = view.getZoom();
+        	view.setZoom(zoom + 1);
+      	};
 
 	});
 })(jQuery);

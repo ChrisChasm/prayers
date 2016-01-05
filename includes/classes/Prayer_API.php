@@ -1,18 +1,18 @@
 <?php
 /**
- * Echo Prayer JSON API
+ * Prayer Prayer JSON API
  *
  * Outputs JSON responses from /prayers/api.
  * 
- * @package   Echo
+ * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
- * @link      https://github.com/kalebheitzman/echo
+ * @link      https://github.com/kalebheitzman/prayer
  * @copyright 2015 Kaleb Heitzman
  * @license   GPL-3.0
  * @version   0.9.0
  */
 
-class Echo_API
+class Prayer_API
 {
 	/**
 	 * Class Construct
@@ -25,12 +25,12 @@ class Echo_API
 	}
 
 	/**
-	 * Register /echo/v1/
+	 * Register /prayer/v1/
 	 * @since  0.9.0
 	 */
 	public function register_get_api()
 	{
-		return register_rest_route( 'echo/v1', '/', array(
+		return register_rest_route( 'prayer/v1', '/', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'api' )
 		) );
@@ -67,7 +67,7 @@ class Echo_API
 	 */
 	public function register_get_prayers()
 	{
-		return register_rest_route( 'echo/v1', '/prayers', array(
+		return register_rest_route( 'prayer/v1', '/prayers', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'get_prayers' )
 		) );

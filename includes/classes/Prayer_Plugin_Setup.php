@@ -12,7 +12,7 @@
  * @since 0.9.0 
  */
 
-class Echo_Plugin_Setup
+class Prayer_Plugin_Setup
 {
 
     protected $plugin_path;
@@ -20,9 +20,9 @@ class Echo_Plugin_Setup
     public function __construct() {
         $this->plugin_path = realpath( plugin_dir_path(__FILE__) . "../plugin.php" );
 
-        register_activation_hook( $this->plugin_path, array( 'EchoPluginSetup', 'plugin_activate' ) );
-        register_deactivation_hook( $this->plugin_path, array( 'EchoPluginSetup', 'plugin_deactivate' ) );
-        register_uninstall_hook( $this->plugin_path, array( 'EchoPluginSetup', 'plugin_uninstall' ) );
+        register_activation_hook( $this->plugin_path, array( 'PrayerPluginSetup', 'plugin_activate' ) );
+        register_deactivation_hook( $this->plugin_path, array( 'PrayerPluginSetup', 'plugin_deactivate' ) );
+        register_uninstall_hook( $this->plugin_path, array( 'PrayerPluginSetup', 'plugin_uninstall' ) );
     }
    
     /**
@@ -39,20 +39,20 @@ class Echo_Plugin_Setup
         }
 
         // install default options
-        if ( ! get_option( 'echo_settings_options' ) ) {
+        if ( ! get_option( 'prayer_settings_options' ) ) {
             $op = array(
                 'primary_color' => '#2582EA',
                 'secondary_color' => '#45D680',
                 'categories_enabled' => '1',
                 'tags_enabled' => '1',
-                'prayer_form_response' => __('Thanks for submitting your prayer request.', 'echo'),
+                'prayer_form_response' => __('Thanks for submitting your prayer request.', 'prayer'),
             );
-            add_option( 'echo_settings_options', $op );
+            add_option( 'prayer_settings_options', $op );
         }
 
 
         // create the default echo user and set permissions to contributer.
-        $username = 'echo';
+        $username = 'prayer';
         if( null == username_exists( $username ) ) {
 
             $password = wp_generate_password( 12, true );
@@ -60,10 +60,10 @@ class Echo_Plugin_Setup
             
             $userdata = array(
                     'ID' => $user_id,
-                    'nickname' => 'Echo',
-                    'display_name' => 'Echo',
-                    'first_name' => 'Echo',
-                    'description' => 'User for Echo Prayer Plugin submission.',
+                    'nickname' => 'Prayer',
+                    'display_name' => 'Prayer',
+                    'first_name' => 'Prayer',
+                    'description' => 'User for Prayer Prayer Plugin submission.',
                     'role' => 'contributer'
                 );
             wp_update_user( $userdata );
@@ -88,9 +88,9 @@ class Echo_Plugin_Setup
      */
     public function plugin_uninstall() {
 
-        delete_option( 'echo_settings_options' );
+        delete_option( 'prayer_settings_options' );
 
-        $user = get_user_by( 'login', 'echo' );
+        $user = get_user_by( 'login', 'prayer' );
         wp_delete_user( $user->id );
 
     }

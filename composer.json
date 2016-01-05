@@ -1,5 +1,5 @@
 {
-    "name": "kalebheitzman/echo",
+    "name": "kalebheitzman/prayer",
     "description": "Wordpress plugin that allows you to manage pray requests",
     "type": "wordpress-plugin",
     "require": {

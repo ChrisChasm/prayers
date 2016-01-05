@@ -5,14 +5,14 @@
  * Provideds helpers to be used inside of template files for things like
  * buttons, lists, etc.
  * 
- * @package   Echo
+ * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
- * @link      https://github.com/kalebheitzman/echo
+ * @link      https://github.com/kalebheitzman/prayer
  * @copyright 2015 Kaleb Heitzman
  * @license   GPL-3.0
  * @version   0.9.0
  */
-class Echo_Template_Helper
+class Prayer_Template_Helper
 {
 
 	/**
@@ -38,7 +38,7 @@ class Echo_Template_Helper
 			} 
 			// build the output for each category
 			foreach ($categories_list as $category) {
-				$output .= '<span class="echo echo-box category taxonomy-' . $taxonomy . '">';
+				$output .= '<span class="echo prayer-box category taxonomy-' . $taxonomy . '">';
 				$output .= $category;
 				$output .= '</span>';
 			}
@@ -68,10 +68,10 @@ class Echo_Template_Helper
 		}
 		// build the prayer button
 		?>
-			<div class="echo-prayer-button" data-prayer-id="<?php the_ID(); ?>">
-				<span class="echo-prayer-count prayer-<?php the_ID(); ?>"><?php echo $prayer_count; ?></span>
-				<span class="echo-pray-button">
-					<form class="echo-prayed" action="" method="post" data-prayer-id="<?php the_ID(); ?>">
+			<div class="prayer-prayer-button" data-prayer-id="<?php the_ID(); ?>">
+				<span class="prayer-prayer-count prayer-<?php the_ID(); ?>"><?php echo $prayer_count; ?></span>
+				<span class="prayer-pray-button">
+					<form class="prayer-prayed" action="" method="post" data-prayer-id="<?php the_ID(); ?>">
 						<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>	
 						<input type="hidden" name="prayer_id" value="<?php the_ID(); ?>" />
 						<input type="submit" value="Pray" />
@@ -95,7 +95,7 @@ class Echo_Template_Helper
 		$prayer_location = get_post_meta( $id, 'meta-prayer-location', 1);
 		if ( empty($prayer_location) ) { return; }
 		// build the html
-		?><span class="echo-box"><?php echo $prayer_location; ?></span><?
+		?><span class="prayer-box"><?php echo $prayer_location; ?></span><?
 	}
 
 	/**
@@ -110,7 +110,7 @@ class Echo_Template_Helper
 		$prayer_name = get_post_meta( $id, 'meta-prayer-name', 1);
 		if ( empty($prayer_name) ) { return; }
 		// build the html
-		?><span class="echo-prayer-name"><?php echo $prayer_name; ?></span><?
+		?><span class="prayer-prayer-name"><?php echo $prayer_name; ?></span><?
 	}
 
 	/**

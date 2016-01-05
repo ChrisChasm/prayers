@@ -1,18 +1,18 @@
 <?php
 /**
- * Class Echo_Virtual_Page
+ * Class Prayer_Virtual_Page
  *
  * Class to create virtual pages.
  * 
- * @package   Echo
+ * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
- * @link      https://github.com/kalebheitzman/echo
+ * @link      https://github.com/kalebheitzman/prayer
  * @copyright 2015 Kaleb Heitzman
  * @license   GPL-3.0
  * @version   0.9.0
  */
 
-class Echo_Virtual_Page
+class Prayer_Virtual_Page
 {
 	private $slug = NULL;
     private $title = NULL;

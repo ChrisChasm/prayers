@@ -1,7 +1,7 @@
 <?php 
 
 // get echo options
-$echo_options = get_option( 'echo_settings_options' );
+$prayer_options = get_option( 'prayer_settings_options' );
 
 if ( ! empty( $_SESSION['errors'] ) ) {
 	$errors = $_SESSION['errors'];
@@ -26,7 +26,7 @@ if ( ! empty( $_SESSION['post'] ) ) {
 
 
 		
-<form method="post" id="echo-prayer-form" class="echo form" action="">
+<form method="post" id="prayer-prayer-form" class="echo form" action="">
 	<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>
 
 	<p><strong>Your prayer request</strong></p>
@@ -63,7 +63,7 @@ if ( ! empty( $_SESSION['post'] ) ) {
 
 	<?php
 	// check to see if categories are enabled
-	$categories_enabled = $echo_options['categories_enabled'];
+	$categories_enabled = $prayer_options['categories_enabled'];
 
 	if ($categories_enabled == '1'):
 		$prayer_category = array( 'prayer_category' );
@@ -77,7 +77,7 @@ if ( ! empty( $_SESSION['post'] ) ) {
 
 	<p class="prayer-categories inline-form-elements">
 		<label for="prayer_category">
-			<strong><?php echo __('Categories', 'echo'); ?></strong>
+			<strong><?php echo __('Categories', 'prayer'); ?></strong>
 		</label><br />
 		<?php foreach ($prayer_categories as $key => $category): ?>
 			<label for="<?php echo $category->slug; ?>">
@@ -85,20 +85,20 @@ if ( ! empty( $_SESSION['post'] ) ) {
 			</label>
 		<?php endforeach; ?>
 		<br />
-		<label for="prayer_category" class="error" style="display:none;"><?php echo __( 'Please choose a category.', 'echo' ) ?></label>
+		<label for="prayer_category" class="error" style="display:none;"><?php echo __( 'Please choose a category.', 'prayer' ) ?></label>
 	</p>
 
 	<?php endif; // categories enabled
 
 	// check to see if tags are enabled
-	$tags_enabled = $echo_options['tags_enabled'];
+	$tags_enabled = $prayer_options['tags_enabled'];
 	if ( $tags_enabled == '1' ):
 
 	?>
 
 	<p class="prayer-tags">
 		<label for="prayer_tags">
-			<strong><?php echo __('Tags', 'echo'); ?></strong>
+			<strong><?php echo __('Tags', 'prayer'); ?></strong>
 			<input type="text" name="prayer_tags" placeholder="healing, doctors, africa (optional)" value="<?php echo $post_data['prayer_tags'] ?>" />
 		</label>
 		<small>Comma-separated list of tags for your request</small>
@@ -119,7 +119,7 @@ if ( ! empty( $_SESSION['post'] ) ) {
 	<p>	
 		<input type="submit" value="Send Prayer" />
 		<input type="hidden" name="prayer-submission" value="1" />
-		<input type="hidden" name="redirect" value="<?php echo Echo_Template_Helper::current_page_url(); ?>" />
+		<input type="hidden" name="redirect" value="<?php echo Prayer_Template_Helper::current_page_url(); ?>" />
 	</p>
 
 </form>

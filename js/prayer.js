@@ -1,5 +1,5 @@
 /*
- Echo Prayer App frontend javascript
+ Prayer Prayer App frontend javascript
  */
 (function($) {
 	$(document).ready(function() {
@@ -8,11 +8,11 @@
 		// storing user interaction on the clients end. If we ever want to 
 		// know who prays, at what time, etc then this will have to be saved
 		// server side. 
-		var db = localStorage.getItem('echo');
+		var db = localStorage.getItem('prayer');
 		var items = JSON.parse(db);
 
 		// disable prayer button for prayers already clicked
-		$('form.echo-prayed').each(function( index, value ) {
+		$('form.prayer-prayed').each(function( index, value ) {
 			// get items from the database 
 			var prayer_id = $(this).attr('data-prayer-id');
 			// request has already been prayed for
@@ -24,17 +24,17 @@
 		});
 
 		// record prayed for request
-		$('form.echo-prayed').submit( function( event ) {
+		$('form.prayer-prayed').submit( function( event ) {
 			// get the form, data, and prayer id
 			var $form = $(this);
 			var formData = $form.serialize();
 			var prayer_id = $form.attr('data-prayer-id');
 
 			// update the prayer count
-			var count = parseInt( $('span.echo-prayer-count.prayer-' + prayer_id).text(), 10 );
+			var count = parseInt( $('span.prayer-prayer-count.prayer-' + prayer_id).text(), 10 );
 
 			// update visual display
-			$('span.echo-prayer-count.prayer-' + prayer_id).text(count+1);
+			$('span.prayer-prayer-count.prayer-' + prayer_id).text(count+1);
 			$form.addClass('prayed-for');
 			$('input[type="submit"]', $form).prop('disabled', true);
 			$('input[type="submit"]', $form).prop('value', 'Prayed');
@@ -43,14 +43,14 @@
 			$.post('#', formData, function(data) {
 							
 				// store this click in local storage to prevent abuse
-				var items = localStorage.getItem('echo');
+				var items = localStorage.getItem('prayer');
 
-				// localStorage echo-prayers key doesn't exist
+				// localStorage prayer-prayers key doesn't exist
 				if (items == null) {
 					items = { prayers: [ prayer_id ] };
 				}
 				else {
-					items = localStorage.getItem('echo');
+					items = localStorage.getItem('prayer');
 					items = JSON.parse(items);
 
 					if (items.prayers.indexOf(prayer_id) < 0) {						
@@ -59,7 +59,7 @@
 				}
 				// store the data to localStorage
 				data = JSON.stringify(items);
-				localStorage.setItem( 'echo', data );
+				localStorage.setItem( 'prayer', data );
 
 				//console.log(localStorage);				
 				//localStorage.clear();
@@ -69,7 +69,7 @@
 		});
 
 		// form validation
-		$('#echo-prayer-form').validate();
+		$('#prayer-prayer-form').validate();
 
 	});
 })(jQuery);

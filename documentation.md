@@ -1,2 +1,2 @@
-# Echo Prayer Plugin Documentation
+# Prayer Prayer Plugin Documentation
 

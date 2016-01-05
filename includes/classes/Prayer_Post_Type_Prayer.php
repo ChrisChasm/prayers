@@ -7,15 +7,15 @@
  * are used as well to construct the different data functionalities that this
  * plugin provides.
  * 
- * @package   Echo
+ * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
- * @link      https://github.com/kalebheitzman/echo
+ * @link      https://github.com/kalebheitzman/prayer
  * @copyright 2015 Kaleb Heitzman
  * @license   GPL-3.0
  * @version   0.9.0
  */
 
-class Echo_Post_Type_Prayer
+class Prayer_Post_Type_Prayer
 {
 	/**
 	 * Class Construct
@@ -77,7 +77,7 @@ class Echo_Post_Type_Prayer
 			'publicly_queryable'  => true,
 			'rewrite'             => $rewrite,
 			'capability_type'     => 'post',
-			'register_meta_box_cb' => 'add_prayer_metaboxes',
+			'register_meta_box_cb' =>'prayer_add_metabox',
 			'show_in_rest'       => true,
 			'rest_base'          => 'prayers',
 	        'rest_controller_class' => 'WP_REST_Posts_Controller',
