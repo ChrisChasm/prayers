@@ -77,7 +77,7 @@ class Prayer_Post_Type_Prayer
 			'publicly_queryable'  => true,
 			'rewrite'             => $rewrite,
 			'capability_type'     => 'post',
-			'register_meta_box_cb' =>'prayer_add_metabox',
+			//'register_meta_box_cb' =>'prayer_add_metabox',
 			'show_in_rest'       => true,
 			'rest_base'          => 'prayers',
 	        'rest_controller_class' => 'WP_REST_Posts_Controller',

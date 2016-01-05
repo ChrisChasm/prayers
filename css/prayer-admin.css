@@ -58,6 +58,9 @@ span.prayer-update-count {
 	padding: 0;
 }
 
+#prayer-notes {
+	padding-top: 6px;
+}
 #prayer-notes textarea {
     width:         100%;
     margin-bottom: 10px;
