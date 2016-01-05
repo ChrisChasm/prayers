@@ -1,4 +1,4 @@
-=== Prayer Prayer Plugin ===
+=== Prayers Plugin ===
 Contributors: kalebheitzman
 Tags: prayer
 Donate link: #
