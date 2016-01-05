@@ -20,7 +20,14 @@ class Prayer_Mailchimp
 	 */
 	public function __construct()
 	{
+		$settings = get_option( 'prayer_settings_options' );
+		$api_key = $settings['mailchimp_api_key'];
+		
+		if ( ! empty($api_key) ) {
+			$this->mc = new Mailchimp( $api_key );			
+		}
 
+		// var_dump($this->mc->lists);
 	}
 
 	/**

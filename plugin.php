@@ -197,6 +197,16 @@ if ( is_admin() )
 $prayer_form_processing = new Prayer_Form_Processing;
 
 /**
+ * MailChimp Integration
+ *
+ * This class establishes an api connection to MailChimp and allows you to
+ * sync a list along with various segments to use in your MailChimp Campaigns.
+ *
+ * @since  0.9.0
+ */
+$prayer_mailchimp = new Prayer_Mailchimp();
+
+/**
  * Prayer JSON API
  *
  * Outputs JSON responses from /prayers/api.

@@ -12,7 +12,14 @@
 	// display the mailchimp integration page
 	?>
 
+		<p>Your API Key: <code><?php echo $api_key; ?></code></p>
+
 		<p>Sync a <a href="http://mailchimp.com" target="_blank">MailChimp</a> list and pre-defined segments from people who have
 submitted prayer requests on your website.</p>
-	
+
+		<ul>
+			<li><a href="#">Sync all emails</a> to a list</li>
+			<li><a href="#">Sync all unanswered request</a> to a segment</li>
+		</ul>
+
 	<?php endif; ?>
