@@ -32,15 +32,42 @@ class Prayer_API
 	{
 		return register_rest_route( 'prayers/v1', '/', array(
 				'methods' => 'GET',
-				'callback' => array( $this, 'api' )
+				'callback' => array( $this, 'get_api' )
 		) );
+	}
+
+	/**
+	 * Register echo/v1/prayers
+	 * @since  0.9.0
+	 */
+	public function register_get_prayers()
+	{
+		return register_rest_route( 'prayers/v1', '/prayers', array(
+				'methods' => 'GET',
+				'callback' => array( $this, 'get_prayers' ),
+				'args' => array(
+					'category' => array(
+						'default' => false,
+						'sanitize_callback' => 'sanitize_title',
+					),
+					'tags' => array(
+						'default' => false,
+						'sanitize_callback' => false,
+					),
+					'answered' => array(
+						'default' => null,
+						'sanitize_callback' => 'absint',
+					),
+				), 
+			)
+		);
 	}
 
 	/**
 	 * GET echo/v1
 	 * @since 0.9.0
 	 */
-	public function api( WP_REST_Request $request ) 
+	public function get_api( WP_REST_Request $request ) 
 	{
 		// var_dump($request); die();
 		// You can access parameters via direct array access on the object:
@@ -62,22 +89,63 @@ class Prayer_API
 	}
 
 	/**
-	 * Register echo/v1/prayers
+	 * GET echo/v1/prayers
 	 * @since  0.9.0
 	 */
-	public function register_get_prayers()
+	public function get_prayers( WP_REST_Request $request )
 	{
-		return register_rest_route( 'prayers/v1', '/prayers', array(
-				'methods' => 'GET',
-				'callback' => array( $this, 'get_prayers' )
-		) );
+		// get parameters
+		$category = $request['category'];
+		$tags = $request['tags'];
+		$answered = $request['answered'];
+
+		// build the query args
+		$args['post_type'] = array( 'prayer' );
+		$args['post_status'] = array( 'publish' );
+		$args['paged'] = $paged;
+		$args['posts_per_page'] = $limit;
+		$args['meta_query'][] = array(
+			'key' => 'prayer-anonymous', // filters out anonymous prayers
+			'value' => 0,
+			'compare' => 'LIKE',
+		);
+
+		if ( $category !== false ) {
+			$args['tax_query'][] = array(
+				'taxonomy' => 'prayer_category',
+				'field' => 'slug',
+				'terms' => $category,
+			);
+		}
+
+		if ( $tags !== false ) {
+			$tags_e = explode( ',', $tags );
+			$args['tax_query'][] = array(
+				'taxonomy' => 'prayer_tag',
+				'field' => 'slug',
+				'terms' => $tags_e,
+			);
+		}
+
+		// The Query
+		$query = new WP_Query( $args );
+		$posts = $query->get_posts();
+
+		foreach ($posts as $key => $post) {
+			
+			$prayer = $this->run_prayer_template( $post );
+			$prayers[] = $prayer;
+			// var_dump($prayers[$key]);
+		}
+
+		return $prayers;
 	}
 
 	/**
 	 * GET echo/v1/prayers
 	 * @since  0.9.0
 	 */
-	public function get_prayers()
+	public function get_prayers_by_category()
 	{
 		// WP_Query arguments
 		$args = array (
