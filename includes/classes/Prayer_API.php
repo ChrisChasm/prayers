@@ -54,6 +54,10 @@ class Prayer_API
 						'default' => false,
 						'sanitize_callback' => false,
 					),
+					'country' => array(
+						'default' => null,
+						'sanitize_callback' => 'sanitize_title',
+					),
 					'answered' => array(
 						'default' => null,
 						'sanitize_callback' => 'absint',
@@ -98,6 +102,7 @@ class Prayer_API
 		$category = $request['category'];
 		$tags = $request['tags'];
 		$answered = $request['answered'];
+		$country = $request['country'];
 
 		// build the query args
 		$args['post_type'] = array( 'prayer' );
@@ -135,6 +140,16 @@ class Prayer_API
 			$args['meta_query'][] = array(
 				'key' => 'prayer-answered',
 				'value' => $answered,
+				'compare' => 'LIKE',
+			);
+		}
+
+		// check to see if this prayer has been answered
+		if ( ! is_null( $country ) )
+		{
+			$args['meta_query'][] = array(
+				'key' => 'prayer-location-country-short',
+				'value' => $country,
 				'compare' => 'LIKE',
 			);
 		}
