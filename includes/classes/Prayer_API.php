@@ -110,6 +110,7 @@ class Prayer_API
 			'compare' => 'LIKE',
 		);
 
+		// check for single category
 		if ( $category !== false ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'prayer_category',
@@ -118,12 +119,23 @@ class Prayer_API
 			);
 		}
 
+		// check for multiple tags
 		if ( $tags !== false ) {
 			$tags_e = explode( ',', $tags );
 			$args['tax_query'][] = array(
 				'taxonomy' => 'prayer_tag',
 				'field' => 'slug',
 				'terms' => $tags_e,
+			);
+		}
+
+		// check to see if this prayer has been answered
+		if ( ! is_null( $answered ) )
+		{
+			$args['meta_query'][] = array(
+				'key' => 'prayer-answered',
+				'value' => $answered,
+				'compare' => 'LIKE',
 			);
 		}
 
@@ -188,7 +200,7 @@ class Prayer_API
 
 		// get the post meta
 		$meta = get_post_meta( $post->ID );
-		
+
 		// standard wp fields filtered down
 		$prayer->ID = $post->ID;
 		$prayer->post_date = $post->post_date;
@@ -198,6 +210,7 @@ class Prayer_API
 		$prayer->excerpt = $post->post_excerpt;
 		$prayer->slug = $post->post_name;
 		$prayer->guid = $post->guid;
+		$prayer->answered = $meta['prayer-answered'][0];
 
 		// set the prayer count
 		$prayer->prayer_count = $meta['prayer-count'][0];
