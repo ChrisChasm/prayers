@@ -56,7 +56,7 @@ class Prayer_Plugin_Setup
         }
 
 
-        // create the default echo user and set permissions to contributer.
+        // create the default prayer user and set permissions to contributer.
         $username = 'prayer';
         if( null == username_exists( $username ) ) {
 
@@ -74,6 +74,22 @@ class Prayer_Plugin_Setup
             wp_update_user( $userdata );
 
         }
+
+        // create tables to store mailchimp integration info
+        global $wpdb;
+        $table_name = $wpdb->prefix . "prayers_mailchimp";
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE $table_name (
+            id mediumint(11) NOT NULL AUTO_INCREMENT,
+            post_id mediumint(11) NOT NULL,
+            prayed_for smallint(1),
+            email_sent smallint(1),
+            PRIMARY KEY id (id),
+            UNIQUE KEY post_id (post_id)
+        ) $charset_collate;";
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        $db = dbDelta( $sql );
 
     }
 

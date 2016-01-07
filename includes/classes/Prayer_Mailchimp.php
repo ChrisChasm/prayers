@@ -69,32 +69,28 @@ class Prayer_Mailchimp
 			// get the list id	
 			if ( ! empty($this->current_list) )
 			{
-				$prayer_ids = get_posts( array(
-					'post_type' => 'prayer',
-					'post_status' => 'publish,private',
-					'posts_per_page' => -1,
-					'fields' => 'ids'
-					) 
-				);
+				// get a list of all emails and names
+				$emails = Prayer_Sql::get_all_emails();
 
 				// get all unique emails and names
 				$emails_filtered = array();
-				foreach( $prayer_ids as $prayer_id )
+				foreach ( $emails as $item ) 
 				{
-					$email = get_post_meta( $prayer_id, 'prayer-email', true );
-					$exists = in_array( $email, $emails_filtered);
+					$email = $item->email;
+					$name = $item->name;
+
 					if ( ! Prayer_Plugin_Helper::in_array_rec( $email, $emails_filtered) )
 					{
-						$name = get_post_meta( $prayer_id, 'prayer-name', true );
+						$name = $item->name;
 						$name_parts = explode( " ", $name );
 						$fname = array_shift( $name_parts );
 						$lname = implode( "", $name_parts );
 						$emails_filtered[] = array(
-							'email' => array( 'email' => $email ),
+							'email' => array( 'email' => $item->email ),
 							'merge_vars' => array( 'fname' => $fname, 'lname' => $lname )
 						);
 					}
-				}		
+				}
 
 				// batch subscribe 
 				try {

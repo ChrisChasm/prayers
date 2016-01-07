@@ -49,7 +49,7 @@ submitted prayer requests on your website.</p>
 					<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
 					<input type="hidden" name="mailchimp-sync-all" value="1" />
 					<input type="submit" value="Sync All" />
-					<span>Sync List and all segments</span>
+					<span>Sync list and all segments</span>
 				</form>
 			</li>
 			<li>
@@ -64,9 +64,9 @@ submitted prayer requests on your website.</p>
 				<form action="" method="post">
 					<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
 					<input type="hidden" name="mailchimp-sync-segment" value="1" />
-					<input type="hidden" name="segment" value="unanswered-requests" />
+					<input type="hidden" name="segment" value="answered-prayers" />
 					<input type="submit" value="Sync Segment" />
-					<span>Unaswered requests</span>
+					<span>Answered prayers</span>
 				</form>
 			<li>
 				<form action="" method="post">
@@ -74,7 +74,7 @@ submitted prayer requests on your website.</p>
 					<input type="hidden" name="mailchimp-sync-segment" value="1" />
 					<input type="hidden" name="segment" value="new-prayed-requests" />
 					<input type="submit" value="Sync Segment" />
-					<span>New Prayed-for requests</span>
+					<span>Newly prayed-for requests</span>
 				</form>
 			</li>
 		</ul>
