@@ -36,6 +36,8 @@ class Prayer_Mailchimp
 
 		// add a form processor 
 		add_action( 'init', array( $this, 'mailchimp_list_submission' ) );
+		add_action( 'init', array( $this, 'sync_mailchimp_list' ) );
+		add_action( 'init', array( $this, 'sync_mailchimp_segment' ) );
 	}
 
 	/**
@@ -55,7 +57,60 @@ class Prayer_Mailchimp
 	 */
 	public function sync_mailchimp_list()
 	{
+		// check to see if this is a prayer submission
+		if ( isset( $_POST['mailchimp-sync-list']) && '1' == $_POST['mailchimp-sync-list']) 
+		{
+			// check for a valid nonce
+			$is_valid_nonce = ( isset( $_POST[ 'mailchimp_nonce' ] ) && wp_verify_nonce( $_POST[ 'mailchimp_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false'; 
+		    // Exits script depending on save status
+		    if ( ! $is_valid_nonce ) {
+		        return;
+		    }
+			// get the list id	
+			if ( ! empty($this->current_list) )
+			{
+				$prayer_ids = get_posts( array(
+					'post_type' => 'prayer',
+					'post_status' => 'publish,private',
+					'posts_per_page' => -1,
+					'fields' => 'ids'
+					) 
+				);
 
+				// get all unique emails and names
+				$emails_filtered = array();
+				foreach( $prayer_ids as $prayer_id )
+				{
+					$email = get_post_meta( $prayer_id, 'prayer-email', true );
+					$exists = in_array( $email, $emails_filtered);
+					if ( ! Prayer_Plugin_Helper::in_array_rec( $email, $emails_filtered) )
+					{
+						$name = get_post_meta( $prayer_id, 'prayer-name', true );
+						$name_parts = explode( " ", $name );
+						$fname = array_shift( $name_parts );
+						$lname = implode( "", $name_parts );
+						$emails_filtered[] = array(
+							'email' => array( 'email' => $email ),
+							'merge_vars' => array( 'fname' => $fname, 'lname' => $lname )
+						);
+					}
+				}		
+
+				// batch subscribe 
+				try {
+					$this->mc_api->lists->batchSubscribe( $this->current_list, $emails_filtered, true, true, true );
+					Prayer_Template_Helper::set_flash_message( __( 'Successfully synced your MailChimp List.', 'prayer' ) );
+				} catch ( Mailchimp_Error $e ) {
+					if ( $e->getMessage() ) {
+						Prayer_Template_Helper::set_flash_message( __( $e->getMessage(), 'prayer' ), 'error' );
+					}
+					else {
+						Prayer_Template_Helper::set_flash_message( __( 'An unknown error occurred', 'prayer' ), 'error' );
+					}
+				}
+			}
+
+		}
 	}
 	
 	/**
@@ -65,7 +120,30 @@ class Prayer_Mailchimp
 	 */
 	public function sync_mailchimp_segment()
 	{
+		// check to see if this is a prayer submission
+		if ( isset( $_POST['mailchimp-sync-segment']) && '1' == $_POST['mailchimp-sync-segment']) 
+		{
+			// check for a valid nonce
+			$is_valid_nonce = ( isset( $_POST[ 'mailchimp_nonce' ] ) && wp_verify_nonce( $_POST[ 'mailchimp_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false'; 
+		    // Exits script depending on save status
+		    if ( ! $is_valid_nonce ) {
+		        return;
+		    }
+		    // get the post
+			$post = $_POST;
+			$segment = $post['segment'];
 
+			switch ($segment)
+			{
+				case 'unanswered-requests':
+
+					break;
+
+				case 'new-prayed-requests':
+
+					break;
+			}
+		}
 	}
 	
 	/**
@@ -76,7 +154,8 @@ class Prayer_Mailchimp
 	public function mailchimp_list_submission()
 	{
 		// check to see if this is a prayer submission
-		if ( isset( $_POST['mailchimp-submission']) && '1' == $_POST['mailchimp-submission']) {
+		if ( isset( $_POST['mailchimp-submission']) && '1' == $_POST['mailchimp-submission']) 
+		{
 			// check for a valid nonce
 			$is_valid_nonce = ( isset( $_POST[ 'mailchimp_nonce' ] ) && wp_verify_nonce( $_POST[ 'mailchimp_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false'; 
 		    // Exits script depending on save status

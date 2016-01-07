@@ -63,4 +63,25 @@ class Prayer_Plugin_Helper
         add_post_meta( $id, 'prayer-location-country-long', $location['country_long'] );
         add_post_meta( $id, 'prayer-location-country-short', $location['country_short'] );
     }
+
+    /**
+     * Recursive Array Search
+     * @param  String $needle  
+     * @param  Array $haystack
+     * @return boolean
+     */
+    static function in_array_rec($needle, $haystack) { 
+       
+        if ( in_array($needle, $haystack) ) { return TRUE; } 
+       
+        foreach($haystack as $elem) 
+        {
+            if ( is_array($elem) && self::in_array_rec($needle, $elem) )
+            {
+                return TRUE;
+            }
+        }
+
+        return FALSE; 
+} 
 }

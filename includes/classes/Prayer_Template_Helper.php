@@ -161,4 +161,30 @@ class Prayer_Template_Helper
 		$current_url = home_url(add_query_arg(array(),$wp->request));
 		return $current_url;
 	}
+
+	/**
+	 * Set Flash Message
+	 */
+	static public function set_flash_message( $message, $type = 'success' )
+	{
+		session_start();
+		// set a flash message
+		$_SESSION['flash']['message'] = array(
+			'type' => $type,
+			'message' => $message,
+		);
+	}
+
+	/**
+	 * Get Flash Message
+	 */
+	static public function flash_message()
+	{
+		$flash_message = $_SESSION['flash']['message'];
+
+		if ( ! empty( $flash_message ) ) 
+		{
+			echo '<div class="flash flash-' . $flash_message['type'] . '">'. $flash_message['message'] . '</div>';
+		}
+	}
 }

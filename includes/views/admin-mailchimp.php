@@ -1,6 +1,9 @@
-<h2>MailChimp</h2>
-
+<h1>MailChimp</h1>
 <?php
+	// show flash messages
+	Prayer_Template_Helper::flash_message();
+
+	// get mailchimp
 	$mc = new Prayer_Mailchimp;
 
 	if ( ! isset( $mc->mc_api->apikey ) ): 
@@ -12,6 +15,8 @@
 	?>
 
 		<p>Your API Key: <code><?php echo $mc->mc_api->apikey; ?></code></p>
+
+		<h2>Select List</h2>
 
 		<?php 
 			// lists
@@ -39,9 +44,39 @@ submitted prayer requests on your website.</p>
 		<h2>Actions</h2>
 
 		<ul>
-			<li><a href="#">Sync all emails</a> to a list</li>
-			<li><a href="#">Sync all unanswered requests</a> (Segment: Unaswered Requests)</li>
-			<li><a href="#">Sync all new prayed for requests</a> (Segment: New Prayed-for Requests)</li>
+			<li>
+				<form action="" method="post">
+					<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
+					<input type="hidden" name="mailchimp-sync-all" value="1" />
+					<input type="submit" value="Sync All" />
+					<span>Sync List and all segments</span>
+				</form>
+			</li>
+			<li>
+				<form action="" method="post">
+					<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
+					<input type="hidden" name="mailchimp-sync-list" value="1" />
+					<input type="submit" value="Sync List" />
+					<span>All emails</span>
+				</form>
+			</li>
+			<li>
+				<form action="" method="post">
+					<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
+					<input type="hidden" name="mailchimp-sync-segment" value="1" />
+					<input type="hidden" name="segment" value="unanswered-requests" />
+					<input type="submit" value="Sync Segment" />
+					<span>Unaswered requests</span>
+				</form>
+			<li>
+				<form action="" method="post">
+					<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
+					<input type="hidden" name="mailchimp-sync-segment" value="1" />
+					<input type="hidden" name="segment" value="new-prayed-requests" />
+					<input type="submit" value="Sync Segment" />
+					<span>New Prayed-for requests</span>
+				</form>
+			</li>
 		</ul>
 
 	<?php endif; ?>
