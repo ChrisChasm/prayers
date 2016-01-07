@@ -47,6 +47,10 @@ class Prayer_Sql
 
 	}
 
+	/**
+	 * Newly Prayed Prayers
+	 * @return object WPDB Object
+	 */
 	public static function get_newly_prayed()
 	{	
 		global $wpdb;
@@ -76,6 +80,36 @@ class Prayer_Sql
 
 		// get the results
 		$results = $wpdb->get_results( $query );
+		// filter the results
+		$results_filtered = self::cleanup_by_email( $results );
+		return $results_filtered;
+	}
+
+	public static function get_unanswered_prayers()
+	{
+		global $wpdb;
+		
+		// build the query
+		$query = "	SELECT 		wp_posts.ID, 
+								email.meta_value 	AS email
+					FROM 		wp_posts
+
+					LEFT JOIN 	wp_postmeta 		AS email
+					ON 			wp_posts.ID = email.post_id
+					AND 		email.meta_key = 'prayer-email'
+					
+					LEFT JOIN 	wp_postmeta 		AS unanswered
+					ON 			wp_posts.ID = unanswered.post_id
+					AND 		unanswered.meta_key = 'prayer-answered'
+
+					WHERE 		wp_posts.post_status = 'publish'
+					AND 		wp_posts.post_type = 'prayer'
+					AND 		unanswered.meta_value = '0'
+				";
+
+		// get the results
+		$results = $wpdb->get_results( $query );
+
 		// filter the results
 		$results_filtered = self::cleanup_by_email( $results );
 		return $results_filtered;

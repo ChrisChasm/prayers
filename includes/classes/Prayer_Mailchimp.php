@@ -17,6 +17,8 @@ class Prayer_Mailchimp
 
 	public $mc_segments;
 
+	public $mc_groups;
+
 	public $current_list;
 
 	public $current_list_name;
@@ -46,9 +48,11 @@ class Prayer_Mailchimp
 
 		// set a list of segments available in mc list
 		$this->mc_segments = array(
-			'unanswered-requests' => __( 'All unanswered requests', 'prayer' ),
-			'new-prayed-requests' => __( 'New prayed-for requests', 'prayer' ),
+			'unanswered-prayers' => __( 'Unanswered Prayers', 'prayer' ),
+			'new-prayed-prayers' => __( 'Recently Prayed Prayers', 'prayer' ),
 		);
+
+		$this->mc_groups = array();
 	}
 
 	/**
@@ -134,11 +138,12 @@ class Prayer_Mailchimp
 
 			switch ($segment)
 			{
-				case 'unanswered-requests':
-
+				case 'unanswered-prayers':
+					$emails = Prayer_Sql::get_unanswered_prayers();
+					$this->sync_segment_by_name( 'Unanswered Prayers', $emails );
 					break;
 
-				case 'new-prayed-requests':
+				case 'new-prayed-prayers':
 					$emails = Prayer_Sql::get_newly_prayed();
 					$this->sync_segment_by_name( 'Newly Prayed', $emails );
 					break;
@@ -219,6 +224,8 @@ class Prayer_Mailchimp
 			$options = explode("|", $post['prayer_mailchimp_list']);
 			update_option( 'prayer_mailchimp_list_id', $options[0] );
 			update_option( 'prayer_mailchimp_list_name', $options[1] );
+
+			Prayer_Template_Helper::set_flash_message( __( 'Successfully set list to ' . $options[1], 'prayer' ) );
 		}
 	}
 
