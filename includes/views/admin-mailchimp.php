@@ -64,6 +64,7 @@ submitted prayer requests on your website.</p>
 								<option value="<?php echo $key ?>"><?php echo $segment ?></option>
 							<?php endforeach; ?>
 						</select>					
+						<span>(For people who have submitted prayer requests)</span>
 					</form>
 				</li>
 				<li>
@@ -85,10 +86,45 @@ submitted prayer requests on your website.</p>
 							}
 							$prayer_cat_list = implode(", ", $prayer_cat_list);
 						?>
-						<span><?php echo $prayer_cat_list ?>, Answered Prayers</span>					
+						<span><?php echo $prayer_cat_list ?>, Answered Prayers (For people who have subscribed to updates)</span>					
 					</form>
 				</li>
 			</ul>
 		<?php endif; ?>
+
+		<h2>Instructions</h2>
+
+		<p><strong>1. Select a list</strong> that you have created in MailChimp. The Prayer Plugin
+		can sync groups and segments to a MailChimp to let you communicate with
+		users of your website.</p>
+
+		<p><strong>2. Actions</strong> allow you keep your List, Segments, and Groups up-to-date. The 
+		Prayer plugin interacts with one List on your MailChimp account. It adds
+		Segments to the list to allow you to communicate with anyone who has
+		submitted a prayer request to your website. Groups are for allowing
+		other people to subscribe to different prayer updates from your website.</p>
+
+		<p><strong>3. Sync List.</strong> When you sync your list, every email 
+		associated with prayers that have been submitted to your website are
+		synced with MailChimp. This makes up your master prayer list where you
+		can communicate timely information to everyone who uses your website 
+		when it's needed.</p>
+
+		<p><strong>4. Sync Segment.</strong> Segments are used to sort
+		different interactions for interacting with people who have submitted
+		prayer requests to your website. For example, you can send out an
+		email to everyone who has recently had thier prayer request prayed for
+		by your organization by syncing the Newly prayed-for segment. Under
+		the Prayer information box for each individual prayer, you can click
+		the processing tab, click "Prayed for", and this will add any new 
+		prayed for requests to a queue to be synced with MailChimp.
+
+		<p><strong>5. Sync Groups.</strong> Creates groups for your MailChimp
+		list that allows endusers to subscribe to incoming prayer requests or
+		communication based on prayer categories, when the prayer has been
+		answered, etc. You can use one of the feeds this plugin provides to 
+		send out automatic updates using an 
+		<a href="http://kb.mailchimp.com/campaigns/rss-in-campaigns/create-an-rss-campaign" target="_blank">
+		RSS Campaign</a> in MailChimp.</p>
 
 	<?php endif; ?>
