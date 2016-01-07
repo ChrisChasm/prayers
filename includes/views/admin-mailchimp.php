@@ -30,7 +30,6 @@ submitted prayer requests on your website.</p>
 			<select name="prayer_mailchimp_list">
 				<option>Select a list</option>
 				<?php foreach($lists['data'] as $list): ?>
-					<?php var_dump($mc->current_list); ?>
 					<option value="<?php echo $list['id'] ?>" <?php if( $list['id'] == $mc->current_list ) { echo 'selected'; } ?>><?php echo $list['name'] ?></option>
 				<?php endforeach; ?>
 			</select>

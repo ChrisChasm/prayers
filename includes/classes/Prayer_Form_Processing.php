@@ -155,6 +155,9 @@ class Prayer_Form_Processing {
 		add_post_meta( $prayer_id, 'prayer-name', $data['prayer_name'] );
 		add_post_meta( $prayer_id, 'prayer-email', $data['prayer_email'] );
 		add_post_meta( $prayer_id, 'prayer-location', $data['prayer_location'] );
+		add_post_meta( $prayer_id, 'prayer-prayed', 0 );
+		add_post_meta( $prayer_id, 'prayer-email-sent', 0 );
+
 		// set the language of the post
 		$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
 		add_post_meta( $prayer_id, 'prayer-lang', $lang );

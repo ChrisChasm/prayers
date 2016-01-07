@@ -153,14 +153,14 @@ class Prayer_Meta
 	    if ( isset( $_POST[ 'prayer-prayed' ] ) ) {
 	    	update_post_meta( $post_id, 'prayer-prayed', sanitize_text_field($_POST['prayer-prayed']) );
 	    } else {
-	    	delete_post_meta( $post_id, 'prayer-prayed' );
+	    	update_post_meta( $post_id, 'prayer-prayed', 0 );
 	    }
 
 	    // Checks for input and sanitizes/saves if needed
 	    if ( isset( $_POST[ 'prayer-email-sent' ] ) ) {
 	    	update_post_meta( $post_id, 'prayer-email-sent', sanitize_text_field($_POST['prayer-email-sent']) );
 	    } else {
-	    	delete_post_meta( $post_id, 'prayer-email-sent' );
+	    	update_post_meta( $post_id, 'prayer-email-sent', 0 );
 	    }
 
 	    // 

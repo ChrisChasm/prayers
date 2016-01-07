@@ -15,6 +15,8 @@ class Prayer_Mailchimp
 {
 	public $mc_api;
 
+	public $mc_segments;
+
 	public $current_list = "";
 
 	/**
@@ -35,27 +37,20 @@ class Prayer_Mailchimp
 		$this->current_list = get_option( 'prayer_mailchimp_list' ); 
 
 		// add a form processor 
-		add_action( 'init', array( $this, 'mailchimp_list_submission' ) );
-		add_action( 'init', array( $this, 'sync_mailchimp_list' ) );
+		add_action( 'init', array( $this, 'set_mailchimp_list_submission' ) );
+		add_action( 'init', array( $this, 'sync_mailchimp_list_submission' ) );
 		add_action( 'init', array( $this, 'sync_mailchimp_segment' ) );
+
+		// set a list of segments available in mc list
+		$this->mc_segments = array();
 	}
 
 	/**
-	 * Authorize Mailchimp
-	 *
-	 * @since  0.9.0
-	 */
-	public function authorize_mailchimp()
-	{
-
-	}
-
-	/**
-	 * Sync List
+	 * Capture List Sync Submission
 	 *
 	 * @since 0.9.0
 	 */
-	public function sync_mailchimp_list()
+	public function sync_mailchimp_list_submission()
 	{
 		// check to see if this is a prayer submission
 		if ( isset( $_POST['mailchimp-sync-list']) && '1' == $_POST['mailchimp-sync-list']) 
@@ -66,46 +61,46 @@ class Prayer_Mailchimp
 		    if ( ! $is_valid_nonce ) {
 		        return;
 		    }
-			// get the list id	
-			if ( ! empty($this->current_list) )
+			$this->sync_mailchimp_list();
+		}
+	}
+
+	/**
+	 * Sync MailChimp List
+	 */
+	public function sync_mailchimp_list()
+	{
+		// get the list id	
+		if ( ! empty($this->current_list) )
+		{
+			// get a list of all emails and names
+			$emails = Prayer_Sql::get_all_emails();
+
+			$batch = array();
+			foreach ( $emails as $email )
 			{
-				// get a list of all emails and names
-				$emails = Prayer_Sql::get_all_emails();
-
-				// get all unique emails and names
-				$emails_filtered = array();
-				foreach ( $emails as $item ) 
-				{
-					$email = $item->email;
-					$name = $item->name;
-
-					if ( ! Prayer_Plugin_Helper::in_array_rec( $email, $emails_filtered) )
-					{
-						$name = $item->name;
-						$name_parts = explode( " ", $name );
-						$fname = array_shift( $name_parts );
-						$lname = implode( "", $name_parts );
-						$emails_filtered[] = array(
-							'email' => array( 'email' => $item->email ),
-							'merge_vars' => array( 'fname' => $fname, 'lname' => $lname )
-						);
-					}
-				}
-
-				// batch subscribe 
-				try {
-					$this->mc_api->lists->batchSubscribe( $this->current_list, $emails_filtered, true, true, true );
-					Prayer_Template_Helper::set_flash_message( __( 'Successfully synced your MailChimp List.', 'prayer' ) );
-				} catch ( Mailchimp_Error $e ) {
-					if ( $e->getMessage() ) {
-						Prayer_Template_Helper::set_flash_message( __( $e->getMessage(), 'prayer' ), 'error' );
-					}
-					else {
-						Prayer_Template_Helper::set_flash_message( __( 'An unknown error occurred', 'prayer' ), 'error' );
-					}
-				}
+				$name = $item->name;
+				$name_parts = explode( " ", $name );
+				$fname = array_shift( $name_parts );
+				$lname = implode( "", $name_parts );
+				$batch[] = array(
+					'email' => array( 'email' => $email->email ),
+					'merge_vars' => array( 'fname' => $fname, 'lname' => $lname )
+				);
 			}
 
+			// batch subscribe 
+			try {
+				$results = $this->mc_api->lists->batchSubscribe( $this->current_list, $batch, false, true, true );
+				Prayer_Template_Helper::set_flash_message( __( 'Successfully synced your MailChimp List.', 'prayer' ) );
+			} catch ( Mailchimp_Error $e ) {
+				if ( $e->getMessage() ) {
+					Prayer_Template_Helper::set_flash_message( __( $e->getMessage(), 'prayer' ), 'error' );
+				}
+				else {
+					Prayer_Template_Helper::set_flash_message( __( 'An unknown error occurred', 'prayer' ), 'error' );
+				}
+			}
 		}
 	}
 	
@@ -136,18 +131,70 @@ class Prayer_Mailchimp
 					break;
 
 				case 'new-prayed-requests':
-
+					$emails = Prayer_Sql::get_newly_prayed();
+					$this->sync_segment_by_name( 'Newly Prayed', $emails );
 					break;
 			}
 		}
 	}
 	
 	/**
+	 * Sync Segment by Name
+	 * @param  string $segment Name of Segment
+	 * @param  object $emails  WPDB Object
+	 */
+	public function sync_segment_by_name( $segment, $emails )
+	{
+		$this->sync_mailchimp_list();
+
+		// get all segments to test against
+		$segments = $this->mc_api->lists->staticSegments( $this->current_list );
+		$segment_exists = Prayer_Plugin_Helper::in_array_rec($segment, $segments);
+
+		// reset the segment if it exists
+		if ( $segment_exists)
+		{
+			foreach( $segments as $key => $item )
+			{
+				if ( $item['name'] == $segment) {
+					$segment_id = $segments[$key]['id'];
+				}
+			}
+			$this->mc_api->lists->staticSegmentReset( $this->current_list, $segment_id );
+		}
+		// create a new segment if it doesn't exist
+		else
+		{
+			$segment_id = $this->mc_api->lists->staticSegmentAdd( $this->current_list, $segment );
+		}
+
+		// build the batch
+		foreach ( $emails as $email )
+		{
+			$batch[] = array(
+				'email' => $email->email
+			);
+		}
+		// batch subscribe 
+		try {
+			$results = $this->mc_api->lists->staticSegmentMembersAdd( $this->current_list, $segment_id, $batch );
+			Prayer_Template_Helper::set_flash_message( __( 'Successfully synced your MailChimp Segment: ' . $segment, 'prayer' ) );
+		} catch ( Mailchimp_Error $e ) {
+			if ( $e->getMessage() ) {
+				Prayer_Template_Helper::set_flash_message( __( $e->getMessage(), 'prayer' ), 'error' );
+			}
+			else {
+				Prayer_Template_Helper::set_flash_message( __( 'An unknown error occurred', 'prayer' ), 'error' );
+			}
+		}
+	}
+
+	/**
 	 * MailChimp List Selection
 	 *
 	 * @since  0.9.0 
 	 */
-	public function mailchimp_list_submission()
+	public function set_mailchimp_list_submission()
 	{
 		// check to see if this is a prayer submission
 		if ( isset( $_POST['mailchimp-submission']) && '1' == $_POST['mailchimp-submission']) 
