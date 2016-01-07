@@ -1,26 +1,5 @@
 <?php
 
-	// paged
-	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-
-	// Attributes
-	extract( $shortcode_atts );
-
-	// WP_Query arguments
-	$args = array (
-		'post_type' => array( 'prayer' ),
-		'post_status' => array( 'publish' ),
-		'paged' => $paged,
-		'posts_per_page' => $limit,
-		/*'meta_query' => array(
-			array(
-				'key' => 'prayer-anonymous', // filters out anonymous prayers
-				'value' => 0,
-				'compare' => 'LIKE',
-			),
-		),*/
-	);
-
 	// The Query
 	$query = new WP_Query( $args );
 	if ( $query->have_posts() ) : ?>

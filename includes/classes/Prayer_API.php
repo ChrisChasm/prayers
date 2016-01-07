@@ -58,6 +58,10 @@ class Prayer_API
 						'default' => null,
 						'sanitize_callback' => 'sanitize_title',
 					),
+					/*'coords' => array(
+						'default' => null,
+						'sanitize_callback' => false,
+					),*/
 					'answered' => array(
 						'default' => null,
 						'sanitize_callback' => 'absint',

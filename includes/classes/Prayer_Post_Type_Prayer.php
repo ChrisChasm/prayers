@@ -22,6 +22,9 @@ class Prayer_Post_Type_Prayer
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'prayer_post_type' ), 0 );
+
+		// set the visibility based on frontend anonymous checkbox
+		add_action( 'pending_to_publish_prayer', array( $this, 'set_visibility' ) );
 	}
 
 	/**
@@ -84,5 +87,11 @@ class Prayer_Post_Type_Prayer
 		);
 		register_post_type( 'prayer', $args );
 
+	}
+
+	public function set_visibility()
+	{
+		var_dump($_SERVER);
+		die();
 	}
 }

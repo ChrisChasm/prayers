@@ -56,8 +56,30 @@ class Prayer_Shortcode_Prayers
 				'start_date' => 'last month',
 				'end_date' => 'today',
 			), $atts );
+
+		// paged
+		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
+		// Attributes
+		extract( $shortcode_atts );
+
+		// WP_Query arguments
+		$args = array (
+			'post_type' => array( 'prayer' ),
+			'post_status' => array( 'publish' ),
+			'paged' => $paged,
+			'posts_per_page' => $limit,
+			'meta_query' => array(
+				array(
+					'key' => 'prayer-anonymous', // filters out anonymous prayers
+					'value' => 0,
+					'compare' => 'LIKE',
+				),
+			),
+		);
+
 		// set var to be accessible in the called template
-		set_query_var( 'shortcode_atts', $shortcode_atts );
+		set_query_var( 'args', $args );
 		// load templates
 		$templates = new Prayer_Template_Loader;
 		// start a buffer to capture output
