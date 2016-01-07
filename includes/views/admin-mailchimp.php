@@ -37,7 +37,6 @@ submitted prayer requests on your website.</p>
 			<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
 			<input type="hidden" name="mailchimp-submission" value="1" />
 			<input type="submit" value="Submit" class="prayer-button" />
-
 		</form>
 
 		<?php if ( ! empty( $mc->current_list ) ): ?>
@@ -59,12 +58,34 @@ submitted prayer requests on your website.</p>
 						<input type="hidden" name="mailchimp-sync-segment" value="1" />
 						<input type="submit" value="Sync Segment" class="prayer-button sync" />
 						<select name="segment">
-							<option>Choose a list to sync</option>
+							<option>Choose a segment to sync</option>
 							<?php $prayer_segments = $mc->mc_segments; 
 								foreach( $prayer_segments as $key => $segment): ?>
 								<option value="<?php echo $key ?>"><?php echo $segment ?></option>
 							<?php endforeach; ?>
 						</select>					
+					</form>
+				</li>
+				<li>
+					<form action="" method="post">
+						<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
+						<input type="hidden" name="mailchimp-sync-groups" value="1" />
+						<input type="submit" value="Sync Groups" class="prayer-button sync" />
+						<?php
+							$prayer_category = array( 'prayer_category' );
+							$args = array(
+								'orderby' => 'name',
+								'order' => 'ASC',
+								'hide_empty' => false 
+							);
+							$prayer_categories = get_terms($prayer_category, $args);
+							foreach( $prayer_categories as $term )
+							{
+								$prayer_cat_list[] = $term->name;
+							}
+							$prayer_cat_list = implode(", ", $prayer_cat_list);
+						?>
+						<span><?php echo $prayer_cat_list ?>, Answered Prayers</span>					
 					</form>
 				</li>
 			</ul>

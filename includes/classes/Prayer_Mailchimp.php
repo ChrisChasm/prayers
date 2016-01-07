@@ -42,6 +42,7 @@ class Prayer_Mailchimp
 		add_action( 'init', array( $this, 'set_mailchimp_list_submission' ) );
 		add_action( 'init', array( $this, 'sync_mailchimp_list_submission' ) );
 		add_action( 'init', array( $this, 'sync_mailchimp_segment' ) );
+		add_action( 'init', array( $this, 'sync_mailchimp_groups' ) );
 
 		// set a list of segments available in mc list
 		$this->mc_segments = array(
@@ -218,6 +219,93 @@ class Prayer_Mailchimp
 			$options = explode("|", $post['prayer_mailchimp_list']);
 			update_option( 'prayer_mailchimp_list_id', $options[0] );
 			update_option( 'prayer_mailchimp_list_name', $options[1] );
+		}
+	}
+
+	/**
+	 * Sync Groups
+	 */
+	public function sync_mailchimp_groups()
+	{
+		// check to see if this is a prayer submission
+		if ( isset( $_POST['mailchimp-sync-groups']) && '1' == $_POST['mailchimp-sync-groups']) 
+		{
+			// check for a valid nonce
+			$is_valid_nonce = ( isset( $_POST[ 'mailchimp_nonce' ] ) && wp_verify_nonce( $_POST[ 'mailchimp_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false'; 
+		    // Exits script depending on save status
+		    if ( ! $is_valid_nonce ) {
+		        return;
+		    }
+
+		    // get the categories to create/update groups
+		    $prayer_category = array( 'prayer_category' );
+			$args = array(
+				'orderby' => 'name',
+				'order' => 'ASC',
+				'hide_empty' => false 
+			);
+			$prayer_categories = get_terms($prayer_category, $args);
+
+			// build the groups and add additional groups
+			foreach( $prayer_categories as $group ) {
+	    		$groups[] = $group->name;
+	    	} 
+	    	$groups[] = __( 'Answered Prayers', 'prayer' );
+
+	    	// Create an interest grouping called Your Interests if it doesn't
+	    	// exist already. If it does, use add the groups to it.
+	    	try
+	    	{
+	    		// get all groups
+				$groupings = $this->mc_api->lists->interestGroupings( $this->current_list );
+				foreach( $groupings as $key => $group )
+				{
+					if ( $group['name'] == 'Prayer Interests' )
+					{
+						$grouping = $group;
+					}
+				}
+				if ( is_null( $grouping ) )
+				{
+					$grouping = $this->mc_api->lists->interestGroupingAdd( $this->current_list, 'Prayer Interests', 'checkboxes', $groups );
+				}
+	    	}
+	    	catch( Mailchimp_Error $e )
+	    	{
+	    		$grouping = $this->mc_api->lists->interestGroupingAdd( $this->current_list, 'Prayer Interests', 'checkboxes', $groups );
+	    	}
+
+	    	// interest groupings have been created or found.
+	    	// updated the groupings with any new categories or groups
+	    	$new_groupings = $groupings = $this->mc_api->lists->interestGroupings( $this->current_list );
+	    	
+	    	// get the current grouping
+	    	foreach( $new_groupings as $key => $group )
+			{
+				if ( $group['name'] == 'Prayer Interests' )
+				{
+					$new_grouping = $group;
+				}
+			}
+			$current_groups = $new_grouping['groups'];
+
+			// build an index to search against
+			$current_group_index = array();
+			foreach( $current_groups as $group )
+			{
+				$current_group_index[] = $group['name'];
+			}
+
+			// add any new groups not a part of current grouping
+			foreach ( $groups as $group )
+			{
+				if ( ! in_array( $group, $current_group_index ) )
+				{
+					$this->mc_api->lists->interestGroupAdd( $this->current_list, $group );
+				}
+			}
+
+			Prayer_Template_Helper::set_flash_message( __( 'Successfully synced your groups.', 'prayer' ) );
 		}
 	}
 
