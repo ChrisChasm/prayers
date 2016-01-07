@@ -17,7 +17,9 @@ class Prayer_Mailchimp
 
 	public $mc_segments;
 
-	public $current_list = "";
+	public $current_list;
+
+	public $current_list_name;
 
 	/**
 	 * Class Construct
@@ -34,7 +36,7 @@ class Prayer_Mailchimp
 			$this->mc_api = new Mailchimp( $api_key );			
 		}
 		// set the current list
-		$this->current_list = get_option( 'prayer_mailchimp_list' ); 
+		$this->current_list = get_option( 'prayer_mailchimp_list_id' ); 
 
 		// add a form processor 
 		add_action( 'init', array( $this, 'set_mailchimp_list_submission' ) );
@@ -42,7 +44,10 @@ class Prayer_Mailchimp
 		add_action( 'init', array( $this, 'sync_mailchimp_segment' ) );
 
 		// set a list of segments available in mc list
-		$this->mc_segments = array();
+		$this->mc_segments = array(
+			'unanswered-requests' => __( 'All unanswered requests', 'prayer' ),
+			'new-prayed-requests' => __( 'New prayed-for requests', 'prayer' ),
+		);
 	}
 
 	/**
@@ -92,7 +97,9 @@ class Prayer_Mailchimp
 			// batch subscribe 
 			try {
 				$results = $this->mc_api->lists->batchSubscribe( $this->current_list, $batch, false, true, true );
-				Prayer_Template_Helper::set_flash_message( __( 'Successfully synced your MailChimp List.', 'prayer' ) );
+				$add_count = $results['add_count'];
+				$update_count = $results['update_count'];
+				Prayer_Template_Helper::set_flash_message( __( 'Successfully synced your MailChimp List (' . $add_count . ' added, ' . $update_count . ' updated).' , 'prayer' ) );
 			} catch ( Mailchimp_Error $e ) {
 				if ( $e->getMessage() ) {
 					Prayer_Template_Helper::set_flash_message( __( $e->getMessage(), 'prayer' ), 'error' );
@@ -178,7 +185,8 @@ class Prayer_Mailchimp
 		// batch subscribe 
 		try {
 			$results = $this->mc_api->lists->staticSegmentMembersAdd( $this->current_list, $segment_id, $batch );
-			Prayer_Template_Helper::set_flash_message( __( 'Successfully synced your MailChimp Segment: ' . $segment, 'prayer' ) );
+			$count = $results['success_count'];
+			Prayer_Template_Helper::set_flash_message( __( 'Successfully synced ' . $count . ' people to your MailChimp Segment: ' . $segment, 'prayer' ) );
 		} catch ( Mailchimp_Error $e ) {
 			if ( $e->getMessage() ) {
 				Prayer_Template_Helper::set_flash_message( __( $e->getMessage(), 'prayer' ), 'error' );
@@ -207,7 +215,9 @@ class Prayer_Mailchimp
 		    }
 		    // get the post
 			$post = $_POST;
-			update_option( 'prayer_mailchimp_list', $post['prayer_mailchimp_list'] );
+			$options = explode("|", $post['prayer_mailchimp_list']);
+			update_option( 'prayer_mailchimp_list_id', $options[0] );
+			update_option( 'prayer_mailchimp_list_name', $options[1] );
 		}
 	}
 

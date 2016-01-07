@@ -87,6 +87,7 @@ span.prayer-update-count {
 .flash {
   padding: 0.5em 1em;
   margin-right: 2em;
+  max-width: 600px;
 }
 .flash-success {
 	background: #C8FFD6;
@@ -95,4 +96,24 @@ span.prayer-update-count {
 .flash-error {
 	background: #FFD4D8;
 	border: 1px solid #FF9A90;
+}
+
+/* Prayer Buttons */
+.prayer-button {
+  border: 1px solid #34829B;
+  background: #44AACB;
+  color: #fff;
+  padding: .25em .75em;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.prayer-button:hover {
+  border: 1px solid #34829B;
+  background: #4DBFE4;
+  color: #fff;
+  border-radius: 4px;
+}
+.prayer-button.sync {
+    width: 120px;
+    margin-right: .25em;
 }

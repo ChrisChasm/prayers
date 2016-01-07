@@ -28,54 +28,46 @@
 submitted prayer requests on your website.</p>
 		
 			<select name="prayer_mailchimp_list">
-				<option>Select a list</option>
+				<option value="">Select a list</option>
 				<?php foreach($lists['data'] as $list): ?>
-					<option value="<?php echo $list['id'] ?>" <?php if( $list['id'] == $mc->current_list ) { echo 'selected'; } ?>><?php echo $list['name'] ?></option>
+					<option value="<?php echo $list['id'] ?>|<?php echo $list['name'] ?>" <?php if( $list['id'] == $mc->current_list ) { echo 'selected'; } ?>><?php echo $list['name'] ?></option>
 				<?php endforeach; ?>
 			</select>
 
 			<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
 			<input type="hidden" name="mailchimp-submission" value="1" />
-			<input type="submit" value="Submit" />
+			<input type="submit" value="Submit" class="prayer-button" />
 
 		</form>
 
-		<h2>Actions</h2>
+		<?php if ( ! empty( $mc->current_list ) ): ?>
 
-		<ul>
-			<li>
-				<form action="" method="post">
-					<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
-					<input type="hidden" name="mailchimp-sync-all" value="1" />
-					<input type="submit" value="Sync All" />
-					<span>Sync list and all segments</span>
-				</form>
-			</li>
-			<li>
-				<form action="" method="post">
-					<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
-					<input type="hidden" name="mailchimp-sync-list" value="1" />
-					<input type="submit" value="Sync List" />
-					<span>All emails</span>
-				</form>
-			</li>
-			<li>
-				<form action="" method="post">
-					<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
-					<input type="hidden" name="mailchimp-sync-segment" value="1" />
-					<input type="hidden" name="segment" value="answered-prayers" />
-					<input type="submit" value="Sync Segment" />
-					<span>Answered prayers</span>
-				</form>
-			<li>
-				<form action="" method="post">
-					<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
-					<input type="hidden" name="mailchimp-sync-segment" value="1" />
-					<input type="hidden" name="segment" value="new-prayed-requests" />
-					<input type="submit" value="Sync Segment" />
-					<span>Newly prayed-for requests</span>
-				</form>
-			</li>
-		</ul>
+			<h2>Actions</h2>
+
+			<ul>
+				<li>
+					<form action="" method="post">
+						<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
+						<input type="hidden" name="mailchimp-sync-list" value="1" />
+						<input type="submit" value="Sync List" class="prayer-button sync" />
+						<span>All <?php echo get_option( 'prayer_mailchimp_list_name' ) ?> Emails</span>
+					</form>
+				</li>
+				<li>
+					<form action="" method="post">
+						<?php wp_nonce_field( basename(__FILE__), 'mailchimp_nonce' ); ?>
+						<input type="hidden" name="mailchimp-sync-segment" value="1" />
+						<input type="submit" value="Sync Segment" class="prayer-button sync" />
+						<select name="segment">
+							<option>Choose a list to sync</option>
+							<?php $prayer_segments = $mc->mc_segments; 
+								foreach( $prayer_segments as $key => $segment): ?>
+								<option value="<?php echo $key ?>"><?php echo $segment ?></option>
+							<?php endforeach; ?>
+						</select>					
+					</form>
+				</li>
+			</ul>
+		<?php endif; ?>
 
 	<?php endif; ?>
