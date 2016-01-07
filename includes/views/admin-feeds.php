@@ -18,15 +18,15 @@
 	    			<tbody>
 		    			<tr>
 			    			<td>By Most Recent</td>
-			    			<td><a target="_blank" href="<?php echo get_site_url(); ?>/prayers/feed"><?php echo get_site_url(); ?>/prayers/feed</a></td>
+			    			<td><a target="_blank" href="<?php echo get_site_url(); ?>/feed?post_type=prayer"><?php echo get_site_url(); ?>/feed?post_type=prayer</a></td>
 		    			</tr>
 		    			<tr>
 			    			<td>By Category</td>
-			    			<td><a target="_blank" href="<?php echo get_site_url(); ?>/prayers/feed?prayer_category=north-america"><?php echo get_site_url(); ?>/prayers/feed?prayer_category=missions</a></td>
+			    			<td><a target="_blank" href="<?php echo get_site_url(); ?>/feed?post_type=prayer&amp;prayer_category=missions"><?php echo get_site_url(); ?>/feed?post_type=prayer&amp;prayer_category=missions</a></td>
 		    			</tr>
 		    			<tr>
 			    			<td>By Tags</td>
-			    			<td><a target="_blank" href="<?php echo get_site_url(); ?>/prayers/feed?prayer_tag=health,supplies"><?php echo get_site_url(); ?>/prayers/feed?prayer_tag=health,supplies</a></td>
+			    			<td><a target="_blank" href="<?php echo get_site_url(); ?>/feed?post_type=prayer&amp;prayer_tag=africa,north-america"><?php echo get_site_url(); ?>/feed?post_type=prayer&amp;prayer_tag=africa,north-america</a></td>
 		    			</tr>
 	    			</tbody>
     			</table>
@@ -44,18 +44,33 @@
     					<tr>
     						<td>By Most Recent</td>
     						<td>
-    							<a href="<?php echo get_site_url(); ?>/wp-json/prayer/v1" target="_blank"><?php echo get_site_url(); ?>/wp-json/prayer/v1</a>
+    							<a href="<?php echo get_site_url(); ?>/wp-json/prayers/v1/prayers" target="_blank"><?php echo get_site_url(); ?>/wp-json/prayers/v1/prayers</a>
     						</td>
     					</tr>
-		    			<tr>
-					    	<td>By Most Recent </td><td><a target="_blank" href="<?php echo get_site_url(); ?>/wp-json/wp/v2/prayers"><?php echo get_site_url(); ?>/wp-json/wp/v2/prayers</a></td>
-						</tr>
 						<tr>
-					    	<td>By Most Recent </td><td><a target="_blank" href="<?php echo get_site_url(); ?>/wp-json/wp/v2/prayers?filter=[prayer_category]=missions"><?php echo get_site_url(); ?>/wp-json/wp/v2/prayers?filter=[prayer_category]=missions</a></td>
-						</tr>
-						<tr>
-					    	<td>By Tags </td><td><a target="_blank" href="<?php echo get_site_url(); ?>/wp-json/wp/v2/prayers?filter=[prayer_tag]=africa"><?php echo get_site_url(); ?>/wp-json/wp/v2/prayers?filter=[prayer_tag]=africa</a></td>
+					    	<td>By Answered</td>
+					    	<td>
+    							<a href="<?php echo get_site_url(); ?>/wp-json/prayers/v1/prayers?answered=1" target="_blank"><?php echo get_site_url(); ?>/wp-json/prayers/v1/prayers?answered=1</a>
+    						</td>
 					    </tr>
+					    <tr>
+					    	<td>By Country</td>
+					    	<td>
+    							<a href="<?php echo get_site_url(); ?>/wp-json/prayers/v1/prayers?country=us" target="_blank"><?php echo get_site_url(); ?>/wp-json/prayers/v1/prayers?country=us</a>
+    						</td>
+					    </tr>
+					    <tr>
+					    	<td>By Category</td>
+					    	<td>
+    							<a href="<?php echo get_site_url(); ?>/wp-json/prayers/v1/prayers?category=missions" target="_blank"><?php echo get_site_url(); ?>/wp-json/prayers/v1/prayers?category=missions</a>
+    						</td>
+						</tr>
+						<tr>
+					    	<td>By Tags</td>
+					    	<td>
+    							<a href="<?php echo get_site_url(); ?>/wp-json/prayers/v1/prayers?tags=africa,north-america" target="_blank"><?php echo get_site_url(); ?>/wp-json/prayers/v1/prayers?tags=africa,north-america</a>
+    						</td>
+						</tr>
 					</tbody>
 		    	</table>
 
