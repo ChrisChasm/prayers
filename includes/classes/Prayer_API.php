@@ -30,7 +30,7 @@ class Prayer_API
 	 */
 	public function register_get_api()
 	{
-		return register_rest_route( 'prayer/v1', '/', array(
+		return register_rest_route( 'prayers/v1', '/', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'api' )
 		) );
@@ -67,7 +67,7 @@ class Prayer_API
 	 */
 	public function register_get_prayers()
 	{
-		return register_rest_route( 'prayer/v1', '/prayers', array(
+		return register_rest_route( 'prayers/v1', '/prayers', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'get_prayers' )
 		) );
@@ -96,48 +96,91 @@ class Prayer_API
 
 		// The Query
 		$query = new WP_Query( $args );
-		$prayers = $query->get_posts();
+		$posts = $query->get_posts();
 
-		foreach ($prayers as $key => $prayer) {
+		foreach ($posts as $key => $post) {
 			
-			// get the post meta
-			$meta = get_post_meta( $prayer->ID );
-			//$prayers[$key]->meta = $meta;
-
-			// set the prayer count
-			$prayers[$key]->prayer_count = $meta['prayer-count'][0];
-
-			// set the user info
-			$prayers[$key]->submitter = array(
-				'name' => $meta['prayer-name'][0]
-			);
-
-			// set the location data
-			$lon = $meta['prayer-location-longitude'];
-			$lat = $meta['prayer-location-latitude'];
-			$add = $meta['prayer-location-formatted-address'];
-			$c_long = $meta['prayer-location-country-long'];
-			$c_short = $meta['prayer-location-country-short'];
-			$prayers[$key]->geocode = array(
-				'place' => $meta['prayer-location'][0],
-				'longitude' => $lon[ sizeof($lon)-1 ],
-				'latitude' => $lat[ sizeof($lat)-1 ],
-				'formatted' => $add[ sizeof($add)-1 ],
-				'c_long' => $c_long[0],
-				'c_short' => $c_short[0],
-				'lang' => $meta['prayer-lang'][0],
-			);
-
-			// set the category data
-			$prayers[$key]->category = get_the_terms( $prayer->ID, 'prayer_category' );
-
-			// set the tags data
-			$prayers[$key]->tags = get_the_terms( $prayer->ID, 'prayer_tag' );
-
+			$prayer = $this->run_prayer_template( $post );
+			$prayers[] = $prayer;
 			// var_dump($prayers[$key]);
 		}
 
 		return $prayers;
+	}
+
+	/**
+	 * Prayer Template
+	 * @param  object $post WP Post Object
+	 * @return object       Prayer to output to JSON
+	 */
+	private function run_prayer_template( $post ) {
+
+		// instantiate a prayer object
+		$prayer = new stdClass();
+
+		// get the post meta
+		$meta = get_post_meta( $post->ID );
+		
+		// standard wp fields filtered down
+		$prayer->ID = $post->ID;
+		$prayer->post_date = $post->post_date;
+		$prayer->post_date_gmt = $post->post_date_gmt;
+		$prayer->title = $post->post_title;
+		$prayer->content = $post->post_content;
+		$prayer->excerpt = $post->post_excerpt;
+		$prayer->slug = $post->post_name;
+		$prayer->guid = $post->guid;
+
+		// set the prayer count
+		$prayer->prayer_count = $meta['prayer-count'][0];
+
+		// set the user info
+		$prayer->submitter = array(
+			'name' => $meta['prayer-name'][0]
+		);
+
+		// set the location data
+		$lon = $meta['prayer-location-longitude'];
+		$lat = $meta['prayer-location-latitude'];
+		$add = $meta['prayer-location-formatted-address'];
+		$c_long = $meta['prayer-location-country-long'];
+		$c_short = $meta['prayer-location-country-short'];
+		$prayer->geocode = array(
+			'place' => $meta['prayer-location'][0],
+			'longitude' => $lon[ sizeof($lon)-1 ],
+			'latitude' => $lat[ sizeof($lat)-1 ],
+			'formatted' => $add[ sizeof($add)-1 ],
+			'c_long' => $c_long[0],
+			'c_short' => $c_short[0],
+			'lang' => $meta['prayer-lang'][0],
+		);
+
+		// set the category data
+		$categories = get_the_terms( $prayer->ID, 'prayer_category' );
+		foreach( $categories as $category ) 
+		{
+			$prayer->category[] = array(
+				'name' => $category->name,
+				'slug' => $category->slug,
+				'id' => $category->term_id,
+			);
+		}
+
+		// set the tags data
+		$tags = get_the_terms( $prayer->ID, 'prayer_tag' );
+		if ( $tags != false )
+		{
+			foreach( $tags as $tag ) 
+			{
+				$prayer->tag[] = array(
+					'name' => $tag->name,
+					'slug' => $tag->slug,
+					'id' => $tag->term_id,
+				);
+			}
+		}
+
+		return $prayer;
 	}
 
 	/**
