@@ -187,4 +187,21 @@ class Prayer_Template_Helper
 			echo '<div class="flash flash-' . $flash_message['type'] . '">'. $flash_message['message'] . '</div>';
 		}
 	}
+
+	/**
+     * Get Categories
+     * @return object WP Taxonomy
+     */
+    public static function get_categories()
+    {
+        $prayer_category = array( 'prayer_category' );
+        $args = array(
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'hide_empty' => false 
+        );
+        $prayer_categories = get_terms($prayer_category, $args);
+        return $prayer_categories;
+    }
+
 }

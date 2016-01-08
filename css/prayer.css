@@ -109,6 +109,15 @@ label.error {
 .echo.form-errors ul {
 	margin-bottom: 0;
 }
+ul.inline-form-elements {
+	margin-left: 0;
+}
+ul.inline-form-elements li {
+  display: inline-block;
+}
+ul.inline-form-elements li label {
+  margin-left: 0;
+}
 
 /* Map styles */
 #prayer-map {
