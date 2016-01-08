@@ -23,6 +23,10 @@
 			})
 		});
 
+		$.getJSON( '/wp-json/prayers/v1/prayers', function( data ) {
+			console.log(data);
+		});
+
 		document.getElementById('zoom-out').onclick = function() {
         	var view = map.getView();
         	var zoom = view.getZoom();

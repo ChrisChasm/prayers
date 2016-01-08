@@ -64,11 +64,11 @@ class Prayer_Shortcode_Map
 	static function register_script()
 	{
 		// register css
-		wp_register_style( 'openlayers-css', plugins_url( '/prayer/bower_components/ol3-bower-dist/dist/ol.css', 'prayer' ), array(), null, 'all' );
+		wp_register_style( 'leaflet-css', 'http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css', array(), null, 'all' );
 
 		// register js
-		wp_register_script( 'openlayers-js', plugins_url( '/prayer/bower_components/ol3-bower-dist/dist/ol.js', 'prayer' ), array(), null, 'all' );
-		wp_register_script( 'prayer-map-js', plugins_url( '/prayer/js/prayer-map.js', 'prayer' ), array( 'openlayers-js'), '0.9.0', 'all' );
+		wp_register_script( 'leaflet-js', 'http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js', array(), null, 'all' );
+		wp_register_script( 'prayer-map-js', plugins_url( '/prayer/js/prayer-map.js', 'prayer' ), array( 'leaflet-js'), '0.9.0', 'all' );
 	}
 
 	static function print_script()
@@ -76,10 +76,10 @@ class Prayer_Shortcode_Map
 		if ( ! self::$add_script ) return;
 
 		// load css
-		wp_enqueue_style( 'openlayers-css' );
+		wp_enqueue_style( 'leaflet-css' );
 
 		// load js
-		wp_enqueue_script( 'openlayers-js' );
+		wp_enqueue_script( 'leaflet-js' );
 		wp_enqueue_script( 'prayer-map-js' );
 	}
 }
