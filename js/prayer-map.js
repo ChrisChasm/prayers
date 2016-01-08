@@ -4,40 +4,29 @@
 (function($) {
 	$(document).ready(function() {
 
-
-		var map = new ol.Map({
-			layers: [
-				new ol.layer.Tile({
-					source: new ol.source.OSM()
-				})
-			],
-			target: 'map',
-			controls: ol.control.defaults({
-				attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
-					collapsible: false
-				})
-			}),
-			view: new ol.View({
-				center: [0, 0],
-				zoom: 2
-			})
-		});
-
 		$.getJSON( '/wp-json/prayers/v1/prayers', function( data ) {
-			console.log(data);
+
+			var map = L.map('prayer-map');
+
+			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+			    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+			}).addTo(map);
+
+			var bounds = [];
+			$.each(data, function( index, item ) {
+				if ( item.geocode.place != "" ) {
+					var marker = L.marker([item.geocode.latitude,item.geocode.longitude]).addTo(map)
+						.bindPopup('<h3>' + item.title + '</h3><br />' + item.content + 
+							'<p><strong>' + item.geocode.formatted + '</strong><br />' + 
+							'<em>' + item.category[0].name + '</em></p>');
+					console.log(item);	
+					bounds[index] = [ item.geocode.latitude, item.geocode.longitude ];
+				} 
+			});
+			
+			map.fitBounds(bounds);
+
 		});
-
-		document.getElementById('zoom-out').onclick = function() {
-        	var view = map.getView();
-        	var zoom = view.getZoom();
-        	view.setZoom(zoom - 1);
-      	};
-
-      	document.getElementById('zoom-in').onclick = function() {
-       		var view = map.getView();
-        	var zoom = view.getZoom();
-        	view.setZoom(zoom + 1);
-      	};
 
 	});
 })(jQuery);

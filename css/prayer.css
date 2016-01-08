@@ -100,12 +100,18 @@ li.prayer-avatar-small img {
 }
 .echo.form-errors,
 label.error {
-  padding: 0.5em 1em;
-  border: 1px solid #FF8488;
-  background: #FFD7DB;
-  border-radius: 4px;
-  margin-bottom: 1.5em;
+  	padding: 0.5em 1em;
+  	border: 1px solid #FF8488;
+  	background: #FFD7DB;
+  	border-radius: 4px;
+  	margin-bottom: 1.5em;
 }
 .echo.form-errors ul {
 	margin-bottom: 0;
+}
+
+/* Map styles */
+#prayer-map {
+  	width: 100%;
+  	height: 500px;
 }

@@ -3,4 +3,4 @@
 	 * Prayer Map Options
 	 */
 	
-?><div id="map" class="map"></div>
+?><div id="prayer-map" class="map"></div>
