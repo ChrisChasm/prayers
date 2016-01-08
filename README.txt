@@ -28,9 +28,7 @@ A: There are 3 shortcodes available.
 
 [prayers limit="10" start_date="last month" end_date="today"]
 
-[prayers_form]
-
-[prayers_map]
+[prayers_map px_height="320" px_width="500" pct_height="" pct_width=""]
 
 [prayers_mailchimp_signup]
 
