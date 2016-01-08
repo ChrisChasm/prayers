@@ -50,9 +50,19 @@ class Prayer_Shortcode_Map
 		// Attributes
 		extract( shortcode_atts(
 			array(
-
+				'px_height' => null,
+				'px_width' => null,
+				'pct_height' => null,
+				'pct_width' => null,
 			), $atts)
 		);
+
+		// set var to be accessible in the called template
+		set_query_var( 'px_height', $px_height );
+		set_query_var( 'px_width', $px_width );
+		set_query_var( 'pct_height', $pct_height );
+		set_query_var( 'pct_width', $pct_width );
+
 		// load templates
 		$templates = new Prayer_Template_Loader;
 		// start a buffer to capture output
@@ -66,9 +76,8 @@ class Prayer_Shortcode_Map
 		// register css
 		wp_register_style( 'leaflet-css', 'http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css', array(), null, 'all' );
 
-		// register js
 		wp_register_script( 'leaflet-js', 'http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js', array(), null, 'all' );
-		wp_register_script( 'prayer-map-js', plugins_url( '/prayer/js/prayer-map.js', 'prayer' ), array( 'leaflet-js'), '0.9.0', 'all' );
+		wp_register_script( 'prayer-map-js', plugins_url( '/prayer/js/prayer-map.js', 'prayer' ), array( 'leaflet-js'), null, 'all' );
 	}
 
 	static function print_script()
@@ -80,6 +89,19 @@ class Prayer_Shortcode_Map
 
 		// load js
 		wp_enqueue_script( 'leaflet-js' );
+
+		$tax = array( 'prayer_category' );
+		$args = array(
+			'orderby' => 'name',
+			'order' => 'ASC',
+			'hide_empty' => false 
+		);
+		$categories = get_terms($tax, $args);
+		$params = array(
+			'categories' => $categories,
+		);
+		wp_localize_script( 'prayer-map-js', 'map_params', $params );
 		wp_enqueue_script( 'prayer-map-js' );
+
 	}
 }

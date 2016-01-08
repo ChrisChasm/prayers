@@ -13,19 +13,23 @@
 			}).addTo(map);
 
 			var bounds = [];
+			var markers = [];
 			$.each(data, function( index, item ) {
 				if ( item.geocode.place != "" ) {
-					var marker = L.marker([item.geocode.latitude,item.geocode.longitude]).addTo(map)
-						.bindPopup('<h3>' + item.title + '</h3><br />' + item.content + 
+					markers[item.category[0].slug ] = L.marker([item.geocode.latitude,item.geocode.longitude]).addTo(map)
+						.bindPopup(
+							'<h3>' + item.title + '</h3><br />' + item.content + 
 							'<p><strong>' + item.geocode.formatted + '</strong><br />' + 
-							'<em>' + item.category[0].name + '</em></p>');
-					console.log(item);	
+							'<em>' + item.category[0].name + '</em></p>'
+						);
+						
 					bounds[index] = [ item.geocode.latitude, item.geocode.longitude ];
 				} 
 			});
-			
+		
+			//console.log(map_params.categories);
+			console.log(markers);
 			map.fitBounds(bounds);
-
 		});
 
 	});

@@ -3,4 +3,11 @@
 	 * Prayer Map Options
 	 */
 	
-?><div id="prayer-map" class="map"></div>
+	if ( ! is_null( $px_height) ) { $pxh = "height: {$px_height}px; "; } 
+	if ( ! is_null( $px_width) ) { $pxw = "width: {$px_width}px; "; } 
+	if ( ! is_null( $pct_height) ) { $pcth = "height: {$pct_height}%; "; } 
+	if ( ! is_null( $pct_width) ) { $pctw = "height: {$pct_width}%; "; } 
+
+	$inline = $pxh . $pxw . $pcth . $pctw;
+
+?><div id="prayer-map" class="map" style="<?php echo $inline ?>"></div>
