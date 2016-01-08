@@ -169,6 +169,7 @@ if ( is_admin() )
 Prayer_Shortcode_Prayers::init();
 Prayer_Shortcode_Form::init();
 Prayer_Shortcode_Map::init();
+Prayer_Shortcode_Signup::init();
 
 /**
  * Admin Prayer Listing Page Columns

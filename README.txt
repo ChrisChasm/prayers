@@ -32,6 +32,8 @@ A: There are 3 shortcodes available.
 
 [prayers_map]
 
+[prayers_mailchimp_signup]
+
 Q: How do I create a prayer listing?
 A: Embed the [prayers] shortcode on any standard page.
 
