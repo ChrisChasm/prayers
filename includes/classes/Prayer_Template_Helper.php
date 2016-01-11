@@ -67,6 +67,7 @@ class Prayer_Template_Helper
 			$prayer_count = 0;
 		}
 		// build the prayer button
+		ob_start();
 		?>
 			<div class="prayer-button" data-prayer-id="<?php the_ID(); ?>">
 				<span class="prayer-count prayer-<?php the_ID(); ?>"><?php echo $prayer_count; ?></span>
@@ -79,8 +80,8 @@ class Prayer_Template_Helper
 					</form>
 				</span>
 			</div>
-
 		<?php
+		return ob_get_clean();
 	}
 
 	/**
@@ -95,7 +96,9 @@ class Prayer_Template_Helper
 		$prayer_location = get_post_meta( $id, 'prayer-location', 1);
 		if ( empty($prayer_location) ) { return; }
 		// build the html
-		?><span class="prayer-box"><?php echo $prayer_location; ?></span><?
+		ob_start(); ?>
+			<span class="prayer-box"><?php echo $prayer_location; ?></span>
+		<?php return ob_get_clean();
 	}
 
 	/**
