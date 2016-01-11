@@ -43,7 +43,7 @@ class Prayer_Plugin_Setup
         if ( ! get_option('prayer_settings_options') ) {
             $options = array(
                 'notification_user' => 1,
-                'prayer_form_response' => __( 'We have recieved your prayer request.', 'prayer' ),
+                'prayer_form_response' => __( 'We have received your prayer request.', 'prayer' ),
                 'button_primary_color' => '#2582EA',
                 'button_secondary_color' => '#45D680',
                 'button_text_color' => '#ffffff',
@@ -109,8 +109,20 @@ class Prayer_Plugin_Setup
      */
     public function plugin_uninstall() {
 
+        // delete all prayer requests
+        $prayers = get_posts( array(
+                'post_type' => 'prayer',
+            )
+        );
+        foreach ( $prayers as $prayer )
+        {
+            wp_elete_post( $prayer->ID, false );
+        }
+
+        // delete prayer settings
         delete_option( 'prayer_settings_options' );
 
+        // delete the prayer user
         $user = get_user_by( 'login', 'prayer' );
         wp_delete_user( $user->id );
 
