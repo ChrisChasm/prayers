@@ -119,8 +119,25 @@ class Prayer_Plugin_Setup
             wp_delete_post( $prayer->ID, true );
         }
 
+        // delete prayer categories
+        $categories = get_terms( 'prayer_category' );
+        foreach ( $categories as $category )
+        {
+            wp_delete_term( $category->ID, 'prayer_category ');
+        }
+
+        // delete prayer tags
+        $tags = get_terms( 'prayer_tags' );
+        foreach ( $tags as $tag )
+        {
+            wp_delete_term( $tag->ID, 'prayer_tags ');
+        }
+
+
         // delete prayer settings
         delete_option( 'prayer_settings_options' );
+        delete_option( 'prayer_mailchimp_list_id' );
+        delete_option( 'prayer_mailchimp_list_name' );
 
         // delete the prayer user
         $user = get_user_by( 'login', 'prayer' );
