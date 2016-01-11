@@ -19,7 +19,7 @@ class Prayer_Taxonomy_Tags
 	 */
 	public function __construct() {
 		register_activation_hook( __FILE__ , array( $this, 'activate' ) );
-		add_action( 'init', array( $this, 'prayer_post_tag_taxonomy' ), 2 );
+		add_action( 'init', array( $this, 'prayer_post_tag_taxonomy' ) );
 	}
 
 	public function activate()

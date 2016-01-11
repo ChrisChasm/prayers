@@ -19,7 +19,7 @@ class Prayer_Taxonomy_Category
 	 */
 	public function __construct() {
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
-		add_action( 'init', array( $this, 'prayer_category_taxonomy' ), 1 );
+		add_action( 'init', array( $this, 'prayer_category_taxonomy' ) );
 	}
 
 	function activate() {
