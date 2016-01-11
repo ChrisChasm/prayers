@@ -116,7 +116,7 @@ class Prayer_Plugin_Setup
         );
         foreach ( $prayers as $prayer )
         {
-            wp_elete_post( $prayer->ID, false );
+            wp_delete_post( $prayer->ID, true );
         }
 
         // delete prayer settings
