@@ -18,7 +18,16 @@ class Prayer_Taxonomy_Category
 	 * Class Construct
 	 */
 	public function __construct() {
+		register_activation_hook( __FILE__, array( $this, 'activate' ) );
 		add_action( 'init', array( $this, 'prayer_category_taxonomy' ), 1 );
+	}
+
+	function activate() {
+		$this->prayer_category_taxonomy();
+		// create default categories
+        wp_insert_term( __('Health', 'prayer'), 'prayer_category' );
+        wp_insert_term( __('Spiritual', 'prayer'), 'prayer_category' );
+        wp_insert_term( __('Global', 'prayer'), 'prayer_category' );
 	}
 
 	/**

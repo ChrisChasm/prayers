@@ -90,7 +90,6 @@ class Prayer_Plugin_Setup
         ) $charset_collate;";
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
         $db = dbDelta( $sql );
-
     }
 
     /**
