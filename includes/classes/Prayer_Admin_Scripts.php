@@ -26,13 +26,13 @@ class Prayer_Admin_Scripts
 	function register_admin_scripts() {
 		// styles	
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_register_style( 'prayer-admin-css', plugins_url( '/prayer/elements/css/prayer-admin.css', 'prayer' ), array(), '20151228', 'all' );
+		wp_register_style( 'prayer-admin-css', plugins_url( '/prayer/includes/css/prayer-admin.css', 'prayer' ), array(), '20151228', 'all' );
 		wp_enqueue_style( 'prayer-admin-css');
 
 		// scripts
-		wp_register_script( 'prayer-admin-settings', plugins_url( '/prayer/elements/js/prayer-admin-settings.js', 'prayer' ), array( 'wp-color-picker' ), '20151228', 'all' );
-		wp_register_script( 'prayer-admin-tabs', plugins_url( '/prayer/elements/js/prayer-admin-tabs.js', 'prayer' ), array( 'wp-color-picker' ), '20151228', 'all' );
-		wp_register_script( 'prayer-admin-notes', plugins_url( '/prayer/elements/js/prayer-admin-notes.js', 'prayer' ), array( 'wp-color-picker' ), '20151228', 'all' );
+		wp_register_script( 'prayer-admin-settings', plugins_url( '/prayer/includes/js/prayer-admin-settings.js', 'prayer' ), array( 'wp-color-picker' ), '20151228', 'all' );
+		wp_register_script( 'prayer-admin-tabs', plugins_url( '/prayer/includes/js/prayer-admin-tabs.js', 'prayer' ), array( 'wp-color-picker' ), '20151228', 'all' );
+		wp_register_script( 'prayer-admin-notes', plugins_url( '/prayer/includes/js/prayer-admin-notes.js', 'prayer' ), array( 'wp-color-picker' ), '20151228', 'all' );
 
 		wp_enqueue_script( 'prayer-admin-settings');	
 		wp_enqueue_script( 'prayer-admin-tabs');	
