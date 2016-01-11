@@ -18,16 +18,19 @@ class Prayer_Taxonomy_Category
 	 * Class Construct
 	 */
 	public function __construct() {
-		register_activation_hook( __FILE__, array( $this, 'activate' ) );
+		$path = realpath( plugin_dir_path(__FILE__) . "../../plugin.php" );
+        $this->plugin_path = $path;
+        
 		add_action( 'init', array( $this, 'prayer_category_taxonomy' ) );
+		register_activation_hook( $this->plugin_path, array( $this, 'activate' ) );
 	}
 
 	function activate() {
 		$this->prayer_category_taxonomy();
 		// create default categories
-        wp_insert_term( __('Health', 'prayer'), 'prayer_category' );
-        wp_insert_term( __('Spiritual', 'prayer'), 'prayer_category' );
-        wp_insert_term( __('Global', 'prayer'), 'prayer_category' );
+        wp_insert_term( 'Health', 'prayer_category' );
+        wp_insert_term( 'Spiritual', 'prayer_category' );
+        wp_insert_term( 'Global', 'prayer_category' );
 	}
 
 	/**

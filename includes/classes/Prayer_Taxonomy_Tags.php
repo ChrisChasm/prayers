@@ -18,20 +18,25 @@ class Prayer_Taxonomy_Tags
 	 * Class Construct
 	 */
 	public function __construct() {
-		register_activation_hook( __FILE__ , array( $this, 'activate' ) );
+		$path = realpath( plugin_dir_path(__FILE__) . "../../plugin.php" );
+        $this->plugin_path = $path;
+
 		add_action( 'init', array( $this, 'prayer_post_tag_taxonomy' ) );
+		register_activation_hook( $this->plugin_path , array( $this, 'activate' ) );
 	}
 
 	public function activate()
 	{
 		$this->prayer_post_tag_taxonomy();
+
 		// create default tags
-        wp_insert_term( __('Africa', 'prayer'), 'prayer_tags' );
-        wp_insert_term( __('Asia', 'prayer'), 'prayer_tags' );
-        wp_insert_term( __('Australia', 'prayer'), 'prayer_tags' );
-        wp_insert_term( __('Europe', 'prayer'), 'prayer_tags' );
-        wp_insert_term( __('North America', 'prayer'), 'prayer_tags' );
-        wp_insert_term( __('South America', 'prayer'), 'prayer_tags' );
+        wp_insert_term( 'Africa', 'prayer_tag' );
+        wp_insert_term( 'Asia', 'prayer_tag' );
+        wp_insert_term( 'Australia', 'prayer_tag' );
+        wp_insert_term( 'Europe', 'prayer_tag' );
+        wp_insert_term( 'North America', 'prayer_tag' );
+        wp_insert_term( 'South America', 'prayer_tag' );
+
 	}
 
 	/**
