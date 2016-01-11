@@ -26,12 +26,12 @@ class Prayer_Plugin_Helper
      * @since 0.9.0 
      */
     static public function parse_location( $location = null ) {
-    	if ( is_null($location) ) return;
-    	
+        if ( is_null($location) ) return;
+        
         // prep the address
-    	$prepAddr = str_replace(' ', '+', $location);
+        $prepAddr = str_replace(' ', '+', $location);
         // send the address to google
-    	$geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
+        $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
         // decode the output
         $output= json_decode($geocode);
         // build a parsed location array to return
@@ -72,17 +72,16 @@ class Prayer_Plugin_Helper
      */
     static function in_array_rec($needle, $haystack) { 
        
-        if ( in_array($needle, $haystack) ) { return TRUE; } 
+        if ( in_array($needle, $haystack) ) { return true; } 
        
         foreach($haystack as $elem) 
         {
             if ( is_array($elem) && self::in_array_rec($needle, $elem) )
             {
-                return TRUE;
+                return true;
             }
         }
-
-        return FALSE; 
+        return false; 
     } 
 
 }

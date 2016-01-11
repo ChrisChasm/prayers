@@ -188,7 +188,8 @@ class Prayer_Mailchimp
 				'email' => $email->email
 			);
 		}
-		if ( is_null($batch) ) {
+
+		if ( is_null( $batch ) || empty( $batch ) ) {
 			return Prayer_Template_Helper::set_flash_message( __( 'There are no emails to sync at this time.', 'prayer' ) );
 		}
 		// batch subscribe 
