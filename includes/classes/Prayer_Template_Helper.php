@@ -110,7 +110,7 @@ class Prayer_Template_Helper
 		$prayer_name = get_post_meta( $id, 'prayer-name', 1);
 		if ( empty($prayer_name) ) { return; }
 		// build the html
-		?><?php echo $prayer_name; ?><?
+		echo $prayer_name;
 	}
 
 	/**
