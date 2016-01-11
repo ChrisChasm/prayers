@@ -26,7 +26,7 @@ class Prayer_Frontend_Scripts
 	public function prayer_register_scripts() {
 
 		// styles
-		wp_register_style( 'prayer-css', plugins_url( '/prayer/css/prayer.css', 'prayer' ), array(), '0.9.0', 'all' );
+		wp_register_style( 'prayer-css', plugins_url( '/prayer/elements/css/prayer.css', 'prayer' ), array(), '0.9.0', 'all' );
 		wp_enqueue_style( 'prayer-css');
 
 		// load colors

@@ -92,7 +92,7 @@ class Prayer_Shortcode_Prayers
 	static function register_script()
 	{
 		// register js
-		wp_register_script( 'prayer-ui-js', plugins_url( '/prayer/js/prayer-ui.js', 'prayer' ), array( 'jquery' ), '0.9.0', 'all' );
+		wp_register_script( 'prayer-ui-js', plugins_url( '/prayer/elements/js/prayer-ui.js', 'prayer' ), array( 'jquery' ), '0.9.0', 'all' );
 	}
 
 	static function print_script()

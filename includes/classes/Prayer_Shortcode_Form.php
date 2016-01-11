@@ -66,9 +66,9 @@ class Prayer_Shortcode_Form
 	static function register_script()
 	{
 		// register js
-		wp_register_script( 'jquery-validation', plugins_url( '/prayer/bower_components/jquery-validation/dist/jquery.validate.min.js', 'prayer' ), array( 'jquery' ) );
-		wp_register_script( 'jquery-validation-extras', plugins_url( '/prayer/bower_components/jquery-validation/dist/additional-methods.min.js', 'prayer' ), array( 'jquery' ) );
-		wp_register_script( 'prayer-form-js', plugins_url( '/prayer/js/prayer-form.js', 'prayer' ), array( 'jquery' ), '0.9.0', 'all' );
+		wp_register_script( 'jquery-validation', plugins_url( '/prayer/elements/css/jquery.validate.min.js', 'prayer' ), array( 'jquery' ) );
+		wp_register_script( 'jquery-validation-extras', plugins_url( '/prayer/elements/css/additional-methods.min.js', 'prayer' ), array( 'jquery' ) );
+		wp_register_script( 'prayer-form-js', plugins_url( '/prayer/elements/js/prayer-form.js', 'prayer' ), array( 'jquery' ), '0.9.0', 'all' );
 	}
 
 	static function print_script()

@@ -33,7 +33,6 @@ spl_autoload_register(function ( $class ) {
 	if ( is_readable( PRAYER_PLUGIN_DIR . "includes/classes/{$class}.php" ) )
 		require PRAYER_PLUGIN_DIR . "includes/classes/{$class}.php";		
 });
-require 'vendor/autoload.php';
 
 /**
  * Prayer Post Type

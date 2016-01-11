@@ -77,7 +77,7 @@ class Prayer_Shortcode_Map
 		wp_register_style( 'leaflet-css', 'http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css', array(), null, 'all' );
 
 		wp_register_script( 'leaflet-js', 'http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js', array(), null, 'all' );
-		wp_register_script( 'prayer-map-js', plugins_url( '/prayer/js/prayer-map.js', 'prayer' ), array( 'leaflet-js'), null, 'all' );
+		wp_register_script( 'prayer-map-js', plugins_url( '/prayer/elements/js/prayer-map.js', 'prayer' ), array( 'leaflet-js'), null, 'all' );
 	}
 
 	static function print_script()
