@@ -19,6 +19,10 @@ class Prayer_Shortcode_Prayers_Manage
 {
 	static $add_script;
 
+	static $token;
+
+	static $decoded;
+
 	/**
 	 * Initialize Script
 	 * @since 0.9.0
@@ -27,8 +31,48 @@ class Prayer_Shortcode_Prayers_Manage
 	{
 		add_shortcode( 'prayers_manage', array( __CLASS__, 'handle_shortcode' ) );
 
-		add_action( 'init', array( __CLASS__, 'register_script' ) );
+		add_action( 'set_current_user', array( __CLASS__, 'validate_token' ), 0 );
+		add_action( 'init', array( __CLASS__, 'logout' ), 1 );
+		add_action( 'init', array( __CLASS__, 'register_script' ), 2 );
 		add_action( 'wp_footer', array( __CLASS__, 'print_script' ) ); 
+	}
+
+	/**
+	 * Validate Token
+	 * @since 0.9.0
+	 */
+	static function validate_token()
+	{
+		self::$token = $_GET['token'];
+		$slug = trim( parse_url ( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), '/' );
+
+		if ( $slug == 'prayers/manage' && is_null( self::$token ) ) {
+			Prayer_Template_Helper::set_flash_message( __( 'Invalid login link.', 'prayer' ), 'error' );
+			$url = get_site_url() . '/prayers';
+			header( 'Location: ' . $url );
+			exit;
+		}
+
+		if ( $slug == 'prayers/manage' && ! is_null( self::$token ) ) {
+			// decode the token, if it fails, the authenticate method
+			// will redirect to GET /prayers
+			self::$decoded = Prayer_Auth::authenticate( self::$token );
+		}
+
+	}
+
+	/**
+	 * Logout
+	 *
+	 * @since  0.9.0
+	 */
+	static function logout()
+	{
+		$logout = $_GET['logout'];
+		if ( $logout == "1" ) {
+			unset( $_COOKIE['wp-prayer-jwt'] );
+			setcookie( 'wp-prayer-jwt', '', time()-3600, '/' );
+		}
 	}
 
 	/**
@@ -55,7 +99,7 @@ class Prayer_Shortcode_Prayers_Manage
 				'limit' => '10',
 				'start_date' => 'last month',
 				'end_date' => 'today',
-				'email' => null
+				'email' => self::$decoded->sub
 			), $atts );
 
 		// paged

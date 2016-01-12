@@ -197,18 +197,12 @@ class Prayer_Template_Helper
 	 */
 	static public function flash_message()
 	{
-		// get the session
-		session_start();
-
 		$flash_message = $_SESSION['flash']['message'];
 
 		if ( ! empty( $flash_message ) ) 
 		{
 			echo '<div class="flash flash-' . $flash_message['type'] . '">'. $flash_message['message'] . '</div>';
 		}
-
-		// destroy the session
-		session_destroy();
 	}
 
 	/**
