@@ -235,42 +235,36 @@ class Prayer_Template_Helper
     public static function get_navigation()
     {
     	
+    	// get the slug
+    	$slug = self::get_slug();
+    	// set an active class for manage if on GET prayers/manage
+    	$manage_class = ( $slug == 'prayers/manage' ? 'manage active' : 'manage' );
 
+
+    	// build the links
     	$links = array();
-
-    	$links[] = array(
-    		'href' => "/prayers",
-    		'title' => "Prayers"
-    	);
-
-    	$links[] = array(
-    		'href' => "/prayers/submit",
-    		'title' => "Submit a Prayer"
-    	);
-
-    	$links[] = array(
-    		'href' => "/prayers/map",
-    		'title' => "Map"
-    	);
 
     	// Authenticated Pages
     	if ( Prayer_Auth::authenticated() ) 
     	{
     		$links[] = array(
     			'href' => "/prayers/manage?token=" . Prayer_Auth::get_token(),
-    			'title' => "My Prayers"
+    			'title' => "My Prayers",
+    			'class' => $manage_class
     		);
 
     		$links[] = array(
     			'href' => "/prayers?logout=1",
-    			'title' => 'Logout'
+    			'title' => 'Logout',
+    			'class' => 'logout',
     		);
     	}
     	else 
     	{
 			$links[] = array(
 	    		'href' => "/prayers/login",
-	    		'title' => "Login"
+	    		'title' => "Login",
+	    		'class' => 'login'
 	    	);
     	}
 
@@ -284,5 +278,10 @@ class Prayer_Template_Helper
 		ob_start();
 		$templates->get_template_part( 'navigation', 'prayers' );
 		echo ob_get_clean();
+	}
+
+	public function get_slug()
+	{
+		return trim( parse_url ( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), '/' );
 	}
 }

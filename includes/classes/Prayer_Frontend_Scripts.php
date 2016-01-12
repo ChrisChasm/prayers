@@ -39,12 +39,15 @@ class Prayer_Frontend_Scripts
 		$taxonomy_text_color = $prayer_options['taxonomy_text_color'];
 		ob_start();
 		?>
-	span.prayer-pray-button input[type="submit"] {
+	span.prayer-pray-button input[type="submit"],
+	ul#prayer-navigation li a  {
 		background: <?php echo $button_primary_color ?>;
 		color: <?php echo $button_text_color ?>;
 	}
 	span.prayer-pray-button:hover input[type="submit"],
-	span.prayer-pray-button form.prayed-for input[type="submit"]  {
+	span.prayer-pray-button form.prayed-for input[type="submit"],
+	ul#prayer-navigation li a:hover,
+	ul#prayer-navigation li.active a    {
 		background: <?php echo $button_secondary_color ?>;
 		color: <?php echo $button_text_color ?>;
 	}
