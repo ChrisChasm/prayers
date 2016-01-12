@@ -135,16 +135,6 @@ if ( is_admin() )
     $prayer_submenu_pages = new Prayer_Submenu_Pages;
 
 /**
- * Virtual Pages
- *
- * Creates virtual pages like form confirmation that Prayer can manage from 
- * settings without having to create and link pages from within WP.
- *
- * @since  0.9.0
- */
-// $prayer_virtual_pages = new Prayer_Virtual_Pages;
-
-/**
  * Prayer Plugin Settings
  *
  * Creates a settings page for the plugin. Allows setting options like colors
