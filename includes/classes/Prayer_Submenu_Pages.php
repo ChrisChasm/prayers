@@ -96,6 +96,7 @@ class Prayer_Submenu_Pages
         $post_count_string = ' <span class="prayer-update-count">' . $post_count . '</span>'; 
 
         global $submenu;
+        global $menu;
 
         // Enable the next line to see all menu orders
         // echo '<pre>'.print_r($submenu['edit.php?post_type=prayer'],true).'</pre>';
@@ -109,8 +110,14 @@ class Prayer_Submenu_Pages
         $arr[] = $submenu['edit.php?post_type=prayer'][17]; // feeds
         $arr[] = $submenu['edit.php?post_type=prayer'][19]; // settings
 
-        $all_prayers = $arr[0][0];
-        $arr[0][0] = $all_prayers . $post_count_string;
+        // add count to menu
+        foreach ($menu as $key => $menu_item) 
+        {
+            if ($menu_item[0] == 'Prayers')
+            {
+                $menu[$key][0] = $menu[$key][0] . $post_count_string;
+            }
+        }
 
         if ($post_count > 0 )
             $submenu['edit.php?post_type=prayer'] = $arr;
