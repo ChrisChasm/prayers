@@ -5,6 +5,9 @@ Prayer_Template_Helper::get_navigation();
 // show flash messages
 Prayer_Template_Helper::flash_message();
 
+$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+$args['paged'] = $paged;
+
 // The Query
 $query = new WP_Query( $args );
 if ( $query->have_posts() ) : ?>
@@ -55,16 +58,22 @@ if ( $query->have_posts() ) : ?>
 	
 		<?php endwhile; ?>
 		
-		<div class="nav-previous alignleft"><?php next_posts_link( 'Older posts' ); ?></div>
-		<div class="nav-next alignright"><?php previous_posts_link( 'Newer posts' ); ?></div>
-
 	</ul>
 
-	<?php else: ?>
-
-		<h3>Sorry. No prayers have been sent yet.</h3>
-
-	<?php endif;
+	<?php 
+	$big = 999999999; // need an unlikely integer
+	echo paginate_links( array(
+	   'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+	   'format' => '?paged=%#%',
+	   'current' => max( 1, $paged ),
+	   'total' => $query->max_num_pages //$q is your custom query
+	 ) );
 
 	/* Restore original Post Data */
-	wp_reset_postdata(); ?>
+	wp_reset_query(); 
+
+	else: ?>
+
+		<h3>Sorry. No prayers have been submitted yet.</h3>
+
+	<?php endif; 

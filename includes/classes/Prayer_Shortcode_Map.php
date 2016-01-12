@@ -4,7 +4,7 @@
  *
  * Provides various shortcodes to be used in templates in the WYSIWYG Editor. 
  * Params the shortcodes take are listed at the beginning of each function. 
- * The shortcodes themselves rely on templates in plugins/prayer/templates to 
+ * The shortcodes themselves rely on templates in plugins/prayers/templates to 
  * output html code. You can copy these templates to your 
  * themes/your_theme/templates folder and tweak them to your site. 
  * 
@@ -74,10 +74,10 @@ class Prayer_Shortcode_Map
 	static function register_script()
 	{
 		// register css
-		wp_register_style( 'leaflet-css', plugins_url( '/prayer/elements/css/leaflet.css', 'prayer' ), array(), null, 'all' );
+		wp_register_style( 'leaflet-css', plugins_url( '/prayers/elements/css/leaflet.css', 'prayer' ), array(), null, 'all' );
 
-		wp_register_script( 'leaflet-js', plugins_url( '/prayer/elements/js/leaflet.js', 'prayer' ), array(), null, 'all' );
-		wp_register_script( 'prayer-map-js', plugins_url( '/prayer/elements/js/prayer-map.js', 'prayer' ), array( 'leaflet-js'), null, 'all' );
+		wp_register_script( 'leaflet-js', plugins_url( '/prayers/elements/js/leaflet.js', 'prayer' ), array(), null, 'all' );
+		wp_register_script( 'prayer-map-js', plugins_url( '/prayers/elements/js/prayer-map.js', 'prayer' ), array( 'leaflet-js'), null, 'all' );
 	}
 
 	static function print_script()

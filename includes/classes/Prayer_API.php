@@ -25,7 +25,7 @@ class Prayer_API
 	}
 
 	/**
-	 * Register /prayer/v1/
+	 * Register /prayers/v1/
 	 * @since  0.9.0
 	 */
 	public function register_get_api()
@@ -284,7 +284,7 @@ class Prayer_API
 	}
 
 	/**
-	 * GET /prayer/api/category/{category}
+	 * GET /prayers/api/category/{category}
 	 * @since 0.9.0
 	 */
 	public function api_category()
@@ -293,7 +293,7 @@ class Prayer_API
 	}
 
 	/**
-	 * GET /prayer/api/tags/{tags}
+	 * GET /prayers/api/tags/{tags}
 	 * @since 0.9.0
 	 */
 	public function api_tags()
@@ -302,7 +302,7 @@ class Prayer_API
 	}
 
 	/**
-	 * GET /prayer/api/location/{location}
+	 * GET /prayers/api/location/{location}
 	 * @since 0.9.0
 	 */
 	public function api_location()

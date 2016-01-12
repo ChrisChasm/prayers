@@ -27,8 +27,6 @@
 				} 
 			});
 		
-			//console.log(map_params.categories);
-			console.log(markers);
 			map.fitBounds(bounds);
 		});
 

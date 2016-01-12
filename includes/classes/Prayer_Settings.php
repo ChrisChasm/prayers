@@ -38,7 +38,7 @@ class Prayer_Settings {
 
 		<div class="wrap">
 			<h2>Prayer Settings</h2>
-			<p>Adjust Prayer to fit your website. For documentation visit <a href="https://github.com/kalebheitzman/prayer/blob/master/documentation.md" target="_blank">documentation.md</a> on our github <a href="https://github.com/kalebheitzman/prayer" target="_blank">project page.</a></p>
+			<p>Adjust Prayer to fit your website. For documentation visit <a href="https://github.com/kalebheitzman/prayers/blob/master/documentation.md" target="_blank">documentation.md</a> on our github <a href="https://github.com/kalebheitzman/prayer" target="_blank">project page.</a></p>
 
 			<?php settings_errors(); ?>
 

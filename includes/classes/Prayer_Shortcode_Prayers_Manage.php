@@ -4,7 +4,7 @@
  *
  * Provides various shortcodes to be used in templates in the WYSIWYG Editor. 
  * Params the shortcodes take are listed at the beginning of each function. 
- * The shortcodes themselves rely on templates in plugins/prayer/templates to 
+ * The shortcodes themselves rely on templates in plugins/prayers/templates to 
  * output html code. You can copy these templates to your 
  * themes/your_theme/templates folder and tweak them to your site. 
  * 
@@ -137,7 +137,8 @@ class Prayer_Shortcode_Prayers_Manage
 	static function register_script()
 	{
 		// register js
-		wp_register_script( 'prayer-ui-js', plugins_url( '/prayer/elements/js/prayer-ui.js', 'prayer' ), array( 'jquery' ), '0.9.0', 'all' );
+		wp_register_script( 'prayer-ui-js', plugins_url( '/prayers/elements/js/prayer-ui.js', 'prayer' ), array( 'jquery' ), null, 'all' );
+		wp_register_script( 'prayer-management', plugins_url( '/prayers/elements/js/prayer-management.js', 'prayer' ), array( 'jquery' ), null, 'all' );
 	}
 
 	static function print_script()
@@ -146,5 +147,6 @@ class Prayer_Shortcode_Prayers_Manage
 
 		// load js
 		wp_print_scripts( 'prayer-ui-js' );
+		wp_print_scripts( 'prayer-management' );
 	}
 }

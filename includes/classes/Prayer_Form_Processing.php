@@ -201,6 +201,9 @@ class Prayer_Form_Processing {
 			$count++;
 			// update the prayer count
 			update_post_meta( $post['prayer_id'], 'prayer-count', $count );
+			// todo: figure out how to prevent repetivitive db calls to say
+			// the prayer has been prayed for.
+			update_post_meta( $post['prayer_id'], 'prayer-prayed', 1 );
 		}
 	}
 

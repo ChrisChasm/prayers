@@ -17,6 +17,8 @@ class Prayer_Plugin_Setup
 
     protected $plugin_path;
 
+    static $user_id;
+
     public function __construct() {
         $path = realpath( plugin_dir_path(__FILE__) . "../../plugin.php" );
         $this->plugin_path = $path;
@@ -40,17 +42,18 @@ class Prayer_Plugin_Setup
         }
 
         // create the default prayer user and set permissions to contributer.
-        $username = 'prayer';
+        $username = 'prayers';
         if( null == username_exists( $username ) ) {
 
             $password = wp_generate_password( 12, true );
             $user_id = wp_create_user( $username, $password );
-            
+            self::$user_id = $user_id;
+
             $userdata = array(
                     'ID' => $user_id,
-                    'nickname' => 'Prayer',
-                    'display_name' => 'Prayer',
-                    'first_name' => 'Prayer',
+                    'nickname' => 'Prayers',
+                    'display_name' => 'Prayers',
+                    'first_name' => 'Prayers',
                     'description' => 'User for Prayer Plugin submission.',
                     'role' => 'contributer'
                 );
@@ -172,12 +175,10 @@ class Prayer_Plugin_Setup
      */
     public function create_page( $title, $content, $parent = 0, $slug = null )
     {
-        global $user_ID;
-
         $page['post_type'] = 'page';
         $page['post_content'] = $content;
         $page['post_parent'] = $parent;
-        $page['post_author'] = $user_ID;
+        $page['post_author'] = self::$user_id;
         $page['post_status'] = 'publish';
         $page['post_title'] = $title;
         if ( ! is_null( $slug ) ) { $page['post_name'] = $slug; }

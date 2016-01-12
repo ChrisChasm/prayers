@@ -4,7 +4,7 @@
  *
  * Provides various shortcodes to be used in templates in the WYSIWYG Editor. 
  * Params the shortcodes take are listed at the beginning of each function. 
- * The shortcodes themselves rely on templates in plugins/prayer/templates to 
+ * The shortcodes themselves rely on templates in plugins/prayers/templates to 
  * output html code. You can copy these templates to your 
  * themes/your_theme/templates folder and tweak them to your site. 
  * 
@@ -55,13 +55,15 @@ class Prayer_Shortcode_Prayers
 				'limit' => '10',
 				'start_date' => 'last month',
 				'end_date' => 'today',
+				'order' => 'DESC',
 			), $atts );
-
-		// paged
-		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
 		// Attributes
 		extract( $shortcode_atts );
+
+		// paged
+		// $paged = get_query_var('paged') ? get_query_var('paged') : 1;
+		global $paged;
 
 		// WP_Query arguments
 		$args = array (
@@ -69,6 +71,7 @@ class Prayer_Shortcode_Prayers
 			'post_status' => array( 'publish' ),
 			'paged' => $paged,
 			'posts_per_page' => $limit,
+			'order' => $order,
 			'meta_query' => array(
 				array(
 					'key' => 'prayer-anonymous', // filters out anonymous prayers
@@ -92,7 +95,7 @@ class Prayer_Shortcode_Prayers
 	static function register_script()
 	{
 		// register js
-		wp_register_script( 'prayer-ui-js', plugins_url( '/prayer/elements/js/prayer-ui.js', 'prayer' ), array( 'jquery' ), '0.9.0', 'all' );
+		wp_register_script( 'prayer-ui-js', plugins_url( '/prayers/elements/js/prayer-ui.js', 'prayer' ), array( 'jquery' ), '0.9.0', 'all' );
 	}
 
 	static function print_script()

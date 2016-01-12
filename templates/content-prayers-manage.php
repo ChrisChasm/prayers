@@ -43,8 +43,8 @@
 				
 				<?php if ( ! Prayer_Template_Helper::get_prayer_answered($id) ): ?>
 					<div class="prayer-response">
-						<p><strong>Has this prayer been answered?</strong></p>
-						<form action="" method="post">
+						<p><a href="#" data-id="response-<?php the_ID() ?>" class="prayer-response">Has this prayer been answered?</a></p>
+						<form action="" method="post" data-id="response-<?php the_ID() ?>" class="prayer-response">
 							<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>
 							<input type="hidden" name="prayer-id" value="<?php the_ID() ?>" />
 							<input type="hidden" name="prayer-answered" value="1" />

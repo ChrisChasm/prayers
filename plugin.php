@@ -62,7 +62,7 @@ if ( is_admin() )
  *
  * Allows template loading from plugin with prayer_get_template_part(). This
  * will load templates from your themes/your_theme/templates directory first 
- * and then search for templates in plugins/prayer/templates
+ * and then search for templates in plugins/prayers/templates
  *
  * @since  0.9.0
  */
