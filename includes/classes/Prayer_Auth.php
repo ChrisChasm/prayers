@@ -81,8 +81,8 @@ class Prayer_Auth
 				session_start();
 				// get the errors
 				$errors = $this->gump->get_readable_errors( false );
-				$_SESSION['errors'] = $errors;
-				$_SESSION['post'] = $post;
+				// set an error flash
+				Prayer_Template_Helper::set_flash_message( __( 'Something went wrong. Please try again later.', 'prayer' ), 'error' );
 
 			// passed validation
 			} else {
