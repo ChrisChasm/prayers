@@ -38,7 +38,7 @@ class Prayer_Notifications
 			$templates = new Prayer_Template_Loader;
 			// start a buffer to capture output
 			ob_start();
-			$templates->get_template_part( 'email', 'notification' );
+			$templates->get_template_part( 'email', 'prayer-notification' );
 			$body = ob_get_clean();
 
 			return wp_mail( $email, $subject, $body );
