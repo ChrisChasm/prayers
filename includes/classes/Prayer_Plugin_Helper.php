@@ -82,6 +82,6 @@ class Prayer_Plugin_Helper
             }
         }
         return false; 
-    } 
+    }
 
 }

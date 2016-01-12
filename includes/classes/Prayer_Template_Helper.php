@@ -117,6 +117,20 @@ class Prayer_Template_Helper
 	}
 
 	/**
+	 * Get Name of Prayer Request Submitter
+	 * @param  integer ID
+	 * @return string Name of submitter
+	 * @since  0.9.0
+	 */
+	static public function get_prayer_answered( $id = 0 ) {
+		if ( $id == 0) { return; }
+		// get the submitter name
+		$prayer_answered = get_post_meta( $id, 'prayer-answered', 1);
+		if ( $prayer_answered == "1" ) return true;
+		return false;
+	}
+
+	/**
 	 * Get Prayer Count
 	 * @param  integer ID
 	 * @return string
@@ -183,12 +197,18 @@ class Prayer_Template_Helper
 	 */
 	static public function flash_message()
 	{
+		// get the session
+		session_start();
+
 		$flash_message = $_SESSION['flash']['message'];
 
 		if ( ! empty( $flash_message ) ) 
 		{
 			echo '<div class="flash flash-' . $flash_message['type'] . '">'. $flash_message['message'] . '</div>';
 		}
+
+		// destroy the session
+		session_destroy();
 	}
 
 	/**
@@ -207,4 +227,62 @@ class Prayer_Template_Helper
         return $prayer_categories;
     }
 
+    /**
+     * Navigation
+     *
+     * @since  0.9.0 
+     */
+    public static function get_navigation()
+    {
+    	
+
+    	$links = array();
+
+    	$links[] = array(
+    		'href' => "/prayers",
+    		'title' => "Prayers"
+    	);
+
+    	$links[] = array(
+    		'href' => "/prayers/submit",
+    		'title' => "Submit a Prayer"
+    	);
+
+    	$links[] = array(
+    		'href' => "/prayers/map",
+    		'title' => "Map"
+    	);
+
+    	// Authenticated Pages
+    	if ( Prayer_Auth::authenticated() ) 
+    	{
+    		$links[] = array(
+    			'href' => "/prayers/manage?token=" . Prayer_Auth::get_token(),
+    			'title' => "My Prayers"
+    		);
+
+    		$links[] = array(
+    			'href' => "/prayers?logout=1",
+    			'title' => 'Logout'
+    		);
+    	}
+    	else 
+    	{
+			$links[] = array(
+	    		'href' => "/prayers/login",
+	    		'title' => "Login"
+	    	);
+    	}
+
+    	// set var to be accessible in the called template
+		set_query_var( 'links', $links );
+
+    	// load templates
+		$templates = new Prayer_Template_Loader;
+
+		// start a buffer to capture output
+		ob_start();
+		$templates->get_template_part( 'navigation', 'prayers' );
+		echo ob_get_clean();
+	}
 }

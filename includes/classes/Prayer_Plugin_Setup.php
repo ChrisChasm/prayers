@@ -55,6 +55,8 @@ class Prayer_Plugin_Setup
             add_option( 'prayer_settings_options', $options );
         }
 
+        // set a jwt key
+        add_option( 'prayer_jwt_key', sha1(microtime(true).mt_rand(10000,90000)) );
 
         // create the default prayer user and set permissions to contributer.
         $username = 'prayer';
@@ -137,6 +139,7 @@ class Prayer_Plugin_Setup
         delete_option( 'prayer_settings_options' );
         delete_option( 'prayer_mailchimp_list_id' );
         delete_option( 'prayer_mailchimp_list_name' );
+        delete_option( 'prayer_jwt_key' );
 
         // delete the prayer user
         $user = get_user_by( 'login', 'prayer' );

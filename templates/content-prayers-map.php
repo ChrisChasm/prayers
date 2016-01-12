@@ -10,4 +10,7 @@
 
 	$inline = $pxh . $pxw . $pcth . $pctw;
 
-?><div id="prayer-map" class="map" style="<?php echo $inline ?>"></div>
+	// prayer navigation
+	Prayer_Template_Helper::get_navigation();
+	
+?><div id="prayer-map" class="map prayer-js" style="<?php echo $inline ?>"></div>

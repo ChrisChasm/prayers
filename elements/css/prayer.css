@@ -57,6 +57,23 @@ span.prayer-count {
 	border-bottom-left-radius: 4px;
 	color: #333;
 }
+.prayer-answered-checkbox label {
+  display: inline-block;
+}
+span.prayer-answered {
+	background: #888 !important;
+	color: #fff !important;
+	margin-left: -8px;
+}
+
+div.prayer-answered {
+	font-style: italic;
+	padding: 1em;
+	background: #f7f7f7;
+	border: 1px solid #efefef;
+	border-radius: 4px;
+}
+
 
 /* Prayer Meta */
 .prayer-meta {
@@ -123,4 +140,32 @@ ul.inline-form-elements li label {
 #prayer-map {
   	width: 100%;
   	height: 500px;
+}
+
+/* Flash Messages */
+.flash {
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+
+}
+.flash-success {
+	background: #C8FFD6;
+	border: 1px solid #9DD38D;
+}
+.flash-error {
+	background: #FFD4D8;
+	border: 1px solid #FF9A90;
+}
+
+ul#prayer-navigation {
+	list-style: none;
+	margin: 0 0 1em;
+}
+ul#prayer-navigation li {
+	display: inline-block;
+	border-left: 1px solid #ccc;
+	padding: 0 0.5em;
+}
+ul#prayer-navigation li:first-child {
+	border-left: 0;	
 }

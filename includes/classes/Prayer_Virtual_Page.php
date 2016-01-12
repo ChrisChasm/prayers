@@ -28,6 +28,7 @@ class Prayer_Virtual_Page
 
 		if (!isset($args['slug']))
             throw new Exception('No slug given for virtual page');
+        
         $this->slug = $args['slug'];
         $this->title = isset( $args['title'] ) ? $args['title'] : '';
         $this->content = isset( $args['content'] ) ? $args['content'] : '';

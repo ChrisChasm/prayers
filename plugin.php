@@ -69,7 +69,7 @@ if ( is_admin() )
 $prayer_templates = new Prayer_Template_Loader;
 
 /**
- * Notifications
+ * Mailer
  *
  * Instantiate a notifications class to notifiy users about various prayer
  * actions. This includes things like incoming prayer requests, prayers being
@@ -77,8 +77,7 @@ $prayer_templates = new Prayer_Template_Loader;
  *
  * @since 0.9.0
  */
-if ( is_admin() )
-	$echoNotifications = new Prayer_Notifications;
+$prayer_mailer = new Prayer_Mailer;
 
 /**
  * Front and Admin Styles
@@ -169,6 +168,7 @@ Prayer_Shortcode_Prayers::init();
 Prayer_Shortcode_Form::init();
 Prayer_Shortcode_Map::init();
 Prayer_Shortcode_Auth::init();
+Prayer_Shortcode_Prayers_Manage::init();
 
 /**
  * Admin Prayer Listing Page Columns
@@ -204,7 +204,16 @@ $prayer_form_processing = new Prayer_Form_Processing;
  *
  * @since  0.9.0
  */
-$prayer_mailchimp = new Prayer_Mailchimp();
+$prayer_mailchimp = new Prayer_Mailchimp;
+
+/**
+ * Prayer Auth
+ *
+ * Provides token authentication for users
+ *
+ * @since 0.9.0
+ */
+$prayer_auth = new Prayer_Auth;
 
 /**
  * Prayer JSON API

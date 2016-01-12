@@ -1,5 +1,11 @@
 <?php 
 
+// prayer navigation
+Prayer_Template_Helper::get_navigation();
+
+// show flash messages
+Prayer_Template_Helper::flash_message();
+
 // get echo options
 $prayer_options = get_option( 'prayer_settings_options' );
 
@@ -23,10 +29,8 @@ if ( ! empty( $_SESSION['post'] ) ) {
 }
 
 ?>
-
-
 		
-<form method="post" id="prayer-form" class="prayer form" action="">
+<form method="post" id="prayer-form" class="prayer form prayer-js" action="">
 	<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>
 
 	<p><strong>Your prayer request</strong></p>

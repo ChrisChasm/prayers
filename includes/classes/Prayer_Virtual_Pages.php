@@ -14,14 +14,14 @@
 class Prayer_Virtual_Pages
 {
 
-	protected $url;
+	protected $slug;
 
 	/**
 	 * Class Construct
 	 */
 	public function __construct() {
 
-		$this->url = trim( parse_url ( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), '/' );
+		$this->slug = trim( parse_url ( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), '/' );
 
 		// prayers pages
 		add_action( 'init', array( $this, 'get_prayers' ) );
@@ -48,7 +48,11 @@ class Prayer_Virtual_Pages
 	 */
 	public function get_prayers()
 	{
-		if ( $this->url == 'prayers' ) {
+		if ( isset( $_GET['logout'] ) && $_GET['logout'] == 1 ) {
+			unset($_COOKIE['wp-prayer-jwt']);
+		}
+
+		if ( $this->slug == 'prayers' ) {
 			// build the args
 			$args = array( 
 				'title' => 'Prayers',
@@ -70,7 +74,7 @@ class Prayer_Virtual_Pages
 	 */
 	public function get_prayers_map()
 	{
-		if ( $this->url == 'prayers/map' ) {
+		if ( $this->slug == 'prayers/map' ) {
 			// build the args
 			$args = array( 
 				'title' => 'Prayer Map',
@@ -89,10 +93,10 @@ class Prayer_Virtual_Pages
 	 */
 	public function get_prayers_submit()
 	{
-		if ( $this->url == 'prayers/submit' ) {
+		if ( $this->slug == 'prayers/submit' ) {
 			// build the args
 			$args = array( 
-				'title' => 'Prayers',
+				'title' => 'Submit a prayer',
 				'slug' => 'prayers/submit',
 				'content' => do_shortcode( '[prayer_form]' )
 			);
@@ -111,7 +115,7 @@ class Prayer_Virtual_Pages
 	 */
 	public function get_prayers_confirmation() {
 		
-		if ( $this->url == 'prayers/confirmation' ) {
+		if ( $this->slug == 'prayers/confirmation' ) {
 			// get custom notification
 			$prayer_options = get_option( 'prayer_settings_options' );
 			$content = $prayer_options['prayer_form_response'];
@@ -136,7 +140,7 @@ class Prayer_Virtual_Pages
 	 * @since  0.9.0
 	 */
 	public function get_prayers_login() {
-		if ( $this->url == 'prayers/login' ) {
+		if ( $this->slug == 'prayers/login' ) {
 			// build the args
 			$args = array( 
 				'title' => 'Prayers Login',
@@ -157,13 +161,20 @@ class Prayer_Virtual_Pages
 	 */
 	public function get_prayers_manage()
 	{
-		if ( $this->url == 'prayers/manage' ) {
+		$token = $_GET['token'];
+
+		// build the prayers/manage page
+		if ( $this->slug == 'prayers/manage' ) {
+
+			// decode the token, if it fails, the authenticate method
+			// will redirect to GET /prayers
+			$authenticated = Prayer_Auth::authenticate( $token );
+
 			// build the args
 			$args = array( 
-				'title' => 'Manage my Prayers',
+				'title' => 'My Prayers',
 				'slug' => 'prayers/manage',
-				//'content' => do_shortcode( '[prayer_auth_form]' )
-				'content' => '<p>Manage Prayers</p>'
+				'content' => do_shortcode( '[prayers_manage email="' . $authenticated->sub . '"]' )
 			);
 			$page = new Prayer_Virtual_Page( $args );
 		}

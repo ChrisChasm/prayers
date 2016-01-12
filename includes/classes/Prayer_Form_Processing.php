@@ -27,6 +27,7 @@ class Prayer_Form_Processing {
 	public function __construct() {
 		add_action( 'init', array( $this, 'prayer_form_submission' ) );
 		add_action( 'init', array( $this, 'prayed_click_submit') );
+		add_action( 'init', array( $this, 'prayer_answered') );
 
 		// setup php based validation
 		$this->gump = new GUMP();
@@ -92,8 +93,8 @@ class Prayer_Form_Processing {
 				session_start();
 				// get the errors
 				$errors = $this->gump->get_readable_errors( false );
-				$_SESSION['errors'] = $errors;
-				$_SESSION['post'] = $post;
+				// show flash messages
+				Prayer_Template_Helper::set_flash_message( $errors, 'error' );
 
 			// passed validation
 			} else {
@@ -108,7 +109,8 @@ class Prayer_Form_Processing {
 				    exit;
 				}
 				else {
-					
+					// show flash messages
+					Prayer_Template_Helper::set_flash_message( __( 'There was an error submitting your request. Please try again later.', 'prayer' ), 'error' );
 				}
 			}
 		}
@@ -166,7 +168,7 @@ class Prayer_Form_Processing {
 		Prayer_Plugin_Helper::save_location_meta( $prayer_id, $location );
 
 		// Notify Prayer designated user
-		$mailresults = Prayer_Notifications::new_request( $data );
+		$mailresults = Prayer_Mailer::new_request( $data );
 		
 		return true;
 	}
@@ -199,6 +201,31 @@ class Prayer_Form_Processing {
 			$count++;
 			// update the prayer count
 			update_post_meta( $post['prayer_id'], 'prayer-count', $count );
+		}
+	}
+
+	/**
+	 * Prayer has been answered
+	 *
+	 * @since  0.9.0 
+	 */
+	function prayer_answered() {
+		// check to see if this is a prayer answered
+		if ( isset( $_POST['prayer-answered']) && '1' == $_POST['prayer-answered']) {
+			// check for a valid nonce
+			$is_valid_nonce = ( isset( $_POST[ 'prayer_nonce' ] ) && wp_verify_nonce( $_POST[ 'prayer_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false'; 
+		    // Exits script depending on save status
+		    if ( ! $is_valid_nonce ) {
+		        return;
+		    }
+
+		    // get the post
+			$post = $_POST;
+			// update the prayer count
+			update_post_meta( $post['prayer-id'], 'prayer-answered', $post['prayer-answered'] );
+			update_post_meta( $post['prayer-id'], 'prayer-response', wp_kses_post( $post['prayer-response'] ) );
+			
+			Prayer_Template_Helper::set_flash_message( __( 'Prayer updated.', 'prayer' ) );			
 		}
 	}
 }
