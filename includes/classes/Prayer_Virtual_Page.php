@@ -28,7 +28,6 @@ class Prayer_Virtual_Page
 
 		if (!isset($args['slug']))
             throw new Exception('No slug given for virtual page');
-
         $this->slug = $args['slug'];
         $this->title = isset( $args['title'] ) ? $args['title'] : '';
         $this->content = isset( $args['content'] ) ? $args['content'] : '';
@@ -37,6 +36,9 @@ class Prayer_Virtual_Page
         $this->dategmt = isset( $args['date'] ) ? $args['date'] : current_time('mysql', 1);
         $this->type = isset( $args['type'] ) ? $args['type'] : 'page';
 
+        // remove br, p, etc
+        remove_filter ('the_content', 'wpautop');
+        // put the page into posts
         add_filter( 'the_posts', array( $this, 'virtual_page') );
 	}
 
