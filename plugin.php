@@ -142,7 +142,7 @@ if ( is_admin() )
  *
  * @since  0.9.0
  */
-$prayer_virtual_pages = new Prayer_Virtual_Pages;
+// $prayer_virtual_pages = new Prayer_Virtual_Pages;
 
 /**
  * Prayer Plugin Settings

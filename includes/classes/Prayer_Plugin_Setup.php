@@ -92,6 +92,20 @@ class Prayer_Plugin_Setup
         ) $charset_collate;";
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
         $db = dbDelta( $sql );
+
+        // create parent page
+        $page_id = self::create_page( __( 'Prayers', 'prayer' ), '[prayers]', 0 );
+        add_option( 'prayer_parent_page_id', $page_id);
+        
+        // create unauthed pages
+        self::create_page( __( 'Map', 'prayer' ), '[prayer_map]', $page_id );
+        self::create_page( __( 'Submit a prayer', 'prayer' ), '[prayer_form]', $page_id, 'submit' );
+        self::create_page( __( 'Confirmation', 'prayer' ), '[prayer_form_response]', $page_id );
+        
+        // create authed pages
+        self::create_page( __( 'Login', 'prayer' ), '[prayer_auth_form]', $page_id );
+        self::create_page( __( 'Manage my prayers', 'prayer' ), '[prayers_manage]', $page_id, 'manage' );
+
     }
 
     /**
@@ -140,11 +154,38 @@ class Prayer_Plugin_Setup
         delete_option( 'prayer_mailchimp_list_id' );
         delete_option( 'prayer_mailchimp_list_name' );
         delete_option( 'prayer_jwt_key' );
+        delete_option( 'prayer_parent_page_id' );
 
         // delete the prayer user
         $user = get_user_by( 'login', 'prayer' );
         wp_delete_user( $user->id );
 
+    }
+
+    /**
+     * Create a page
+     * @param  string  $title   Title
+     * @param  string  $content Content
+     * @param  integer $parent  Page ID
+     * @return integer          Page ID
+     */
+    public function create_page( $title, $content, $parent = 0, $slug = null )
+    {
+        global $user_ID;
+
+        $page['post_type'] = 'page';
+        $page['post_content'] = $content;
+        $page['post_parent'] = $parent;
+        $page['post_author'] = $user_ID;
+        $page['post_status'] = 'publish';
+        $page['post_title'] = $title;
+        if ( ! is_null( $slug ) ) { $page['post_name'] = $slug; }
+        $page = apply_filters('prayer_add_new_page', $page, 'prayer' );
+        $pageid = wp_insert_post ($page);
+        if ($pageid == 0) { 
+            return false;
+        }
+        return $pageid;
     }
 
 }
