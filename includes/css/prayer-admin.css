@@ -47,7 +47,9 @@ span.prayer-update-count {
 	display: inline-block;
 	padding: .35em .35em;
 	margin: -5px 0 -5px 5px;
+	min-width: 15px;
 	border-radius: 2em;
+	text-align: center;
 }
 
 /* Meta Nav */
