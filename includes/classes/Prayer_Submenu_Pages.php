@@ -113,14 +113,13 @@ class Prayer_Submenu_Pages
         // add count to menu
         foreach ($menu as $key => $menu_item) 
         {
-            if ($menu_item[0] == 'Prayers')
+            if ( $menu_item[0] == 'Prayers' && $post_count > 0 )
             {
                 $menu[$key][0] = $menu[$key][0] . $post_count_string;
             }
         }
 
-        if ($post_count > 0 )
-            $submenu['edit.php?post_type=prayer'] = $arr;
+        $submenu['edit.php?post_type=prayer'] = $arr;
 
         return $menu_ord;
     }
