@@ -39,25 +39,6 @@ class Prayer_Plugin_Setup
             wp_die('Sorry, but this plugin requires the <a href="https://wordpress.org/plugins/rest-api/">WP REST API (Version 2)</a> to be installed and active. <br><a href="' . admin_url( 'plugins.php' ) . '">&laquo; Return to Plugins</a>');
         }
 
-        // install default options
-        if ( ! get_option('prayer_settings_options') ) {
-            $options = array(
-                'notification_user' => 1,
-                'prayer_form_response' => __( 'We have received your prayer request.', 'prayer' ),
-                'button_primary_color' => '#2582EA',
-                'button_secondary_color' => '#45D680',
-                'button_text_color' => '#ffffff',
-                'taxonomy_background_color' => '#efefef',
-                'taxonomy_text_color' => '#333333',
-                'categories_enabled' => "1",
-                'tags_enabled' => "1",
-            );
-            add_option( 'prayer_settings_options', $options );
-        }
-
-        // set a jwt key
-        add_option( 'prayer_jwt_key', sha1(microtime(true).mt_rand(10000,90000)) );
-
         // create the default prayer user and set permissions to contributer.
         $username = 'prayer';
         if( null == username_exists( $username ) ) {
@@ -74,11 +55,29 @@ class Prayer_Plugin_Setup
                     'role' => 'contributer'
                 );
             wp_update_user( $userdata );
-
         }
 
+        // install default options
+        if ( ! get_option('prayer_settings_options') ) {
+            $options = array(
+                'notification_user' => $user_id,
+                'prayer_form_response' => __( 'We have received your prayer request.', 'prayer' ),
+                'button_primary_color' => '#2582EA',
+                'button_secondary_color' => '#45D680',
+                'button_text_color' => '#ffffff',
+                'taxonomy_background_color' => '#efefef',
+                'taxonomy_text_color' => '#333333',
+                'categories_enabled' => "1",
+                'tags_enabled' => "1",
+            );
+            add_option( 'prayer_settings_options', $options );
+        }
+
+        // set a jwt key
+        add_option( 'prayer_jwt_key', sha1(microtime(true).mt_rand(10000,90000)) );
+
         // create tables to store mailchimp integration info
-        global $wpdb;
+        /*global $wpdb;
         $table_name = $wpdb->prefix . "prayers_mailchimp";
         $charset_collate = $wpdb->get_charset_collate();
 
@@ -91,7 +90,7 @@ class Prayer_Plugin_Setup
             UNIQUE KEY post_id (post_id)
         ) $charset_collate;";
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-        $db = dbDelta( $sql );
+        $db = dbDelta( $sql );*/
 
         // create parent page
         $page_id = self::create_page( __( 'Prayers', 'prayer' ), '[prayers]', 0 );
@@ -155,6 +154,8 @@ class Prayer_Plugin_Setup
         delete_option( 'prayer_mailchimp_list_name' );
         delete_option( 'prayer_jwt_key' );
         delete_option( 'prayer_parent_page_id' );
+
+        // delete prayer pages
 
         // delete the prayer user
         $user = get_user_by( 'login', 'prayer' );
