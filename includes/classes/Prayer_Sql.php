@@ -68,21 +68,18 @@ class Prayer_Sql
 					ON 			wp_posts.ID = prayed.post_id
 					AND 		prayed.meta_key = 'prayer-prayed'
 
-					LEFT JOIN 	wp_postmeta 		AS sent
-					ON 			wp_posts.ID = sent.post_id
-					AND 		sent.meta_key = 'prayer-email-sent'
+					LEFT JOIN 	wp_postmeta 		AS synced
+					ON 			wp_posts.ID = synced.post_id
+					AND 		synced.meta_key = 'prayer-email-synced'
 
 					WHERE 		wp_posts.post_status = 'publish'
 					AND 		wp_posts.post_type = 'prayer'
 					AND 		prayed.meta_value = '1'
-					AND 		sent.meta_value = '0'
+					AND 		synced.meta_value = '0'
 				";
 
 		// get the results
-		$results = $wpdb->get_results( $query );
-		// filter the results
-		$results_filtered = self::cleanup_by_email( $results );
-		return $results_filtered;
+		return $wpdb->get_results( $query );
 	}
 
 	public static function get_unanswered_prayers()
@@ -108,11 +105,7 @@ class Prayer_Sql
 				";
 
 		// get the results
-		$results = $wpdb->get_results( $query );
-
-		// filter the results
-		$results_filtered = self::cleanup_by_email( $results );
-		return $results_filtered;
+		return $wpdb->get_results( $query );
 	}
 
 	/**
@@ -120,7 +113,7 @@ class Prayer_Sql
 	 * @param  Object $results WPDB Results
 	 * @return Object          WPDB Results
 	 */
-	private static function cleanup_by_email( $results )
+	public static function cleanup_by_email( $results )
 	{
 		$indexed = array();
 		foreach ( $results as $key => $object )
@@ -134,6 +127,18 @@ class Prayer_Sql
 			$results_filtered[] = $object2;
 		}
 		return $results_filtered;
+	}
+
+	/**
+	 * Set Emails Synced
+	 * @param array $posts WP Posts
+	 */
+	public static function set_emails_synced( $posts )
+	{
+		foreach( $posts as $post )
+		{
+			update_post_meta( $post->ID, 'prayer-email-synced', 1 );
+		}
 	}
 
 

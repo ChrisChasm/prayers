@@ -140,12 +140,16 @@ class Prayer_Mailchimp
 			{
 				case 'unanswered-prayers':
 					$emails = Prayer_Sql::get_unanswered_prayers();
-					$this->sync_segment_by_name( 'Unanswered Prayers', $emails );
+					$emails_filtered = Prayer_Sql::cleanup_by_email( $emails );
+					$results = $this->sync_segment_by_name( 'Unanswered Prayers', $emails_filtered );
+					if ( $results === true ) Prayer_Sql::set_emails_synced( $emails );
 					break;
 
 				case 'new-prayed-prayers':
 					$emails = Prayer_Sql::get_newly_prayed();
-					$this->sync_segment_by_name( 'Newly Prayed', $emails );
+					$emails_filtered = Prayer_Sql::cleanup_by_email( $emails );
+					$results = $this->sync_segment_by_name( 'Newly Prayed', $emails_filtered );
+					if ( $results === true ) Prayer_Sql::set_emails_synced( $emails );
 					break;
 			}
 		}
@@ -190,13 +194,15 @@ class Prayer_Mailchimp
 		}
 
 		if ( is_null( $batch ) || empty( $batch ) ) {
-			return Prayer_Template_Helper::set_flash_message( __( 'There are no emails to sync at this time.', 'prayer' ) );
+			Prayer_Template_Helper::set_flash_message( __( 'There are no emails to sync at this time.', 'prayer' ) );
+			return false;
 		}
 		// batch subscribe 
 		try {
 			$results = $this->mc_api->lists->staticSegmentMembersAdd( $this->current_list, $segment_id, $batch );
 			$count = $results['success_count'];
 			Prayer_Template_Helper::set_flash_message( __( 'Successfully synced ' . $count . ' people to your MailChimp Segment: ' . $segment, 'prayer' ) );
+			return true;
 		} catch ( Mailchimp_Error $e ) {
 			if ( $e->getMessage() ) {
 				Prayer_Template_Helper::set_flash_message( __( $e->getMessage(), 'prayer' ), 'error' );
@@ -205,6 +211,7 @@ class Prayer_Mailchimp
 				Prayer_Template_Helper::set_flash_message( __( 'An unknown error occurred', 'prayer' ), 'error' );
 			}
 		}
+		return false;
 	}
 
 	/**

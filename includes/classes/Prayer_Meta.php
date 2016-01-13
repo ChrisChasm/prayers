@@ -157,10 +157,10 @@ class Prayer_Meta
 	    }
 
 	    // Checks for input and sanitizes/saves if needed
-	    if ( isset( $_POST[ 'prayer-email-sent' ] ) ) {
-	    	update_post_meta( $post_id, 'prayer-email-sent', sanitize_text_field($_POST['prayer-email-sent']) );
+	    if ( isset( $_POST[ 'prayer-email-synced' ] ) ) {
+	    	update_post_meta( $post_id, 'prayer-email-synced', sanitize_text_field($_POST['prayer-email-synced']) );
 	    } else {
-	    	update_post_meta( $post_id, 'prayer-email-sent', 0 );
+	    	update_post_meta( $post_id, 'prayer-email-synced', 0 );
 	    }
 
 	    // 

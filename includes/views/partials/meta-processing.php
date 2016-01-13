@@ -41,17 +41,17 @@
 		}
 		?>
 		<p>
-			<label><input type="checkbox"e name="prayer-prayed" value="1" <?php echo $prayed_checked; ?> /><span><?php echo __( 'Prayed for?', 'prayer' ) ?></span></label>
+			<label><input type="checkbox" disabled name="prayer-prayed" value="1" <?php echo $prayed_checked; ?> /><span><?php echo __( 'Prayed for?', 'prayer' ) ?></span></label>
 		</p>
 
 		<?php // build the prayed_for radio buttons
-		$prayer_email_sent = $post_meta['prayer-email-sent'][0];
-		if ( $prayer_email_sent == "1" ) {
-			$email_sent_checked = 'checked="checked"';
+		$prayer_email_synced = $post_meta['prayer-email-synced'][0];
+		if ( $prayer_email_synced == "1" ) {
+			$email_synced_checked = 'checked="checked"';
 		}
 		?>
 		<p>
-			<label><input type="checkbox" name="prayer-email-sent" value="1" <?php echo $email_sent_checked ?>><?php echo __( 'Email sent?', 'prayer' ) ?></inpu>
+			<label><input type="checkbox" disabled name="prayer-email-synced" value="1" <?php echo $email_synced_checked ?>><?php echo __( 'Email synced?', 'prayer' ) ?></inpu>
 		</p>
 	</div><!--.column-->
 

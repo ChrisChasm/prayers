@@ -124,4 +124,5 @@ class Prayer_Admin_Columns
 			}
 		}
 	}
+	
 }
