@@ -32,7 +32,7 @@ if ( $query->have_posts() ) : ?>
 						<li class="prayer-avatar-small"><?php echo Prayer_Template_Helper::get_avatar( $id, 27 ); ?></li>
 						<li><?php echo Prayer_Template_Helper::get_prayed_button( $id ); ?></li>
 						<?php if ( ! empty( Prayer_Template_Helper::get_prayer_location($id) ) ): ?>
-							<li><?php echo Prayer_Template_Helper::get_prayer_location($id); ?></li>
+							<li><a href="<?php echo site_url(); ?>/prayers/map"><?php echo Prayer_Template_Helper::get_prayer_location($id); ?></a></li>
 						<?php endif; ?>
 						<li class="prayer-taxonomy"><?php echo Prayer_Template_Helper::get_terms_list($id, 'prayer-category'); ?></li>
 						<li class="prayer-taxonomy"><?php echo Prayer_Template_Helper::get_terms_list($id, 'prayer-tag'); ?></li>

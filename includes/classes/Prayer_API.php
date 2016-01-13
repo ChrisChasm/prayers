@@ -227,6 +227,12 @@ class Prayer_API
 		$prayer->title = $post->post_title;
 		$prayer->content = $post->post_content;
 		$prayer->excerpt = $post->post_excerpt;
+
+		if ( isset($meta['prayer-response'][0])) {
+			$prayer->content_answered = $meta['prayer-response'][0];
+			$prayer->excerpt_answered = $this->get_excerpt( $meta['prayer-response'][0] );
+		}
+
 		$prayer->slug = $post->post_name;
 		$prayer->guid = $post->guid;
 		$prayer->answered = $meta['prayer-answered'][0];
@@ -308,6 +314,27 @@ class Prayer_API
 	public function api_location()
 	{
 		return [];
+	}
+
+	/**
+	 * Get excerpt from string
+	 * 
+	 * @param String $str String to get an excerpt from
+	 * @param Integer $startPos Position int string to start excerpt from
+	 * @param Integer $maxLength Maximum length the excerpt may be
+	 * @return String excerpt
+	 */
+	function get_excerpt($str, $startPos=0, $maxLength=100) {
+		if(strlen($str) > $maxLength) {
+			$excerpt   = substr($str, $startPos, $maxLength-3);
+			$lastSpace = strrpos($excerpt, ' ');
+			$excerpt   = substr($excerpt, 0, $lastSpace);
+			$excerpt  .= '...';
+		} else {
+			$excerpt = $str;
+		}
+		
+		return $excerpt;
 	}
 
 }

@@ -75,7 +75,10 @@ div.prayer-answered {
 	border: 1px solid #efefef;
 	border-radius: 4px;
 }
-
+span.taxonomy-prayer-tag {
+  margin-right: 0.5em;
+  text-transform: capitalize;
+}
 
 /* Prayer Meta */
 .prayer-meta {
