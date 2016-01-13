@@ -22,11 +22,11 @@
 		    			</tr>
 		    			<tr>
 			    			<td>By Category</td>
-			    			<td><a target="_blank" href="<?php echo get_site_url(); ?>/feed?post_type=prayer&amp;prayer_category=missions"><?php echo get_site_url(); ?>/feed?post_type=prayer&amp;prayer_category=missions</a></td>
+			    			<td><a target="_blank" href="<?php echo get_site_url(); ?>/feed?post_type=prayer&amp;prayer-category=missions"><?php echo get_site_url(); ?>/feed?post_type=prayer&amp;prayer-category=missions</a></td>
 		    			</tr>
 		    			<tr>
 			    			<td>By Tags</td>
-			    			<td><a target="_blank" href="<?php echo get_site_url(); ?>/feed?post_type=prayer&amp;prayer_tag=africa,north-america"><?php echo get_site_url(); ?>/feed?post_type=prayer&amp;prayer_tag=africa,north-america</a></td>
+			    			<td><a target="_blank" href="<?php echo get_site_url(); ?>/feed?post_type=prayer&amp;prayer-tag=africa,north-america"><?php echo get_site_url(); ?>/feed?post_type=prayer&amp;prayer-tag=africa,north-america</a></td>
 		    			</tr>
 	    			</tbody>
     			</table>

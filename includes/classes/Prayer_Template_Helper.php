@@ -25,24 +25,26 @@ class Prayer_Template_Helper
 	static public function get_terms_list( $id = 0, $taxonomy = null ) {
 		if ( is_null($taxonomy) ) { return 'Taxonomy not supplied'; }
 
-		// get the categories for custom post type
-		$categories = get_the_terms( $id, $taxonomy );
+		// start the output
+		$output = "";
+
+		// get the terms for custom post type
+		$terms = get_the_terms( $id, $taxonomy );
 		// return a wrapped list
-		if ( $categories && ! is_wp_error( $categories ) ) {
-			// start the output
-			$output = "";
-			// create a categories array to store term names
-			$categories_list = array();
-			foreach ( $categories as $term ) {
-				$categories_list[] = $term->name;
+		if ( $terms && ! is_wp_error( $terms ) ) {
+			// create a terms array to store term names
+			$terms_list = array();
+			foreach ( $terms as $term ) {
+				$terms_list[] = $term->name;
 			} 
-			// build the output for each category
-			foreach ($categories_list as $category) {
-				$output .= '<span class="prayer prayer-box category taxonomy-' . $taxonomy . '">';
-				$output .= $category;
+			// build the output for each term
+			foreach ($terms_list as $term) {
+				$output .= '<span class="prayer prayer-box term taxonomy-' . $taxonomy . '">';
+				$output .= '<a href="' . get_term_link( $term, $taxonomy ) . '">' . $term . '</a>';
 				$output .= '</span>';
 			}
 		}
+
 		// return the html output to the template
 		return $output;
 	}
@@ -211,7 +213,7 @@ class Prayer_Template_Helper
      */
     public static function get_categories()
     {
-        $prayer_category = array( 'prayer_category' );
+        $prayer_category = array( 'prayer-category' );
         $args = array(
             'orderby' => 'name',
             'order' => 'ASC',
@@ -219,6 +221,22 @@ class Prayer_Template_Helper
         );
         $prayer_categories = get_terms($prayer_category, $args);
         return $prayer_categories;
+    }
+
+    /**
+     * Get Categories
+     * @return object WP Taxonomy
+     */
+    public static function get_tags()
+    {
+        $prayer_tag = array( 'prayer-tag' );
+        $args = array(
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'hide_empty' => false 
+        );
+        $prayer_tags = get_terms($prayer_tag, $args);
+        return $prayer_tags;
     }
 
     /**

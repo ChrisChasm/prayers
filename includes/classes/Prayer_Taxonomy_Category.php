@@ -28,9 +28,9 @@ class Prayer_Taxonomy_Category
 	function activate() {
 		$this->prayer_category_taxonomy();
 		// create default categories
-        wp_insert_term( 'Health', 'prayer_category' );
-        wp_insert_term( 'Spiritual', 'prayer_category' );
-        wp_insert_term( 'Global', 'prayer_category' );
+        wp_insert_term( 'Health', 'prayer-category' );
+        wp_insert_term( 'Spiritual', 'prayer-category' );
+        wp_insert_term( 'Global', 'prayer-category' );
 	}
 
 	/**
@@ -65,11 +65,12 @@ class Prayer_Taxonomy_Category
 			'show_admin_column'          => true,
 			'show_in_nav_menus'          => true,
 			'show_tagcloud'              => false,
+			'has_archive'				 => true,
 			//'update_count_callback'      => 'prayer_category_count_cb',
 			'rest_base'          		 => 'prayer-category',
         	'rest_controller_class' 	 => 'WP_REST_Terms_Controller',	
 		);
-		register_taxonomy( 'prayer_category', array( 'prayer' ), $args );
+		register_taxonomy( 'prayer-category', array( 'prayer' ), $args );
 
 	}
 }

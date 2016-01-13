@@ -70,7 +70,7 @@ if ( ! empty( $_SESSION['post'] ) ) {
 	$categories_enabled = $prayer_options['categories_enabled'];
 
 	if ($categories_enabled == '1'):
-		$prayer_category = array( 'prayer_category' );
+		$prayer_category = array( 'prayer-category' );
 		$args = array(
 			'orderby' => 'name',
 			'order' => 'ASC',
@@ -80,16 +80,16 @@ if ( ! empty( $_SESSION['post'] ) ) {
 	?>
 
 	<p class="prayer-categories inline-form-elements">
-		<label for="prayer_category">
+		<label for="prayer-category">
 			<strong><?php echo __('Categories', 'prayer'); ?></strong>
 		</label><br />
 		<?php foreach ($prayer_categories as $key => $category): ?>
 			<label for="<?php echo $category->slug; ?>">
-				<input type="radio" name="prayer_category" value="<?php echo $category->slug; ?>"  <?php if ( $key == 0 ) echo "required"; ?>/> <?php echo $category->name ?> &nbsp;
+				<input type="radio" name="prayer-category" value="<?php echo $category->slug; ?>"  <?php if ( $key == 0 ) echo "required"; ?>/> <?php echo $category->name ?> &nbsp;
 			</label>
 		<?php endforeach; ?>
 		<br />
-		<label for="prayer_category" class="error" style="display:none;"><?php echo __( 'Please choose a category.', 'prayer' ) ?></label>
+		<label for="prayer-category" class="error" style="display:none;"><?php echo __( 'Please choose a category.', 'prayer' ) ?></label>
 	</p>
 
 	<?php endif; // categories enabled
@@ -101,9 +101,9 @@ if ( ! empty( $_SESSION['post'] ) ) {
 	?>
 
 	<p class="prayer-tags">
-		<label for="prayer_tags">
+		<label for="prayer-tags">
 			<strong><?php echo __('Tags', 'prayer'); ?></strong>
-			<input type="text" name="prayer_tags" placeholder="healing, doctors, africa (optional)" value="<?php echo $post_data['prayer_tags'] ?>" />
+			<input type="text" name="prayer-tags" placeholder="healing, doctors, africa (optional)" value="<?php echo $post_data['prayer-tags'] ?>" />
 		</label>
 		<small>Comma-separated list of tags for your request</small>
 	</p>

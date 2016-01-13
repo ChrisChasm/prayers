@@ -65,7 +65,7 @@ class Prayer_Post_Type_Prayer
 			'description'         => __( 'Prayer Requests', 'prayer' ),
 			'labels'              => $labels,
 			'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'revisions', ),
-			'taxonomies'          => array( 'prayer_category', 'prayer_tag', 'prayer_location' ),
+			'taxonomies'          => array( 'prayer-category', 'prayer-tag', 'prayer_location' ),
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,

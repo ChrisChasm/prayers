@@ -113,7 +113,7 @@ $prayer_meta = new Prayer_Meta( 'prayer', '0.9.0' );
  *
  * Currently, a custom prayer category and tags taxonomy are associated with
  * the prayer post type to keep other taxonomies in your WP system clean. The
- * slugs used are prayer_category and prayer_tag. You can query off of these
+ * slugs used are prayer-category and prayer-tag. You can query off of these
  * slugs for any custom queries that you create. 
  *
  * @since 0.9.0

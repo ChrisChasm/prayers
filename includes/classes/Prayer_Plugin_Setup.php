@@ -137,17 +137,17 @@ class Prayer_Plugin_Setup
         }
 
         // delete prayer categories
-        $categories = get_terms( 'prayer_category' );
+        $categories = get_terms( 'prayer-category' );
         foreach ( $categories as $category )
         {
-            wp_delete_term( $category->ID, 'prayer_category ');
+            wp_delete_term( $category->ID, 'prayer-category ');
         }
 
         // delete prayer tags
-        $tags = get_terms( 'prayer_tags' );
+        $tags = get_terms( 'prayer-tags' );
         foreach ( $tags as $tag )
         {
-            wp_delete_term( $tag->ID, 'prayer_tags ');
+            wp_delete_term( $tag->ID, 'prayer-tags ');
         }
 
 

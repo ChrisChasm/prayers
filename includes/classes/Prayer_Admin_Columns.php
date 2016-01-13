@@ -43,11 +43,11 @@ class Prayer_Admin_Columns
 		$date = $columns['date'];
 		unset($columns['date']);
 		// store the category column in order to shift it to the end of the table
-		$category = $columns['taxonomy-prayer_category'];
-		unset($columns['taxonomy-prayer_category']);
+		$category = $columns['taxonomy-prayer-category'];
+		unset($columns['taxonomy-prayer-category']);
 		// build additional columns for the listing
 		$columns['prayer_location'] = __( 'Location', 'prayer' );
-		$columns['taxonomy-prayer_category'] = $category;
+		$columns['taxonomy-prayer-category'] = $category;
 		$columns['prayer_count'] = __( 'Prayed', 'prayer' );
 		$columns['prayer_answered'] = __( 'Answered?', 'prayer' );
 		// $columns['prayer_anonymous'] = __( 'Anon?', 'prayer' );

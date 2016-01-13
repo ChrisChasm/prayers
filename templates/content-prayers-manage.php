@@ -29,7 +29,7 @@
 						<?php if ( ! empty( Prayer_Template_Helper::get_prayer_location($id) ) ): ?>
 							<li><?php echo Prayer_Template_Helper::get_prayer_location($id); ?></li>
 						<?php endif; ?>
-						<li class="prayer-taxonomy"><?php echo Prayer_Template_Helper::get_terms_list($id, 'prayer_category'); ?></li>
+						<li class="prayer-taxonomy"><?php echo Prayer_Template_Helper::get_terms_list($id, 'prayer-category'); ?></li>
 						<li class="prayer-taxonomy"><?php echo Prayer_Template_Helper::get_terms_list($id, 'prayer_location'); ?></li>
 						<?php if ( Prayer_Template_Helper::get_prayer_answered($id) ): ?>
 							<li class="prayer prayer-answered"><span class="prayer prayer-answered prayer-box">Answered</span></li>

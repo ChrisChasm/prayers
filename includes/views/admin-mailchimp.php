@@ -73,7 +73,7 @@ submitted prayer requests on your website.</p>
 						<input type="hidden" name="mailchimp-sync-groups" value="1" />
 						<input type="submit" value="Sync Groups" class="prayer-button sync" />
 						<?php
-							$prayer_category = array( 'prayer_category' );
+							$prayer_category = array( 'prayer-category' );
 							$args = array(
 								'orderby' => 'name',
 								'order' => 'ASC',

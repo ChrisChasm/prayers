@@ -90,7 +90,7 @@ class Prayer_Shortcode_Map
 		// load js
 		wp_enqueue_script( 'leaflet-js' );
 
-		$tax = array( 'prayer_category' );
+		$tax = array( 'prayer-category' );
 		$args = array(
 			'orderby' => 'name',
 			'order' => 'ASC',

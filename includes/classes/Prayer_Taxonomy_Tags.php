@@ -30,12 +30,12 @@ class Prayer_Taxonomy_Tags
 		$this->prayer_post_tag_taxonomy();
 
 		// create default tags
-        wp_insert_term( 'Africa', 'prayer_tag' );
-        wp_insert_term( 'Asia', 'prayer_tag' );
-        wp_insert_term( 'Australia', 'prayer_tag' );
-        wp_insert_term( 'Europe', 'prayer_tag' );
-        wp_insert_term( 'North America', 'prayer_tag' );
-        wp_insert_term( 'South America', 'prayer_tag' );
+        wp_insert_term( 'Africa', 'prayer-tag' );
+        wp_insert_term( 'Asia', 'prayer-tag' );
+        wp_insert_term( 'Australia', 'prayer-tag' );
+        wp_insert_term( 'Europe', 'prayer-tag' );
+        wp_insert_term( 'North America', 'prayer-tag' );
+        wp_insert_term( 'South America', 'prayer-tag' );
 
 	}
 
@@ -71,9 +71,10 @@ class Prayer_Taxonomy_Tags
 			'show_admin_column'          => false,
 			'show_in_nav_menus'          => false,
 			'show_tagcloud'              => true,
+			'has_archive'				 => true,
 			//'update_count_callback'      => 'prayer_post_tag_cb',	
 		);
-		register_taxonomy( 'prayer_tag', array( 'prayer' ), $args );
+		register_taxonomy( 'prayer-tag', array( 'prayer' ), $args );
 
 	}
 }

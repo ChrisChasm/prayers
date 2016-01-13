@@ -256,7 +256,7 @@ class Prayer_Mailchimp
 		    }
 
 		    // get the categories to create/update groups
-		    $prayer_category = array( 'prayer_category' );
+		    $prayer_category = array( 'prayer-category' );
 			$args = array(
 				'orderby' => 'name',
 				'order' => 'ASC',

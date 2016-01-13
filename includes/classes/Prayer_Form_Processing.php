@@ -45,9 +45,9 @@ class Prayer_Form_Processing {
 			'prayer_content' => 'required|min_len,6',
 			'prayer_name' => 'required,min_len,2',
 			'prayer_email' => 'required,valid_email',
-			'prayer_category' => 'required'
+			'prayer-category' => 'required'
 			// 'prayer_location' => '',
-			// 'prayer_tags' => '',
+			// 'prayer-tags' => '',
 		);
 		$this->gump->validation_rules( $rules );
 	}
@@ -63,7 +63,7 @@ class Prayer_Form_Processing {
 			'prayer_name' => 'trim|sanitize_string',
 			'prayer_email' => 'trim|sanitize_email',
 			'prayer_location' => 'trim|sanitize_string',
-			'prayer_tags' => 'trim|sanitize_string',
+			'prayer-tags' => 'trim|sanitize_string',
 		);
 		$this->gump->filter_rules( $filters );
 	}
@@ -125,13 +125,13 @@ class Prayer_Form_Processing {
 		if ( null == $data ) return;
 
 		// check to make sure the taxonomy term exists and insert if it does not
-		$prayer_category = term_exists( $data['prayer_category'], 'prayer_category', 0 );
+		$prayer_category = term_exists( $data['prayer-category'], 'prayer-category', 0 );
 		if ( ! $prayer_category ) {
-			$prayer_category = wp_insert_term( $prayer_category, 'prayer_category', array( 'parent' => 0 ) );
+			$prayer_category = wp_insert_term( $prayer_category, 'prayer-category', array( 'parent' => 0 ) );
 		}
 
 		// check for taxonomy tags
-		$tags = explode( ',', $data['prayer_tags'] );
+		$tags = explode( ',', $data['prayer-tags'] );
 	
 		// get the echo user
 		$user = get_user_by( 'login', 'prayer' );
@@ -145,7 +145,7 @@ class Prayer_Form_Processing {
 			'post_content' => $data['prayer_content'],
 			'post_status' => 'pending',
 			'post_type' => 'prayer',
-			'tax_input' => [ 'prayer_category' => $prayer_category['term_taxonomy_id'], 'prayer_tag' => $tags ],
+			'tax_input' => [ 'prayer-category' => $prayer_category['term_taxonomy_id'], 'prayer-tag' => $tags ],
 		);
 		// create the pending prayer request
 		$prayer_id = wp_insert_post($prayer);

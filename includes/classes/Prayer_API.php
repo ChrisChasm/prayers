@@ -122,7 +122,7 @@ class Prayer_API
 		// check for single category
 		if ( $category !== false ) {
 			$args['tax_query'][] = array(
-				'taxonomy' => 'prayer_category',
+				'taxonomy' => 'prayer-category',
 				'field' => 'slug',
 				'terms' => $category,
 			);
@@ -132,7 +132,7 @@ class Prayer_API
 		if ( $tags !== false ) {
 			$tags_e = explode( ',', $tags );
 			$args['tax_query'][] = array(
-				'taxonomy' => 'prayer_tag',
+				'taxonomy' => 'prayer-tag',
 				'field' => 'slug',
 				'terms' => $tags_e,
 			);
@@ -256,7 +256,7 @@ class Prayer_API
 		);
 
 		// set the category data
-		$categories = get_the_terms( $prayer->ID, 'prayer_category' );
+		$categories = get_the_terms( $prayer->ID, 'prayer-category' );
 		foreach( $categories as $category ) 
 		{
 			$prayer->category[] = array(
@@ -267,7 +267,7 @@ class Prayer_API
 		}
 
 		// set the tags data
-		$tags = get_the_terms( $prayer->ID, 'prayer_tag' );
+		$tags = get_the_terms( $prayer->ID, 'prayer-tag' );
 		if ( $tags != false )
 		{
 			foreach( $tags as $tag ) 
