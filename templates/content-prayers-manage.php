@@ -33,6 +33,10 @@
 						<li class="prayer-taxonomy"><?php echo Prayer_Template_Helper::get_terms_list($id, 'prayer_location'); ?></li>
 						<?php if ( Prayer_Template_Helper::get_prayer_answered($id) ): ?>
 							<li class="prayer prayer-answered"><span class="prayer prayer-answered prayer-box">Answered</span></li>
+						<?php else: ?>
+							<li>
+								<span class="right"><a href="#" data-id="response-<?php the_ID() ?>" class="prayer-response">Has this prayer been answered?</a></span>
+							</li>
 						<?php endif; ?>
 					</ul>
 				</div>
@@ -43,7 +47,6 @@
 				
 				<?php if ( ! Prayer_Template_Helper::get_prayer_answered($id) ): ?>
 					<div class="prayer-response">
-						<p><a href="#" data-id="response-<?php the_ID() ?>" class="prayer-response">Has this prayer been answered?</a></p>
 						<form action="" method="post" data-id="response-<?php the_ID() ?>" class="prayer-response">
 							<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>
 							<input type="hidden" name="prayer-id" value="<?php the_ID() ?>" />
@@ -75,7 +78,13 @@
 
 	</ul>
 
-	<?php else: ?>
+	<?php 
+
+		Prayer_Template_Helper::pagination( $query->max_num_pages ); 
+		/* Restore original Post Data */
+		wp_reset_query(); 
+
+	else: ?>
 
 		<p>Sorry, you haven't submitted any prayers yet.</p>
 

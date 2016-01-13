@@ -61,19 +61,13 @@ if ( $query->have_posts() ) : ?>
 	</ul>
 
 	<?php 
-	$big = 999999999; // need an unlikely integer
-	echo paginate_links( array(
-	   'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-	   'format' => '?paged=%#%',
-	   'current' => max( 1, $paged ),
-	   'total' => $query->max_num_pages //$q is your custom query
-	 ) );
 
-	/* Restore original Post Data */
-	wp_reset_query(); 
+		Prayer_Template_Helper::pagination( $query->max_num_pages ); 
+		/* Restore original Post Data */
+		wp_reset_query(); 
 
 	else: ?>
 
-		<h3>Sorry. No prayers have been submitted yet.</h3>
+	s<h3>Sorry. No prayers have been submitted yet.</h3>
 
 	<?php endif; 

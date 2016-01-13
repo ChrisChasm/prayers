@@ -106,7 +106,7 @@ class Prayer_Plugin_Setup
         
         // create authed pages
         self::create_page( __( 'Login', 'prayer' ), '[prayer_auth_form]', $page_id );
-        self::create_page( __( 'Manage my prayers', 'prayer' ), '[prayers_manage]', $page_id, 'manage' );
+        self::create_page( __( 'My prayers', 'prayer' ), '[prayers_manage]', $page_id, 'manage' );
 
     }
 

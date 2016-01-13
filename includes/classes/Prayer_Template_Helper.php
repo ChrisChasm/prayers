@@ -278,4 +278,25 @@ class Prayer_Template_Helper
 	{
 		return trim( parse_url ( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), '/' );
 	}
+
+	/**
+	 * Pagination
+	 * @return string HTML output
+	 */
+	public static function pagination( $max_num_pages = 1 )
+	{
+		global $paged;
+
+		$big = 999999999; // need an unlikely integer
+		$translated = __( 'Page', 'prayer' ); // Supply translatable string
+
+		echo paginate_links( array(
+	   		'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+	   		'format' => '?paged=%#%',
+	   		'current' => max( 1, $paged ),
+	   		'total' => $max_num_pages, //$q is your custom query
+	   		'before_page_number' => '<span class="screen-reader-text">' . $translated . ' </span>'
+	 	) );
+
+	}
 }

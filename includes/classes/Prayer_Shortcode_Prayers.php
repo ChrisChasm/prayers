@@ -61,15 +61,11 @@ class Prayer_Shortcode_Prayers
 		// Attributes
 		extract( $shortcode_atts );
 
-		// paged
-		// $paged = get_query_var('paged') ? get_query_var('paged') : 1;
-		global $paged;
-
+		
 		// WP_Query arguments
 		$args = array (
 			'post_type' => array( 'prayer' ),
 			'post_status' => array( 'publish' ),
-			'paged' => $paged,
 			'posts_per_page' => $limit,
 			'order' => $order,
 			'meta_query' => array(
@@ -87,7 +83,7 @@ class Prayer_Shortcode_Prayers
 		$templates = new Prayer_Template_Loader;
 		// start a buffer to capture output
 		ob_start();
-		$templates->get_template_part( 'content', 'prayers-listing' );
+		$templates->get_template_part( 'content', 'prayers' );
 		return ob_get_clean();
 
 	}
