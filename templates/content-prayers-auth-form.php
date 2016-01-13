@@ -2,10 +2,9 @@
 // prayer navigation
 Prayer_Template_Helper::get_navigation();
 
-if( ! empty( Prayer_Template_Helper::flash_message() ) ):
-	// show flash messages
-	Prayer_Template_Helper::flash_message();
-else:
+// show flash messages
+Prayer_Template_Helper::flash_message();
+
 ?><form method="post" id="prayer-form" class="prayer form prayer-js" action="">
 	<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>
 
@@ -16,4 +15,4 @@ else:
 		<input type="submit" value="Send link" />
 	</p>
 
-</form><?php endif; ?>
+</form>
