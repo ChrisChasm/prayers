@@ -96,11 +96,11 @@ class Prayer_Template_Helper
 		if ( $id == 0) { return; }
 		// get the prayer location
 		$prayer_location = get_post_meta( $id, 'prayer-location', 1);
-		if ( empty($prayer_location) ) { return; }
+		if ( empty($prayer_location) ) { return false; }
 		// build the html
 		ob_start(); ?>
 			<span class="prayer-box"><?php echo $prayer_location; ?></span>
-		<?php return ob_get_clean();
+		<?php return trim( ob_get_clean() );
 	}
 
 	/**
@@ -113,7 +113,7 @@ class Prayer_Template_Helper
 		if ( $id == 0) { return; }
 		// get the submitter name
 		$prayer_name = get_post_meta( $id, 'prayer-name', 1);
-		if ( empty($prayer_name) ) { return; }
+		if ( empty($prayer_name) ) { return false; }
 		// build the html
 		echo $prayer_name;
 	}
@@ -125,7 +125,7 @@ class Prayer_Template_Helper
 	 * @since  0.9.0
 	 */
 	static public function get_prayer_answered( $id = 0 ) {
-		if ( $id == 0) { return; }
+		if ( $id == 0) { return false; }
 		// get the submitter name
 		$prayer_answered = get_post_meta( $id, 'prayer-answered', 1);
 		if ( $prayer_answered == "1" ) return true;

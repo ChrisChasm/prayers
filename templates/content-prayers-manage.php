@@ -24,14 +24,22 @@
 				</h3>
 
 				<div class="prayer prayer-meta">
-					<ul>
-						<li><?php echo Prayer_Template_Helper::get_prayed_button( $id ); ?></li>
-						<?php if ( ! empty( Prayer_Template_Helper::get_prayer_location($id) ) ): ?>
-							<li><?php echo Prayer_Template_Helper::get_prayer_location($id); ?></li>
+					<ul><?php 
+					
+							// html output
+							$prayer_button = Prayer_Template_Helper::get_prayed_button( $id );
+							$prayer_location = Prayer_Template_Helper::get_prayer_location($id);
+							$prayer_category = Prayer_Template_Helper::get_terms_list($id, 'prayer-category');
+							$prayer_tags = Prayer_Template_Helper::get_terms_list($id, 'prayer-tags');
+							$prayer_answered = Prayer_Template_Helper::get_prayer_answered($id);
+					
+					  	?><li><?php echo $prayed_button; ?></li>
+						<?php if ( $prayer_location !== false ): ?>
+							<li><?php echo $prayer_location; ?></li>
 						<?php endif; ?>
-						<li class="prayer-taxonomy"><?php echo Prayer_Template_Helper::get_terms_list($id, 'prayer-category'); ?></li>
-						<li class="prayer-taxonomy"><?php echo Prayer_Template_Helper::get_terms_list($id, 'prayer_location'); ?></li>
-						<?php if ( Prayer_Template_Helper::get_prayer_answered($id) ): ?>
+						<li class="prayer-taxonomy"><?php echo $prayer_category ?></li>
+						<li class="prayer-taxonomy"><?php echo $prayer_tags; ?></li>
+						<?php if ( $prayer_answered !== false ): ?>
 							<li class="prayer prayer-answered"><span class="prayer prayer-answered prayer-box">Answered</span></li>
 						<?php else: ?>
 							<li>
@@ -45,7 +53,7 @@
 					<?php the_content() ?>
 				</div>
 				
-				<?php if ( ! Prayer_Template_Helper::get_prayer_answered($id) ): ?>
+				<?php if ( $prayer_answered === false ): ?>
 					<div class="prayer-response">
 						<form action="" method="post" data-id="response-<?php the_ID() ?>" class="prayer-response">
 							<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>
@@ -63,7 +71,7 @@
 						</form>
 					</div>
 				<?php endif; ?>
-				<?php if ( Prayer_Template_Helper::get_prayer_answered($id) ): ?>
+				<?php if ( $prayer_answered !== false ): ?>
 					<div class="prayer-answered">
 						<?php echo get_post_meta( $id, 'prayer-response', 1); ?>
 					</div>
