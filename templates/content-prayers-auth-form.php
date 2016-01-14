@@ -2,7 +2,8 @@
 // prayer navigation
 Prayer_Template_Helper::get_navigation();
 
-if( ! empty( Prayer_Template_Helper::flash_message() ) ):
+$flash_message = Prayer_Template_Helper::flash_message();
+if( ! empty( $flash_message ) ):
 	// show flash messages
 	Prayer_Template_Helper::flash_message();
 else:
