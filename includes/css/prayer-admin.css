@@ -4,10 +4,11 @@
 }
 
 /* credits */
-#kh-credits a {
+.kh-credits {
 	display: inline-block;
 	width: 70px;
 	height: 70px;
+  direction: ltr;
 	text-indent: -9999em;
 	background-image: url('../../elements/images/kh-logo.png');
 	background-size: 70px 70px;
@@ -17,36 +18,32 @@
 }
 
 /* Prayer list columns */
-th#title {
+.column-title {
 	width: 200px;
 }
-th#prayer_location {
+.column-prayer_location {
   width: 250px;
 }
-th#taxonomy-prayer-category {
+.column-taxonomy-prayer-category {
 	width: 100px;
 }
-th#prayer_count {
+.column-prayer_count {
 	width: 50px;
 }
-th#prayer_answered {
+.column-prayer_answered {
 	width: 80px;
 }
-th#prayer_anonymous {
+.column-prayer_anonymous {
 	width: 50px;
 }
 
 /* location styles in location column */
-.prayer-admin {}
 .prayer-location {
 	width: 250px;
 }
-.prayer-location div.avatar {
+.prayer-location .avatar {
 	float: left;
 	width: 35px;
-}
-.prayer-location .avatar img {
-
 }
 .prayer-location .details {
 	width: 215px;
@@ -54,7 +51,7 @@ th#prayer_anonymous {
 }
 
 /* Pending count button in sidebar */
-span.prayer-update-count {
+.prayer-update-count {
 	background: #C43B0E;
 	color: #fff;
 	display: inline-block;
@@ -67,33 +64,29 @@ span.prayer-update-count {
 }
 
 /* Meta Nav */
-#prayer-navigation a.nav-tab {
-
-}
-#prayer-navigation .nav-tab-wrapper {
+.prayer-navigation .nav-tab-wrapper {
 	padding: 0;
 }
 
-#prayer-notes,
-#prayer-responses {
+.prayer-section {
 	padding-top: 6px;
 }
-#prayer-notes textarea,
-#prayer-responses textarea {
+.prayer-meta-textarea,
+.prayer-response-textarea {
     width:         100%;
     margin-bottom: 10px;
 }
-#prayer-responses textarea {
+.prayer-response-textarea {
 	height: 100px;
 }
-#prayer-navigation {
+.prayer-navigation {
   overflow:hidden;
 }
-#prayer-navigation .column {
+.prayer-navigation .column {
   width: 33.3%;
   float: left;
 }
-#prayer-navigation .column.align-right {
+.prayer-navigation .align-right {
 	width: 30.3%;
 	margin-right: 3%;
 	text-align: right;
@@ -129,7 +122,7 @@ span.prayer-update-count {
   color: #fff;
   border-radius: 4px;
 }
-.prayer-button.sync {
+.button-sync {
     width: 130px;
     margin-right: .25em;
 }

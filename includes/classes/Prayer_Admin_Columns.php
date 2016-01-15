@@ -5,7 +5,7 @@
  * Manipulates the prayer listing edit page to add columns to the listing
  * table with relevant data to the request like location, whether the prayer
  * has been answered, etc.
- * 
+ *
  * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/prayer
@@ -28,9 +28,9 @@ class Prayer_Admin_Columns
 	 * Admin Prayer Listing Columns
 	 *
 	 * Builds a column list to be used for displaying relevant info on the Admin
-	 * Prayer Listing page. This will include data like location, submitter, and 
+	 * Prayer Listing page. This will include data like location, submitter, and
 	 * whether the prayer has been answered or not, etc.
-	 * 
+	 *
 	 * @param  array Columns to generate for the admin page
 	 * @return array Columns to be displayed for the padmin page
 	 * @since  0.9.0
@@ -63,10 +63,10 @@ class Prayer_Admin_Columns
 	 *
 	 * Takes columns specificed in prayers_columns_head and generates html
 	 * output relevant to each column and prayer post.
-	 * 
+	 *
 	 * @param  string Column Name to check agains
 	 * @param  integer Post ID to generate info on
-	 * @since  0.9.0 
+	 * @since  0.9.0
 	 */
 	function prayers_columns( $column_name, $post_ID ) {
 		// get the post meta to use in building the new column values
@@ -124,5 +124,5 @@ class Prayer_Admin_Columns
 			}
 		}
 	}
-	
+
 }
