@@ -7,7 +7,7 @@
  * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/prayer
- * @copyright 2015 Kaleb Heitzman
+ * @copyright 2016 Kaleb Heitzman
  * @license   GPL-3.0
  * @version   0.9.0
  */

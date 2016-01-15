@@ -3,6 +3,19 @@
   padding-right: 1em;
 }
 
+/* credits */
+#kh-credits a {
+	display: inline-block;
+	width: 70px;
+	height: 70px;
+	text-indent: -9999em;
+	background-image: url('../../elements/images/kh-logo.png');
+	background-size: 70px 70px;
+	position: absolute;
+	right: 1.2em;
+	top: 1.5em;
+}
+
 /* Prayer list columns */
 th#title {
 	width: 200px;

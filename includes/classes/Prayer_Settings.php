@@ -8,7 +8,7 @@
  * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/prayer
- * @copyright 2015 Kaleb Heitzman
+ * @copyright 2016 Kaleb Heitzman
  * @license   GPL-3.0
  * @version   0.9.0
  */
@@ -41,6 +41,8 @@ class Prayer_Settings {
 			<p>Adjust Prayer to fit your website. For documentation visit <a href="https://github.com/kalebheitzman/prayers/blob/master/documentation.md" target="_blank">documentation.md</a> on our github <a href="https://github.com/kalebheitzman/prayer" target="_blank">project page.</a></p>
 
 			<?php settings_errors(); ?>
+
+			<h2 id="kh-credits"><a href="http://kheitzman.com" target="_blank">KH</a></h2>
 
 			<form method="post" action="options.php">
 				<?php

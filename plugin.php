@@ -10,9 +10,12 @@
  * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/prayer
- * @copyright 2015 Kaleb Heitzman
+ * @copyright 2016 Kaleb Heitzman
  * @license   GPL-3.0
  * @version   0.9.0
+ *
+ * TODO: add internationalization 01/15/16
+ * TODO: convert plugin to class 01/15/16
  */
 
 // If this file is called directly, abort.
@@ -31,7 +34,7 @@ define( 'PRAYER_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
  */
 spl_autoload_register(function ( $class ) {
 	if ( is_readable( PRAYER_PLUGIN_DIR . "includes/classes/{$class}.php" ) )
-		require PRAYER_PLUGIN_DIR . "includes/classes/{$class}.php";		
+		require PRAYER_PLUGIN_DIR . "includes/classes/{$class}.php";
 });
 
 /**
@@ -41,7 +44,7 @@ spl_autoload_register(function ( $class ) {
  * will be stored under this custom post type. Taxonomy and heavy use of meta
  * are used as well to construct the different data functionalities that this
  * plugin provides.
- * 
+ *
  * @since 0.9.0
  */
 $prayer_post_type_prayer = new Prayer_Post_Type_Prayer;
@@ -49,7 +52,7 @@ $prayer_post_type_prayer = new Prayer_Post_Type_Prayer;
 /**
  * Install and Uninstall hooks
  *
- * Creates settings, echo user, as well as cleans up the database on an 
+ * Creates settings, echo user, as well as cleans up the database on an
  * uninstall.
  *
  * @since 0.9.0
@@ -61,7 +64,7 @@ if ( is_admin() )
  * Template Loader
  *
  * Allows template loading from plugin with prayer_get_template_part(). This
- * will load templates from your themes/your_theme/templates directory first 
+ * will load templates from your themes/your_theme/templates directory first
  * and then search for templates in plugins/prayers/templates
  *
  * @since  0.9.0
@@ -84,7 +87,7 @@ $prayer_mailer = new Prayer_Mailer;
  *
  * Loads frontend and admin backend styles and scripts. These are vanilla css
  * and js files. In the future I may provide less/sass and coffeescript files
- * as well for advanced functionality. 
+ * as well for advanced functionality.
  *
  * @since 0.9.0
  */
@@ -114,7 +117,7 @@ $prayer_meta = new Prayer_Meta( 'prayer', '0.9.0' );
  * Currently, a custom prayer category and tags taxonomy are associated with
  * the prayer post type to keep other taxonomies in your WP system clean. The
  * slugs used are prayer-category and prayer-tag. You can query off of these
- * slugs for any custom queries that you create. 
+ * slugs for any custom queries that you create.
  *
  * @since 0.9.0
  */
@@ -124,7 +127,7 @@ $prayer_taxonomy_tags = new Prayer_Taxonomy_Tags;
 /**
  * Prayer Post Type Menu
  *
- * Creates a prayer menu to be used in the main editing sidebar menu of your 
+ * Creates a prayer menu to be used in the main editing sidebar menu of your
  * WP Install. Provides pages like settings, feeds, pending prayers, etc.
  *
  * Future ideas: MailChimp integration page
@@ -140,7 +143,7 @@ if ( is_admin() )
  * Creates a settings page for the plugin. Allows setting options like colors
  * enabling/disabling features, etc.
  *
- * @since  0.9.0 
+ * @since  0.9.0
  */
 if ( is_admin() )
 	$prayer_settings = new Prayer_Settings;
@@ -213,4 +216,3 @@ $prayer_auth = new Prayer_Auth;
  * @since  0.9.0
  */
 $prayer_api = new Prayer_API;
-

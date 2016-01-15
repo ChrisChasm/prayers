@@ -9,7 +9,7 @@
  *
  * Future: find a better way to require dependencies other than wp_die.
  *
- * @since 0.9.0 
+ * @since 0.9.0
  */
 
 class Prayer_Plugin_Setup
@@ -27,11 +27,11 @@ class Prayer_Plugin_Setup
         register_deactivation_hook( $this->plugin_path, array( 'Prayer_Plugin_Setup', 'plugin_deactivate' ) );
         register_uninstall_hook( $this->plugin_path, array( 'Prayer_Plugin_Setup', 'plugin_uninstall' ) );
     }
-   
+
     /**
      * Activate Hook
      *
-     * @since 0.9.0 
+     * @since 0.9.0
      */
     public function plugin_activate(){
 
@@ -98,12 +98,12 @@ class Prayer_Plugin_Setup
         // create parent page
         $page_id = self::create_page( __( 'Prayers', 'prayer' ), '[prayers]', 0 );
         add_option( 'prayer_parent_page_id', $page_id);
-        
+
         // create unauthed pages
         self::create_page( __( 'Map', 'prayer' ), '[prayer_map]', $page_id );
         self::create_page( __( 'Submit a prayer', 'prayer' ), '[prayer_form]', $page_id, 'submit' );
         self::create_page( __( 'Confirmation', 'prayer' ), '[prayer_form_response]', $page_id );
-        
+
         // create authed pages
         self::create_page( __( 'Login', 'prayer' ), '[prayer_auth_form]', $page_id );
         self::create_page( __( 'My prayers', 'prayer' ), '[prayers_manage]', $page_id, 'manage' );
@@ -113,7 +113,7 @@ class Prayer_Plugin_Setup
     /**
      * Deactivate Hook
      *
-     * @since 0.9.0 
+     * @since 0.9.0
      */
     public function plugin_deactivate() {
 
@@ -184,7 +184,7 @@ class Prayer_Plugin_Setup
         if ( ! is_null( $slug ) ) { $page['post_name'] = $slug; }
         $page = apply_filters('prayer_add_new_page', $page, 'prayer' );
         $pageid = wp_insert_post ($page);
-        if ($pageid == 0) { 
+        if ($pageid == 0) {
             return false;
         }
         return $pageid;
