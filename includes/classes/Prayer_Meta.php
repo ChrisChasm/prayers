@@ -93,7 +93,8 @@ class Prayer_Meta
 	 * @since  0.9.0
 	 */
 	public function prayer_meta_save( $post_id = 0 ) {
-		if ( $post_id == 0 ) return;
+    global $post;
+		if ( $post_id == 0 || $post->post_type != 'prayer' ) return;
 
 		// Checks save status
 	    $is_autosave = wp_is_post_autosave( $post_id );
