@@ -9,30 +9,30 @@
 	$query = new WP_Query( $args );
 	if ( $query->have_posts() ) : ?>
 
-	<ul id="prayers" class="prayer prayer-listing prayer-js">
-	
+	<ul id="prayers" class="prayer prayers-listing prayer-js">
+
 		<?php while ( $query->have_posts() ):
-			$query->the_post(); 
+			$query->the_post();
 
 			$id = get_the_ID();
 
 			?>
-	
+
 			<li>
 				<h3 class="prayer-title">
 					<a href="<?php the_permalink(); ?>"><?php the_title() ?></a>
 				</h3>
 
 				<div class="prayer prayer-meta">
-					<ul><?php 
-					
+					<ul><?php
+
 							// html output
 							$prayer_button = Prayer_Template_Helper::get_prayed_button( $id );
 							$prayer_location = Prayer_Template_Helper::get_prayer_location($id);
 							$prayer_category = Prayer_Template_Helper::get_terms_list($id, 'prayer-category');
 							$prayer_tags = Prayer_Template_Helper::get_terms_list($id, 'prayer-tags');
 							$prayer_answered = Prayer_Template_Helper::get_prayer_answered($id);
-					
+
 					  	?><li><?php echo $prayed_button; ?></li>
 						<?php if ( $prayer_location !== false ): ?>
 							<li><?php echo $prayer_location; ?></li>
@@ -52,7 +52,7 @@
 				<div class="prayer-content">
 					<?php the_content() ?>
 				</div>
-				
+
 				<?php if ( $prayer_answered === false ): ?>
 					<div class="prayer-response">
 						<form action="" method="post" data-id="response-<?php the_ID() ?>" class="prayer-response">
@@ -78,19 +78,19 @@
 				<?php endif; ?>
 
 			</li>
-	
+
 		<?php endwhile; ?>
-		
+
 		<div class="nav-previous alignleft"><?php next_posts_link( 'Older posts' ); ?></div>
 		<div class="nav-next alignright"><?php previous_posts_link( 'Newer posts' ); ?></div>
 
 	</ul>
 
-	<?php 
+	<?php
 
-		Prayer_Template_Helper::pagination( $query->max_num_pages ); 
+		Prayer_Template_Helper::pagination( $query->max_num_pages );
 		/* Restore original Post Data */
-		wp_reset_query(); 
+		wp_reset_query();
 
 	else: ?>
 

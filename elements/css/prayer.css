@@ -1,23 +1,57 @@
+/* project Prayers Wordpress Plugin
+ * copyright 2016 kaleb heitzman
+ */
+
+/* ==table of contents
+  1. colors
+  2. fonts
+  3. global settings
+  4. primary layout structure
+  5. secondary layout structure
+  6. tertiary layout struture
+  7. text-related treatments
+  8. images, links, and other salient features
+  9. general styles
+  10. general classes
+  11. miscellaneous stuff */
+
+/* ==colors
+ */
+
+/* ==fonts
+ */
+
+/* ==global settings (resets, scrollbars, etc.)
+ */
 .screen-reader-text { display: none; }
 
+/* ==primary layout structure (body, primary divs)
+ */
+
+/* ==secondary layout structure (header, footer, sidebar)
+ */
+
+/* ==tertiary layout structure (page regions, floats)
+ */
+
 /* Prayer List */
-ul#prayers {
-	margin: 0;
-	list-style: none;
+.prayers-listing {
+ 	margin: 0;
+ 	list-style: none;
 }
-ul#prayers > li {
-	margin: 1em 0;
+.prayers-listing > li {
+ 	margin: 1em 0;
 }
 
 /* Prayer Content */
-span.prayer-name {
-	float: left;
-	border: 1px dashed #aaa;
-	border-radius: 4px;
-	margin-top: -1px;
-	margin-bottom: -4px;
-	margin-right: .35em;
-	padding: 0 .35em;
+.prayer-name {
+ 	float: left;
+ 	border: 1px dashed #aaa;
+ 	border-radius: 4px;
+ 	margin-top: -1px;
+ 	margin-bottom: -4px;
+ 	margin-right: .35em;
+ 	padding: 0 .35em;
 }
 
 /* echo pray button */
@@ -37,6 +71,9 @@ span.prayer-pray-button input[type="submit"] {
 	color: #fff;
 	background: #2582EA;
 	margin-left: -5px;
+}
+span.prayer-pray-button input[type="submit"]:focus {
+	color: #fff;
 	outline: none;
 }
 span.prayer-pray-button:hover input[type="submit"] {
@@ -45,13 +82,13 @@ span.prayer-pray-button:hover input[type="submit"] {
 	border: 0;
 
 }
-span.prayer-pray-button form.prayed-for input[type="submit"] {
+span.prayer-pray-button .prayed-for input[type="submit"] {
 	background: #36DA99;
 	color: #fff;
 	border: 0;
 	cursor: default;
 }
-span.prayer-count {
+.prayer-count {
 	background: #efefef;
 	padding: 0.15em 0.75em;
 	display: inline-block;
@@ -63,8 +100,8 @@ span.prayer-count {
   display: inline-block;
 }
 span.prayer-answered {
-	background: #888 !important;
-	color: #fff !important;
+	background: #888;
+	color: #fff;
 	margin-left: -8px;
 }
 
@@ -75,15 +112,12 @@ div.prayer-answered {
 	border: 1px solid #efefef;
 	border-radius: 4px;
 }
-span.taxonomy-prayer-tag {
+.taxonomy-prayer-tag {
   margin-right: 0.5em;
   text-transform: capitalize;
 }
 
 /* Prayer Meta */
-.prayer-meta {
-
-}
 .prayer-meta ul {
 	display: block;
 	list-style-type: none;
@@ -95,10 +129,7 @@ span.taxonomy-prayer-tag {
 	display: inline-block;
 	margin-right: 0.25em;
 }
-.prayer-meta ul li.prayer-taxonomy span {
-
-}
-span.prayer-box {
+.prayer-box {
 	background: #efefef;
 	color: #333;
 	padding: 0.25em 0.75em;
@@ -106,87 +137,96 @@ span.prayer-box {
 	border-radius: 4px;
 }
 
-li.prayer-avatar-small img {
+.prayer-avatar-small img {
 	background: #efefef;
 	border-radius: 4px;
 	margin-top: -3px;
 	display: inline-block;
 }
-li span.right {
-
-}
-
-/* form elements */
-.inline-form-elements label {
-	display: inline-block;
-}
-.prayer-form label.hide { 
-	display: none; 
-}
-.echo.form-errors,
-label.error {
-  	padding: 0.5em 1em;
-  	border: 1px solid #FF8488;
-  	background: #FFD7DB;
-  	border-radius: 4px;
-  	margin-bottom: 1.5em;
-}
-.echo.form-errors ul {
-	margin-bottom: 0;
-}
-ul.inline-form-elements {
-	margin-left: 0;
-}
-ul.inline-form-elements li {
-  display: inline-block;
-}
-ul.inline-form-elements li label {
-  margin-left: 0;
-}
 
 /* Map styles */
-#prayer-map {
+.prayer-map {
   	width: 100%;
   	height: 500px;
 }
 
-/* Flash Messages */
-.flash {
-  padding: 0.5em 1em;
-  margin-bottom: 1em;
-
-}
-.flash-success {
-	background: #C8FFD6;
-	border: 1px solid #9DD38D;
-}
-.flash-error {
-	background: #FFD4D8;
-	border: 1px solid #FF9A90;
-}
-
-ul#prayer-navigation {
+ul.prayer-navigation {
 	list-style: none;
 	margin: -3.5em 0 1em;
 	float: right;
 	border-radius: 4px;
 	font-size: .95em
 }
-ul#prayer-navigation a {
+ul.prayer-navigation a {
 	background: #888;
 	color: #fff;
 	padding: 0.35em 0.85em;
 	border-radius: 4px;
 }
-ul#prayer-navigation a:hover {
+ul.prayer-navigation a:hover {
 	background: #aaa;
 }
-ul#prayer-navigation li {
+ul.prayer-navigation li {
 	display: inline-block;
 }
-ul#prayer-navigation li:first-child {
-	border-left: 0;	
+ul.prayer-navigation li:first-child {
+	border-left: 0;
 }
-ul#prayer-navigation li.login a {
-	
+
+/* ==text-related treatments (headings, paragraphs, lists)
+ */
+
+/* ==images, links, and other salient features (pre, code)
+ */
+
+/* ==general styles (forms, tables, buttons, acronyms et al)
+ */
+
+.inline-form-elements label {
+ 	display: inline-block;
 }
+.prayer-form .hide {
+ 	display: none;
+}
+.error {
+   	padding: 0.5em 1em;
+   	border: 1px solid #FF8488;
+   	background: #FFD7DB;
+   	border-radius: 4px;
+   	margin-bottom: 1.5em;
+}
+.form-errors ul {
+ 	margin-bottom: 0;
+}
+ul.inline-form-elements {
+ 	margin-left: 0;
+}
+ul.inline-form-elements li {
+   display: inline-block;
+}
+ul.inline-form-elements li label {
+   margin-left: 0;
+}
+
+/* ==general classes (.clear, .center, .right, .left, etc.)
+ */
+
+/* ==miscellaneous stuff and template code
+ */
+
+/* Flash Messages */
+.flash {
+   padding: 0.5em 1em;
+   margin-bottom: 1em;
+
+}
+.flash-success {
+ 	background: #C8FFD6;
+ 	border: 1px solid #9DD38D;
+}
+.flash-error {
+ 	background: #FFD4D8;
+ 	border: 1px solid #FF9A90;
+}
+
+/* created by kh | kheitzman.com */
