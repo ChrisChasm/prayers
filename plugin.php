@@ -15,7 +15,6 @@
  * @version   0.9.0
  *
  * TODO: add internationalization 01/15/16
- * TODO: convert plugin to class 01/15/16
  */
 
 // If this file is called directly, abort.

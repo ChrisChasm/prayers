@@ -3,7 +3,7 @@
  * Prayer JSON API
  *
  * Outputs JSON responses from /prayers/api.
- * 
+ *
  * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/prayer
@@ -15,8 +15,8 @@
 class Prayer_API
 {
 	/**
-	 * Class Construct
-	 * @since 0.9.0 
+	 * Class construct
+	 * @since 	0.9.0
 	 */
 	public function __construct()
 	{
@@ -66,7 +66,7 @@ class Prayer_API
 						'default' => null,
 						'sanitize_callback' => 'absint',
 					),
-				), 
+				),
 			)
 		);
 	}
@@ -75,10 +75,10 @@ class Prayer_API
 	 * GET echo/v1
 	 * @since 0.9.0
 	 */
-	public function get_api( WP_REST_Request $request ) 
+	public function get_api( WP_REST_Request $request )
 	{
-		// var_dump($request); die();
-		// You can access parameters via direct array access on the object:
+			// var_dump($request); die();
+			// You can access parameters via direct array access on the object:
 	    $param = $request['some_param'];
 
 	    // Or via the helper method:
@@ -163,7 +163,7 @@ class Prayer_API
 		$posts = $query->get_posts();
 
 		foreach ($posts as $key => $post) {
-			
+
 			$prayer = $this->run_prayer_template( $post );
 			$prayers[] = $prayer;
 			// var_dump($prayers[$key]);
@@ -198,7 +198,7 @@ class Prayer_API
 		$posts = $query->get_posts();
 
 		foreach ($posts as $key => $post) {
-			
+
 			$prayer = $this->run_prayer_template( $post );
 			$prayers[] = $prayer;
 			// var_dump($prayers[$key]);
@@ -263,7 +263,7 @@ class Prayer_API
 
 		// set the category data
 		$categories = get_the_terms( $prayer->ID, 'prayer-category' );
-		foreach( $categories as $category ) 
+		foreach( $categories as $category )
 		{
 			$prayer->category[] = array(
 				'name' => $category->name,
@@ -276,7 +276,7 @@ class Prayer_API
 		$tags = get_the_terms( $prayer->ID, 'prayer-tag' );
 		if ( $tags != false )
 		{
-			foreach( $tags as $tag ) 
+			foreach( $tags as $tag )
 			{
 				$prayer->tag[] = array(
 					'name' => $tag->name,
@@ -318,7 +318,7 @@ class Prayer_API
 
 	/**
 	 * Get excerpt from string
-	 * 
+	 *
 	 * @param String $str String to get an excerpt from
 	 * @param Integer $startPos Position int string to start excerpt from
 	 * @param Integer $maxLength Maximum length the excerpt may be
@@ -333,7 +333,7 @@ class Prayer_API
 		} else {
 			$excerpt = $str;
 		}
-		
+
 		return $excerpt;
 	}
 
