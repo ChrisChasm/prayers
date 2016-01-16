@@ -2,12 +2,12 @@
 /**
  * Build Meta Boxes
  *
- * Build the metabox used for the Prayer edit page. This adds options for 
- * storing name, email, and location, as well as other metadata. This is also 
+ * Build the metabox used for the Prayer edit page. This adds options for
+ * storing name, email, and location, as well as other metadata. This is also
  * where the meta save process is found. It's straightforward other than a
- * call to process location data using the prayer_save_meta_location plugin 
+ * call to process location data using the prayer_save_meta_location plugin
  * helper.
- * 
+ *
  * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/prayer
@@ -27,7 +27,7 @@ class Prayer_Meta
      * @var      string    $name    The ID of this plugin.
      */
     private $name;
- 
+
     /**
      * The version of this plugin.
      *
@@ -36,7 +36,7 @@ class Prayer_Meta
      * @var      string    $version    The current version of this plugin.
      */
     private $version;
- 
+
     /**
      * Initialize the class and set its properties.
      *
@@ -45,13 +45,13 @@ class Prayer_Meta
      * @var      string    $version    The version of this plugin.
      */
     public function __construct( $name, $version ) {
- 
+
         $this->name = $name;
         $this->version = $version;
 
         add_action( 'add_meta_boxes', array( $this, 'prayer_add_metabox' ) );
-		add_action( 'save_post', array( $this, 'prayer_meta_save' ) );
- 
+		    add_action( 'save_post', array( $this, 'prayer_meta_save' ) );
+
     }
 
 	/**
@@ -60,11 +60,11 @@ class Prayer_Meta
 	 */
 	public function prayer_add_metabox() {
 		add_meta_box(
-			'prayer-meta', 
-			__('Prayer Meta', 'prayer'), 
-			array( $this, 'display_meta_box' ), 
-			'prayer', 
-			'normal', 
+			'prayer-meta',
+			__('Prayer Meta', 'prayer'),
+			array( $this, 'display_meta_box' ),
+			'prayer',
+			'normal',
 			'high');
 	}
 
@@ -83,8 +83,8 @@ class Prayer_Meta
 		$views = plugin_dir_path( __FILE__ ) . "../views/";
 		include_once( $views . 'prayer-meta-box.php' );
 
-		
-	    
+
+
 	}
 
 	/**
@@ -99,11 +99,24 @@ class Prayer_Meta
 	    $is_autosave = wp_is_post_autosave( $post_id );
 	    $is_revision = wp_is_post_revision( $post_id );
 	    $is_valid_nonce = ( isset( $_POST[ 'prayer_nonce' ] ) && wp_verify_nonce( $_POST[ 'prayer_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
-	 
+
 	    // Exits script depending on save status
 	    if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
 	        return;
 	    }
+
+      // update the post title
+      if ( empty( $_POST['post_title'] ) ) {
+        // build a title
+        // $title_parts[] = $category->name;
+        $title_parts[] = $_POST[ 'prayer-name' ];
+        $title_parts[] = date('YmdHi');
+        $title = implode(" on ", $title_parts);
+
+        remove_action( 'save_post', array( $this, 'prayer_meta_save' ) );
+        wp_update_post( array( 'ID' => $post_id, 'post_title' => $title ) );
+        add_action( 'save_post', array( $this, 'prayer_meta_save' ) );
+      }
 
 	    // Checks for input and sanitizes/saves if needed
 	    if( isset( $_POST[ 'prayer-answered' ] ) ) {
@@ -113,6 +126,11 @@ class Prayer_Meta
 	    // Checks for input and sanitizes/saves if needed
 	    if( isset( $_POST[ 'prayer-anonymous' ] ) ) {
 	        update_post_meta( $post_id, 'prayer-anonymous', sanitize_text_field( $_POST[ 'prayer-anonymous' ] ) );
+
+          // set the visibility to private
+          remove_action( 'save_post', array( $this, 'prayer_meta_save' ) );
+          wp_update_post( array( 'ID' => $post_id, 'post_status' => 'private' ) );
+          add_action( 'save_post', array( $this, 'prayer_meta_save' ) );
 	    }
 
 	    // Checks for input and sanitizes/saves if needed
@@ -163,26 +181,26 @@ class Prayer_Meta
 	    	update_post_meta( $post_id, 'prayer-email-synced', 0 );
 	    }
 
-	    // 
+	    //
 	    if ( ! empty( $_POST['prayer-response'] ) ) {
 	    	update_post_meta( $post_id, 'prayer-response', esc_textarea( $_POST['prayer-response'] ) );
 	    }
 
 	    // If the 'Resources' inputs exist, iterate through them and sanitize them
 		if ( ! empty( $_POST['prayer-notes'] ) ) {
-		 
+
 		    $notes = $_POST['prayer-notes'];
 		    $sanitized_notes = array();
 		    foreach ( $notes as $note ) {
-		         
+
 		        $note = esc_textarea( strip_tags( $note ) );
 
 		        if ( ! empty ( $note ) ) {
 		        	$sanitized_notes[] = $note;
-		        }     
+		        }
 		    }
 		    update_post_meta( $post_id, 'prayer-notes', $sanitized_notes );
-		 
+
 		} else {
 			if ( '' !== get_post_meta( $post_id, 'prayer-notes', true ) ) {
 				delete_post_meta( $post_id, 'prayer-notes' );

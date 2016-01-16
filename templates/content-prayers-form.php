@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // prayer navigation
 Prayer_Template_Helper::get_navigation();
@@ -22,23 +22,23 @@ if ( ! empty( $_SESSION['errors'] ) ) {
 		} ?>
 		</ul>
 	</div>
-<?php } 
+<?php }
 
 if ( ! empty( $_SESSION['post'] ) ) {
 	$post_data = $_SESSION['post'];
 }
 
 ?>
-		
+
 <form method="post" id="prayer-form" class="prayer form prayer-js" action="">
 	<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>
 
 	<p><strong>Your prayer request</strong></p>
 
-	<p class="prayer-title">
+	<?php/*<p class="prayer-title">
 		<label for="prayer_title" class="hide"><?php echo __('Prayer title', 'prayer') ?></label>
 		<input type="text" name="prayer_title" minlength="6" required placeholder="Prayer title (required)" value="<?php echo $post_data['prayer_title'] ?>" />
-	</p>
+	</p>*/?>
 
 	<p class="prayer-content">
 		<label for="prayer_content" class="hide"><?php echo __('Prayer Request', 'prayer') ?></label>
@@ -47,7 +47,7 @@ if ( ! empty( $_SESSION['post'] ) ) {
 
 	<p><strong>Your contact information</strong></p>
 
-	<p class="prayer-name">
+	<p class="prayer-form-name">
 		<label for="prayer_name" class="hide"><?php echo __('Your name', 'prayer') ?></label>
 		<input type="text" name="prayer_name" required placeholder="Your name (required)" value="<?php echo $post_data['prayer_name'] ?>" />
 	</p>
@@ -74,7 +74,7 @@ if ( ! empty( $_SESSION['post'] ) ) {
 		$args = array(
 			'orderby' => 'name',
 			'order' => 'ASC',
-			'hide_empty' => false 
+			'hide_empty' => false
 		);
 		$prayer_categories = get_terms($prayer_category, $args);
 	?>
@@ -109,7 +109,7 @@ if ( ! empty( $_SESSION['post'] ) ) {
 	</p>
 
 	<?php endif; // tags enabled ?>
-	
+
 	<p class="prayer-anonymous inline-form-elements">
 		<label>
 			<strong><?php echo __('Would you like this prayer request to be anonymous?', 'prayer' ); ?></strong>
@@ -120,7 +120,7 @@ if ( ! empty( $_SESSION['post'] ) ) {
 		</label>
 	</p>
 
-	<p>	
+	<p>
 		<input type="submit" value="Send Prayer" />
 		<input type="hidden" name="prayer-submission" value="1" />
 		<input type="hidden" name="redirect" value="<?php echo Prayer_Template_Helper::current_page_url(); ?>" />

@@ -3,8 +3,8 @@
  * Form Processing
  *
  * Povides form processing functions for frontend submissions, prayer clicks,
- * etc. 
- * 
+ * etc.
+ *
  * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/prayer
@@ -37,28 +37,28 @@ class Prayer_Form_Processing {
 
 	/**
 	 * Set Validation Rules for the frontend form
-	 * @since  0.9.0 
+	 * @since  0.9.0
 	 */
 	function set_validation_rules() {
 		$rules = array(
-			'prayer_title' => 'required|min_len,6',
+			//'prayer_title' => 'required|min_len,6',
 			'prayer_content' => 'required|min_len,6',
 			'prayer_name' => 'required,min_len,2',
 			'prayer_email' => 'required,valid_email',
 			'prayer-category' => 'required'
-			// 'prayer_location' => '',
-			// 'prayer-tags' => '',
+			//'prayer_location' => '',
+			//'prayer-tags' => '',
 		);
 		$this->gump->validation_rules( $rules );
 	}
 
 	/**
 	 * Set Validation Filters
-	 * @since  0.9.0 
+	 * @since  0.9.0
 	 */
 	function set_validation_filters() {
 		$filters = array(
-			'prayer_title' => 'trim|sanitize_string',
+			//'prayer_title' => 'trim|sanitize_string',
 			'prayer_content' => 'trim|sanitize_string',
 			'prayer_name' => 'trim|sanitize_string',
 			'prayer_email' => 'trim|sanitize_email',
@@ -72,7 +72,7 @@ class Prayer_Form_Processing {
 	 * Prayer Form Processor
 	 *
 	 * Processes frontend prayer form submissions based on the [prayers_form]
-	 * shortcode. Checks against a nonce to prevent cross site hacking. 
+	 * shortcode. Checks against a nonce to prevent cross site hacking.
 	 *
 	 * @since  0.9.0
 	 */
@@ -80,7 +80,7 @@ class Prayer_Form_Processing {
 		// check to see if this is a prayer submission
 		if ( isset( $_POST['prayer-submission']) && '1' == $_POST['prayer-submission']) {
 			// check for a valid nonce
-			$is_valid_nonce = ( isset( $_POST[ 'prayer_nonce' ] ) && wp_verify_nonce( $_POST[ 'prayer_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false'; 
+			$is_valid_nonce = ( isset( $_POST[ 'prayer_nonce' ] ) && wp_verify_nonce( $_POST[ 'prayer_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
 		    // Exits script depending on save status
 		    if ( ! $is_valid_nonce ) {
 		        return;
@@ -105,7 +105,7 @@ class Prayer_Form_Processing {
 					// attempt redirect with js
 					printf("<script>location.href='/prayers/confirmation'</script>");
 					// meta refresh backup
-					echo '<META HTTP-EQUIV="Refresh" Content="0; URL=/prayers/confirmation">';    
+					echo '<META HTTP-EQUIV="Refresh" Content="0; URL=/prayers/confirmation">';
 				    exit;
 				}
 				else {
@@ -119,7 +119,7 @@ class Prayer_Form_Processing {
 	/**
 	 * Save Validated Data
 	 *
-	 * @since 0.9.0 
+	 * @since 0.9.0
 	 */
 	private function save_validated_data( $data = null ) {
 		if ( null == $data ) return;
@@ -132,21 +132,31 @@ class Prayer_Form_Processing {
 
 		// check for taxonomy tags
 		$tags = explode( ',', $data['prayer-tags'] );
-	
+
 		// get the echo user
 		$user = get_user_by( 'login', 'prayer' );
+
+		// get the category
+		// $category = get_term( $prayer_category['term_taxonomy_id'], 'prayer-category' );
+
+		// build a title
+		// $title_parts[] = $category->name;
+		$title_parts[] = $data['prayer_name'];
+		$title_parts[] = date('YmdHi');
+		$title = implode(" on ", $title_parts);
 
 		// build a prayer entry to be insterted into the db
 		$prayer = array(
 			'comment_status' => 'closed',
 			'ping_status' => 'closed',
 			'post_author' => $user->id,
-			'post_title' => $data['prayer_title'],
+			'post_title' => $title, //$data['prayer_title'],
 			'post_content' => $data['prayer_content'],
 			'post_status' => 'pending',
 			'post_type' => 'prayer',
 			'tax_input' => [ 'prayer-category' => $prayer_category['term_taxonomy_id'], 'prayer-tag' => $tags ],
 		);
+
 		// create the pending prayer request
 		$prayer_id = wp_insert_post($prayer);
 		// add meta to the prayer after insert. You have to get a post id
@@ -163,13 +173,13 @@ class Prayer_Form_Processing {
 		// set the language of the post
 		$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
 		add_post_meta( $prayer_id, 'prayer-lang', $lang );
-		// calculate coordinates and store them 
+		// calculate coordinates and store them
 		$location = Prayer_Plugin_Helper::parse_location($data['prayer_location']);
 		Prayer_Plugin_Helper::save_location_meta( $prayer_id, $location );
 
 		// Notify Prayer designated user
 		$mailresults = Prayer_Mailer::new_request( $data );
-		
+
 		return true;
 	}
 
@@ -179,13 +189,13 @@ class Prayer_Form_Processing {
 	 * Process prayer click submissions by incremting the prayer count for
 	 * individual prayer posts.
 	 *
-	 * @since 0.9.0 
+	 * @since 0.9.0
 	 */
 	function prayed_click_submit() {
 		// check to see if this is a prayer click submission
 		if ( isset( $_POST['prayer-click']) && '1' == $_POST['prayer-click']) {
 			// check for a valid nonce
-			$is_valid_nonce = ( isset( $_POST[ 'prayer_nonce' ] ) && wp_verify_nonce( $_POST[ 'prayer_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false'; 
+			$is_valid_nonce = ( isset( $_POST[ 'prayer_nonce' ] ) && wp_verify_nonce( $_POST[ 'prayer_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
 		    // Exits script depending on save status
 		    if ( !$is_valid_nonce ) {
 		        return;
@@ -210,13 +220,13 @@ class Prayer_Form_Processing {
 	/**
 	 * Prayer has been answered
 	 *
-	 * @since  0.9.0 
+	 * @since  0.9.0
 	 */
 	function prayer_answered() {
 		// check to see if this is a prayer answered
 		if ( isset( $_POST['prayer-answered']) && '1' == $_POST['prayer-answered']) {
 			// check for a valid nonce
-			$is_valid_nonce = ( isset( $_POST[ 'prayer_nonce' ] ) && wp_verify_nonce( $_POST[ 'prayer_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false'; 
+			$is_valid_nonce = ( isset( $_POST[ 'prayer_nonce' ] ) && wp_verify_nonce( $_POST[ 'prayer_nonce' ], basename( __FILE__ ) ) ) ? 'true' : 'false';
 		    // Exits script depending on save status
 		    if ( ! $is_valid_nonce ) {
 		        return;
@@ -227,8 +237,8 @@ class Prayer_Form_Processing {
 			// update the prayer count
 			update_post_meta( $post['prayer-id'], 'prayer-answered', $post['prayer-answered'] );
 			update_post_meta( $post['prayer-id'], 'prayer-response', wp_kses_post( $post['prayer-response'] ) );
-			
-			Prayer_Template_Helper::set_flash_message( __( 'Prayer updated.', 'prayer' ) );			
+
+			Prayer_Template_Helper::set_flash_message( __( 'Prayer updated.', 'prayer' ) );
 		}
 	}
 }
