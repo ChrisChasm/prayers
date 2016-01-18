@@ -140,9 +140,34 @@ class Prayer_Meta
 	    }
 
 	    // Checks for input and sanitizes/saves if needed
-	    if( isset( $_POST[ 'prayer-email' ] ) ) {
+	    if( isset( $_POST[ 'prayer-email' ] ) && ! empty( $_POST[ 'prayer-email' ] ) ) {
 	    	update_post_meta( $post_id, 'prayer-email', sanitize_text_field( $_POST[ 'prayer-email' ] ) );
 	    }
+      else {
+        // attempt to pull email from Existing MailChimp List
+        global $prayer_mailchimp;
+        if ( ! empty( $prayer_mailchimp->mc_api->apikey ) ) {
+
+          $name = $_POST[ 'prayer-name' ];
+          $name_parts = explode( ' ', $name );
+          $query = $name;
+          $members = $prayer_mailchimp->mc_api->helper->searchMembers( $query, $prayer_mailchimp->current_list );
+
+          foreach( $members['full_search']['members'] as $member ) {
+
+            $fname = $member['merges']['FNAME'];
+            $lname = $member['merges']['LNAME'];
+
+            if ( ( $fname == $name_parts[0] ) && ( $lname = $name_parts[1] ) ) {
+              $email = $member['email'];
+              update_post_meta( $post_id, 'prayer-email', $email );
+            }
+
+          }
+
+        }
+
+      }
 
 	    // Checks for input and sanitizes/saves if needed
 	    if( isset( $_POST[ 'prayer-lang' ] ) ) {
