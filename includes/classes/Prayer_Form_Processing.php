@@ -141,16 +141,16 @@ class Prayer_Form_Processing {
 
 		// build a title
 		// $title_parts[] = $category->name;
-		$title_parts[] = $data['prayer_name'];
-		$title_parts[] = date('YmdHi');
-		$title = implode(" on ", $title_parts);
+		#$title_parts[] = date('YmdHi');
+		#$title_parts[] = str_replace(' ', '-', strtolower($data['prayer_name'] ) );
+		#$title = implode("#", $title_parts);
 
 		// build a prayer entry to be insterted into the db
 		$prayer = array(
 			'comment_status' => 'closed',
 			'ping_status' => 'closed',
 			'post_author' => $user->id,
-			'post_title' => $title, //$data['prayer_title'],
+			'post_title' => str_replace(' ', '-', strtolower($data['prayer_name'] ) ), //$data['prayer_title'],
 			'post_content' => $data['prayer_content'],
 			'post_status' => 'pending',
 			'post_type' => 'prayer',
@@ -159,6 +159,12 @@ class Prayer_Form_Processing {
 
 		// create the pending prayer request
 		$prayer_id = wp_insert_post($prayer);
+
+		// update the post title with the ID
+		$prayer['ID'] = $prayer_id;
+		$prayer['post_title'] = $prayer_id . '#' . $prayer['post_title'];
+		wp_update_post( $prayer );
+
 		// add meta to the prayer after insert. You have to get a post id
 		// before being able to insert meta.
 		add_post_meta( $prayer_id, 'prayer-anonymous', $data['prayer_anonymous'] );
@@ -171,10 +177,10 @@ class Prayer_Form_Processing {
 		add_post_meta( $prayer_id, 'prayer-email-synced', 0 );
 
 		// set the language of the post
-		$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
+		$lang = substr( $_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 		add_post_meta( $prayer_id, 'prayer-lang', $lang );
 		// calculate coordinates and store them
-		$location = Prayer_Plugin_Helper::parse_location($data['prayer_location']);
+		$location = Prayer_Plugin_Helper::parse_location( $data['prayer_location'] );
 		Prayer_Plugin_Helper::save_location_meta( $prayer_id, $location );
 
 		// Notify Prayer designated user
