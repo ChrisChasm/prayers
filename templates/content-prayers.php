@@ -73,6 +73,6 @@ if ( $query->have_posts() ) : ?>
 
 	else: ?>
 
-	s<h3>Sorry. No prayers have been submitted yet.</h3>
+	<h3>Sorry. No prayers have been submitted yet.</h3>
 
 	<?php endif;
