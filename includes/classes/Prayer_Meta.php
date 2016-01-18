@@ -125,7 +125,7 @@ class Prayer_Meta
 	    }
 
 	    // Checks for input and sanitizes/saves if needed
-	    if( isset( $_POST[ 'prayer-anonymous' ] ) ) {
+	    if( isset( $_POST[ 'prayer-anonymous' ] ) && $_POST[ 'prayer-anonymous' ] == '1' ) {
 	        update_post_meta( $post_id, 'prayer-anonymous', sanitize_text_field( $_POST[ 'prayer-anonymous' ] ) );
 
           // set the visibility to private

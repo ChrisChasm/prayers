@@ -40,7 +40,7 @@
  	list-style: none;
 }
 .prayers-listing > li {
- 	margin: 1em 0;
+ 	margin: 1em 0 2em;
 }
 
 /* Prayer Content */

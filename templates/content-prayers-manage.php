@@ -19,9 +19,7 @@
 			?>
 
 			<li>
-				<h3 class="prayer-title">
-					<a href="<?php the_permalink(); ?>"><?php the_title() ?></a>
-				</h3>
+				<h3 class="prayer-title"><?php the_date() ?></h3>
 
 				<div class="prayer prayer-meta">
 					<ul><?php
