@@ -57,13 +57,21 @@ if ( ! empty( $_SESSION['post'] ) ) {
 		<input type="email" name="prayer_email" required placeholder="Your email (required)" value="<?php echo $post_data['prayer_email'] ?>" />
 	</p>
 
-	<p><strong>Place your request on the map?</strong><br />
+	<?php
+	// check to see if categories are enabled
+	$location_enabled = $prayer_options['location_enabled'];
+
+	if ($location_enabled == '1'): ?>
+
+	<p><strong>Place your request on the <a href="<?php get_site_url() ?>/prayers/map">map?</a></strong><br />
 	<small>City and state is fine, we don't need a full address.</small></p>
 
 	<p class="prayer-address">
 		<label for="prayer_location" class="hide"><?php echo __('Your city, state, province, country', 'prayer') ?></label>
 		<input type="text" name="prayer_location" placeholder="Your city, state, province, country, etc (optional)" value="<?php echo $post_data['prayer_location'] ?>" />
 	</p>
+
+	<?php endif; ?>
 
 	<?php
 	// check to see if categories are enabled

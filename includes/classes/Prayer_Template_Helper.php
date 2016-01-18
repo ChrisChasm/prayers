@@ -4,7 +4,7 @@
  *
  * Provideds helpers to be used inside of template files for things like
  * buttons, lists, etc.
- * 
+ *
  * @package   Prayer
  * @author 	  Kaleb Heitzman <kalebheitzman@gmail.com>
  * @link      https://github.com/kalebheitzman/prayer
@@ -36,11 +36,12 @@ class Prayer_Template_Helper
 			$terms_list = array();
 			foreach ( $terms as $term ) {
 				$terms_list[] = $term->name;
-			} 
+			}
 			// build the output for each term
 			foreach ($terms_list as $term) {
 				$output .= '<span class="prayer prayer-box term taxonomy-' . $taxonomy . '">';
-				$output .= '<a href="' . get_term_link( $term, $taxonomy ) . '">' . $term . '</a>';
+				//$output .= '<a href="' . get_term_link( $term, $taxonomy ) . '">' . $term . '</a>';
+				$output .= $term;
 				$output .= '</span>';
 			}
 		}
@@ -56,7 +57,7 @@ class Prayer_Template_Helper
 	 * to say they've prayed for the request on screen. Thier response is stored
 	 * in html5 localStorage to check against whether they've prayed for a
 	 * specific request before or not.
-	 * 
+	 *
 	 * @param  integer ID
 	 * @return string html content
 	 * @since  0.9.0
@@ -75,7 +76,7 @@ class Prayer_Template_Helper
 				<span class="prayer-count prayer-<?php the_ID(); ?>"><?php echo $prayer_count; ?></span>
 				<span class="prayer-pray-button">
 					<form class="prayer-prayed" action="" method="post" data-prayer-id="<?php the_ID(); ?>">
-						<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>	
+						<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>
 						<input type="hidden" name="prayer_id" value="<?php the_ID(); ?>" />
 						<input type="submit" value="Pray" />
 						<input type="hidden" name="prayer-click" value="1" />
@@ -150,7 +151,7 @@ class Prayer_Template_Helper
 			$output = __("Prayed once", "prayer");
 		}
 		else {
-			$output = __("Prayed", "prayer") . " " . $prayer_count . " " . __("times", "prayer");		
+			$output = __("Prayed", "prayer") . " " . $prayer_count . " " . __("times", "prayer");
 		}
 		// return the html
 		return $output;
@@ -161,7 +162,7 @@ class Prayer_Template_Helper
 	 * @param  integer ID
 	 * @param  integer Size of avatar
 	 * @return string Html string with avatar image
-	 * @since  0.9.0 
+	 * @since  0.9.0
 	 */
 	static public function get_avatar( $id = 0, $size = 26 ) {
 		if ($id == 0) return;
@@ -201,7 +202,7 @@ class Prayer_Template_Helper
 	{
 		$flash_message = $_SESSION['flash']['message'];
 
-		if ( ! empty( $flash_message ) ) 
+		if ( ! empty( $flash_message ) )
 		{
 			echo '<div class="flash flash-' . $flash_message['type'] . '">'. $flash_message['message'] . '</div>';
 		}
@@ -217,7 +218,7 @@ class Prayer_Template_Helper
         $args = array(
             'orderby' => 'name',
             'order' => 'ASC',
-            'hide_empty' => false 
+            'hide_empty' => false
         );
         $prayer_categories = get_terms($prayer_category, $args);
         return $prayer_categories;
@@ -233,7 +234,7 @@ class Prayer_Template_Helper
         $args = array(
             'orderby' => 'name',
             'order' => 'ASC',
-            'hide_empty' => false 
+            'hide_empty' => false
         );
         $prayer_tags = get_terms($prayer_tag, $args);
         return $prayer_tags;
@@ -242,22 +243,21 @@ class Prayer_Template_Helper
     /**
      * Navigation
      *
-     * @since  0.9.0 
+     * @since  0.9.0
      */
     public static function get_navigation()
     {
-    	
+
     	// get the slug
     	$slug = self::get_slug();
     	// set an active class for manage if on GET prayers/manage
     	$manage_class = ( $slug == 'prayers/manage' ? 'manage active' : 'manage' );
 
-
     	// build the links
     	$links = array();
 
     	// Authenticated Pages
-    	if ( Prayer_Auth::authenticated() ) 
+    	if ( Prayer_Auth::authenticated() )
     	{
     		$links[] = array(
     			'href' => "/prayers/manage?token=" . Prayer_Auth::get_token(),
@@ -271,7 +271,7 @@ class Prayer_Template_Helper
     			'class' => 'logout',
     		);
     	}
-    	else 
+    	else
     	{
 			$links[] = array(
 	    		'href' => "/prayers/login",

@@ -70,6 +70,7 @@ class Prayer_Plugin_Setup
                 'button_text_color' => '#ffffff',
                 'taxonomy_background_color' => '#efefef',
                 'taxonomy_text_color' => '#333333',
+                'location_enabled' => "1",
                 'categories_enabled' => "1",
                 'tags_enabled' => "1",
             );

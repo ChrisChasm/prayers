@@ -133,6 +133,14 @@ class Prayer_Settings {
 		);
 
 		add_settings_field(
+			'location_enabled', // id
+			'Location Enabled', // title
+			array( $this, 'location_enabled_callback' ), // callback
+			'prayer-settings-admin', // page
+			'prayer_settings_setting_section' // section
+		);
+
+		add_settings_field(
 			'categories_enabled', // id
 			'Categories Enabled', // title
 			array( $this, 'categories_enabled_callback' ), // callback
@@ -194,6 +202,10 @@ class Prayer_Settings {
 
 		if ( isset( $input['taxonomy_text_color'] ) ) {
 			$sanitary_values['taxonomy_text_color'] = sanitize_text_field( $input['taxonomy_text_color'] );
+		}
+
+		if ( isset( $input['location_enabled'] ) ) {
+			$sanitary_values['location_enabled'] = $input['location_enabled'];
 		}
 
 		if ( isset( $input['categories_enabled'] ) ) {
@@ -288,6 +300,16 @@ class Prayer_Settings {
 			isset( $this->prayer_settings_options['taxonomy_text_color'] ) ? esc_attr( $this->prayer_settings_options['taxonomy_text_color']) : '#333'
 		);
 		echo ' <small>' . __( 'Text color of taxonomy pill.', 'prayer' ) . '</small>';
+	}
+
+	public function location_enabled_callback() {
+		?> <fieldset class="prayer-inline-radios"><?php $checked = ( isset( $this->prayer_settings_options['location_enabled'] ) && $this->prayer_settings_options['location_enabled'] === '1' ) ? 'checked' : '' ; ?>
+		<label for="location_enabled-0"><input type="radio" name="prayer_settings_options[location_enabled]" id="location_enabled-0" value="1" <?php echo $checked; ?>> Yes</label>
+		<?php $checked = ( isset( $this->prayer_settings_options['location_enabled'] ) && $this->prayer_settings_options['location_enabled'] === '0' ) ? 'checked' : '' ; ?>
+		<label for="location_enabled-1"><input type="radio" name="prayer_settings_options[location_enabled]" id="location_enabled-1" value="0" <?php echo $checked; ?>> No</label>
+		<?php echo '<small>' . __( 'Enable frontend users to enter a location for thier prayer request?', 'prayer' ) . '</small>'; ?>
+		</fieldset> <?php
+
 	}
 
 	public function categories_enabled_callback() {
