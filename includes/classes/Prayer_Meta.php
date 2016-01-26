@@ -203,6 +203,13 @@ class Prayer_Meta
 	    	update_post_meta( $post_id, 'prayer-prayed', 0 );
 	    }
 
+      // Checks for input and sanitizes/saves if needed
+	    if ( isset( $_POST[ 'prayer-email-ready-for-sync' ] ) ) {
+	    	update_post_meta( $post_id, 'prayer-email-ready-for-sync', sanitize_text_field($_POST['prayer-email-ready-for-sync']) );
+	    } else {
+	    	update_post_meta( $post_id, 'prayer-email-ready-for-sync', 0 );
+	    }
+
 	    // Checks for input and sanitizes/saves if needed
 	    if ( isset( $_POST[ 'prayer-email-synced' ] ) ) {
 	    	update_post_meta( $post_id, 'prayer-email-synced', sanitize_text_field($_POST['prayer-email-synced']) );
