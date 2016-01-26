@@ -2,7 +2,7 @@
 
 	<h2 class="nav-tab-wrapper current">
 		<a class="nav-tab nav-tab-active" href="javascript:;"><?php echo __( 'Notes', 'prayer' ) ?></a>
-		<a class="nav-tab" href="javascript:;"><?php echo __( 'Responses', 'prayer' ) ?></a>
+		<a class="nav-tab" href="javascript:;"><?php echo __( 'Response', 'prayer' ) ?></a>
 		<a class="nav-tab" href="javascript:;"><?php echo __( 'Geolocation', 'prayer' ) ?></a>
 		<a class="nav-tab" href="javascript:;"><?php echo __( 'Contact', 'prayer' ) ?></a>
 		<a class="nav-tab" href="javascript:;"><?php echo __( 'Processing', 'prayer' ) ?></a>

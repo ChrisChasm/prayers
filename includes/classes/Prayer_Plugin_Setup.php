@@ -73,6 +73,7 @@ class Prayer_Plugin_Setup
                 'location_enabled' => "1",
                 'categories_enabled' => "1",
                 'tags_enabled' => "1",
+                'mailchimp_magic_enabled' => "0",
             );
             add_option( 'prayer_settings_options', $options );
         }

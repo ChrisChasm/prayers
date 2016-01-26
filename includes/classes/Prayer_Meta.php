@@ -83,8 +83,6 @@ class Prayer_Meta
 		$views = plugin_dir_path( __FILE__ ) . "../views/";
 		include_once( $views . 'prayer-meta-box.php' );
 
-
-
 	}
 
 	/**
@@ -105,6 +103,9 @@ class Prayer_Meta
 	    if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {
 	        return;
 	    }
+
+      // get the prayer settings
+      $prayer_settings = get_option( 'prayer_settings_options' );
 
       // update the post title
       if ( empty( $_POST['post_title'] ) ) {
@@ -144,6 +145,8 @@ class Prayer_Meta
 	    	update_post_meta( $post_id, 'prayer-email', sanitize_text_field( $_POST[ 'prayer-email' ] ) );
 	    }
       else {
+        // if not enabled skip pulling the email
+        if ( $prayer_settings['mailchimp_magic_enabled'] == "0" ) return;
         // attempt to pull email from Existing MailChimp List
         global $prayer_mailchimp;
         if ( ! empty( $prayer_mailchimp->mc_api->apikey ) ) {

@@ -35,7 +35,7 @@
 
  /* Meta Nav */
 .prayer-navigation .nav-tab-wrapper {
- 	padding: 0;
+ 	padding: 0 !important;
 }
 .prayer-section {
  	padding-top: 6px;
@@ -115,9 +115,12 @@
 .prayer-location .avatar {
 	float: left;
 	width: 35px;
+  height: 35px;
+  border-radius: 2px;
+  margin-right: 10px;
 }
 .prayer-location .details {
-	width: 215px;
+	width: 205px;
 	float: left;
 }
 

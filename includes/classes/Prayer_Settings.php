@@ -85,6 +85,14 @@ class Prayer_Settings {
 		);
 
 		add_settings_field(
+			'mailchimp_magic', // id
+			'MailChimp Magic', // title
+			array( $this, 'mailchimp_magic_callback' ), // callback
+			'prayer-settings-admin', // page
+			'prayer_settings_setting_section' // section
+		);
+
+		add_settings_field(
 			'prayer_form_response', // id
 			'Prayer Form Response', // title
 			array( $this, 'prayer_form_response_callback' ), // callback
@@ -216,6 +224,10 @@ class Prayer_Settings {
 			$sanitary_values['tags_enabled'] = $input['tags_enabled'];
 		}
 
+		if ( isset( $input['mailchimp_magic_enabled'] ) ) {
+			$sanitary_values['mailchimp_magic_enabled'] = $input['mailchimp_magic_enabled'];
+		}
+
 		if ( isset( $input['default_category'] ) ) {
 			$sanitary_values['default_category'] = $input['default_category'];
 		}
@@ -260,6 +272,15 @@ class Prayer_Settings {
 			isset( $this->prayer_settings_options['mailchimp_api_key'] ) ? esc_attr( $this->prayer_settings_options['mailchimp_api_key']) : ''
 		);
 		echo '<span> <a href="http://admin.mailchimp.com/account/api/" target="_blank">Get a MailChimp API Key</a></span>';
+	}
+
+	public function mailchimp_magic_callback() {
+		?> <fieldset class="prayer-inline-radios"><?php $checked = ( isset( $this->prayer_settings_options['mailchimp_magic_enabled'] ) && $this->prayer_settings_options['mailchimp_magic_enabled'] === '1' ) ? 'checked' : '' ; ?>
+		<label for="mailchimp_magic_enabled-0"><input type="radio" name="prayer_settings_options[mailchimp_magic_enabled]" id="mailchimp_magic_enabled-0" value="1" <?php echo $checked; ?>> Yes</label>
+		<?php $checked = ( isset( $this->prayer_settings_options['mailchimp_magic_enabled'] ) && $this->prayer_settings_options['mailchimp_magic_enabled'] === '0' ) ? 'checked' : '' ; ?>
+		<label for="mailchimp_magic_enabled-1"><input type="radio" name="prayer_settings_options[mailchimp_magic_enabled]" id="mailchimp_magic_enabled-1" value="0" <?php echo $checked; ?>> No</label>
+		<?php echo '<small>' . __( 'Sync MailChimp Subscriber info to prayer requests in WordPress? (experimental)', 'prayer' ) . '</small>'; ?>
+		</fieldset> <?php
 	}
 
 	public function button_primary_color_callback() {
