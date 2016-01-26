@@ -172,6 +172,13 @@ class Prayer_Meta
 
       }
 
+      // Checks for input and sanitizes/saves if needed
+	    if ( isset( $_POST[ 'prayer-map-enabled' ] ) ) {
+	    	update_post_meta( $post_id, 'prayer-map-enabled', sanitize_text_field($_POST['prayer-map-enabled']) );
+	    } else {
+	    	update_post_meta( $post_id, 'prayer-map-enabled', 0 );
+	    }
+
 	    // Checks for input and sanitizes/saves if needed
 	    if( isset( $_POST[ 'prayer-lang' ] ) ) {
 	    	update_post_meta( $post_id, 'prayer-lang', sanitize_text_field( $_POST[ 'prayer-lang' ] ) );

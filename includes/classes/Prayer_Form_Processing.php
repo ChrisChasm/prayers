@@ -172,6 +172,7 @@ class Prayer_Form_Processing {
 		add_post_meta( $prayer_id, 'prayer-count', 0);
 		add_post_meta( $prayer_id, 'prayer-name', $data['prayer_name'] );
 		add_post_meta( $prayer_id, 'prayer-email', $data['prayer_email'] );
+		add_post_meta( $prayer_id, 'prayer-map-enabled', 0 );
 		add_post_meta( $prayer_id, 'prayer-location', $data['prayer_location'] );
 		add_post_meta( $prayer_id, 'prayer-prayed', 0 );
 		add_post_meta( $prayer_id, 'prayer-email-synced', 0 );
