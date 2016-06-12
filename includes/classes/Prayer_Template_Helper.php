@@ -252,6 +252,7 @@ class Prayer_Template_Helper
     	$slug = self::get_slug();
     	// set an active class for manage if on GET prayers/manage
     	$manage_class = ( $slug == 'prayers/manage' ? 'manage active' : 'manage' );
+    	$submit_class = ( $slug == 'prayers/submit' ? 'submit active' : 'submit' );
 
     	// build the links
     	$links = array();
@@ -266,10 +267,17 @@ class Prayer_Template_Helper
     		);
 
     		$links[] = array(
+    			'href' => "/prayers/submit?token=" . Prayer_Auth::get_token(),
+    			'title' => "Submit a Prayer",
+    			'class' => $submit_class
+    		);
+
+    		$links[] = array(
     			'href' => "/prayers?logout=1",
     			'title' => 'Logout',
     			'class' => 'logout',
     		);
+
     	}
     	else
     	{

@@ -25,6 +25,10 @@
  */
 .screen-reader-text { display: none; }
 
+a {
+
+}
+
 /* ==primary layout structure (body, primary divs)
  */
 
@@ -162,6 +166,7 @@ ul.prayer-navigation a {
 	color: #fff;
 	padding: 0.35em 0.85em;
 	border-radius: 4px;
+	text-decoration: none;
 }
 ul.prayer-navigation a:hover {
 	background: #aaa;
@@ -171,6 +176,51 @@ ul.prayer-navigation li {
 }
 ul.prayer-navigation li:first-child {
 	border-left: 0;
+}
+
+/* Prayer Login Form */
+#prayer-form {
+
+}
+#prayer-form p {
+	width: 100%;
+	float: left;
+}
+#prayer-form p * {
+	box-sizing: border-box;
+}
+#prayer-form label.main {
+	width: 25%;
+	display: block;
+	float: left;
+}
+#prayer-form input[type="email"],
+#prayer-form input[type="text"],
+#prayer-form textarea,
+#prayer-form .prayer-inline-elements {
+	width: 75%;
+	display: block;
+	float: left;
+	margin: 0;
+}
+#prayer-form p span {
+	font-size: small;
+	font-style: italic;
+	width: 75%;
+	margin-left: 25%;
+	padding-top: 2px;
+	display: block;
+	float: left;
+}
+#prayer-form p .prayer-inline-input input {
+	margin-right: 3px;
+}
+
+.prayer-email input[type="submit"] {
+	width: 19%;
+	display: block;
+	float: right;
+	margin-top: 0;
 }
 
 /* ==text-related treatments (headings, paragraphs, lists)
