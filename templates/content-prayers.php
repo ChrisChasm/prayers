@@ -35,7 +35,8 @@ if ( $query->have_posts() ) : ?>
 							$prayer_answered = Prayer_Template_Helper::get_prayer_answered($id);
 							$prayer_avatar = Prayer_Template_Helper::get_avatar( $id, 27 );
 
-					  	?><li class="prayer-avatar-small"><?php echo $prayer_avatar; ?></li>
+					  	?>
+					  	<li class="prayer-avatar-small"><?php echo $prayer_avatar; ?></li>
 						<li><?php echo $prayer_button; ?></li>
 						<?php if ( $prayer_location !== false ): ?>
 							<li><a href="<?php echo site_url(); ?>/prayers/map"><?php echo $prayer_location; ?></a></li>

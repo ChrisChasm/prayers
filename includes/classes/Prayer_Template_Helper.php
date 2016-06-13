@@ -66,6 +66,7 @@ class Prayer_Template_Helper
 		if ( $id == 0 ) return;
 		// get the current prayer count and set to 0 if it's empty
 		$prayer_count = get_post_meta( $id, 'prayer-count', 1);
+
 		if ( empty($prayer_count) ) {
 			$prayer_count = 0;
 		}

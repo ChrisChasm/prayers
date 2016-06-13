@@ -167,7 +167,8 @@ class Prayer_Form_Processing {
 
 		// add meta to the prayer after insert. You have to get a post id
 		// before being able to insert meta.
-		add_post_meta( $prayer_id, 'prayer-anonymous', $data['prayer_anonymous'] );
+		$prayer_anonymous = is_null($data['prayer_anonymous']) ? 0 : $data['prayer_anonymous'];
+		add_post_meta( $prayer_id, 'prayer-anonymous', $prayer_anonymous );
 		add_post_meta( $prayer_id, 'prayer-answered', 0);
 		add_post_meta( $prayer_id, 'prayer-count', 0);
 		add_post_meta( $prayer_id, 'prayer-name', $data['prayer_name'] );

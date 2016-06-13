@@ -31,7 +31,7 @@
 							$prayer_tags = Prayer_Template_Helper::get_terms_list($id, 'prayer-tags');
 							$prayer_answered = Prayer_Template_Helper::get_prayer_answered($id);
 
-					  	?><li><?php echo $prayed_button; ?></li>
+					  	?><li><?php echo $prayer_button; ?></li>
 						<?php if ( $prayer_location !== false ): ?>
 							<li><?php echo $prayer_location; ?></li>
 						<?php endif; ?>
