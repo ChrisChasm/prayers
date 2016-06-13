@@ -206,6 +206,15 @@ ul.prayer-navigation li:first-child {
 	float: left;
 	margin: 0;
 }
+.prayer-auth-email {
+	width: 52% !important;
+	float: left;
+}
+.prayer-auth-submit {
+	float: right;
+	width: 20% !important;
+	margin-top: 0 !important;
+}
 #prayer-form p span {
 	font-size: small;
 	font-style: italic;
@@ -217,13 +226,6 @@ ul.prayer-navigation li:first-child {
 }
 #prayer-form p .prayer-inline-input input {
 	margin-right: 3px;
-}
-
-.prayer-email input[type="submit"] {
-	width: 19%;
-	display: block;
-	float: right;
-	margin-top: 0;
 }
 
 /* Prayer list */

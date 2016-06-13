@@ -251,6 +251,12 @@ class Prayer_Template_Helper
 
     	// get the slug
     	$slug = self::get_slug();
+
+    	if ( $slug == 'prayers/login' ) {
+    		$links = array();
+    		return $links;
+    	}
+
     	// set an active class for manage if on GET prayers/manage
     	$manage_class = ( $slug == 'prayers/manage' ? 'manage active' : 'manage' );
     	$submit_class = ( $slug == 'prayers/submit' ? 'submit active' : 'submit' );
