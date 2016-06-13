@@ -33,10 +33,14 @@ if ( ! empty( $_SESSION['post'] ) ) {
 <form method="post" id="prayer-form" class="prayer form prayer-js" action="">
 	<?php wp_nonce_field( basename(__FILE__), 'prayer_nonce' ); ?>
 
-	<?php/*<p class="prayer-title">
+	<?php
+
+	/*<p class="prayer-title">
 		<label for="prayer_title"><?php echo __('Prayer title', 'prayer') ?></label>
 		<input type="text" name="prayer_title" minlength="6" required placeholder="Prayer title (required)" value="<?php echo $post_data['prayer_title'] ?>" />
-	</p>*/?>
+	</p>*/
+
+	?>
 
 	<p class="prayer-content">
 		<label class="main" for="prayer_content"><?php echo __('Prayer Request', 'prayer') ?></label>
