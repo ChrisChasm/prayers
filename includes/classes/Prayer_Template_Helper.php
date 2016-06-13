@@ -325,4 +325,32 @@ class Prayer_Template_Helper
 	 	) );
 
 	}
+
+	/**
+	 *	Get email from token
+	 *	@return string email
+	 */
+	public static function get_email()
+	{
+		$token = $_GET['token'];
+
+		// get the key
+		$key = get_option( 'prayer_jwt_key' );
+
+		try {
+			// decode the token
+			$decoded = JWT::decode($token, $key, array('HS256'));
+
+			// save the token in storage for use on the site
+			setcookie( 'wp-prayer-jwt', $token, (time()+3600), "/" );
+
+			// return the decoded token
+			return $decoded->sub;
+		} 
+		catch ( Exception $e ) 
+		{
+			return null;
+		}
+
+	}
 }

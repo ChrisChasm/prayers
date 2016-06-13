@@ -48,9 +48,15 @@ if ( ! empty( $_SESSION['post'] ) ) {
 		<input type="text" name="prayer_name" id="prayer_name" required placeholder="Your name (required)" value="<?php echo $post_data['prayer_name'] ?>" />
 	</p>
 
+	<?php $email = Prayer_Template_Helper::get_email(); ?>
+
 	<p class="prayer-email">
 		<label class="main" for="prayer_email"><?php echo __('Your email', 'prayer') ?></label>
-		<input type="email" name="prayer_email" id="prayer_email" required placeholder="Your email (required)" value="<?php echo $post_data['prayer_email'] ?>" />
+		<?php if( is_null($email) ): ?>
+			<input type="email" name="prayer_email" id="prayer_email" required placeholder="Your email (required)" value="<?php echo $post_data['prayer_email'] ?>" />
+		<?php else: ?>
+			<input type="email" name="prayer_email" id="prayer_email" required placeholder="Your email (required)" value="<?php echo $email; ?>" />
+		<?php endif; ?>
 	</p>
 
 	<?php
